@@ -7,11 +7,12 @@ $drop = "DROP DATABASE IF EXISTS " . $DB_NAME . ";";
 $create_db = "CREATE DATABASE " . $DB_NAME . ";";
 
 //Connect to MySql (db not created yet);
+//var_dump($_SERVER);
 try {
 	$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOexception $e) {
-	die('ERROR CREATING DB :' . $e->getMessage());
+	die('ERROR CREATING DB :' . $e->getMessage() . '\n' . var_dump($db));
 }
 
 //Create DB
@@ -31,6 +32,8 @@ $user_a = array (
 
 $db->exec("USE " . $DB_NAME);
 $db->exec(create_table('users', $user_a));
+
+header ('Location: /');
 
 // var_dump($db);
 
