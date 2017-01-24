@@ -18,21 +18,21 @@ try {
 //Create DB
 $db->exec($create_db) or die (print_r($db->errorInfo(), true));
 
-//Create tables;
+//Create table user;
 $user_a = array (
-		'ID'		=>	'SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT',
+		'ID'		=>	'SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY',
 		'login' 	=>	'varchar(15) NOT NULL',
 		'pass'		=>	'varchar(99) NOT NULL',
 		'mail'		=>	'varchar(30) NOT NULL',
 		'f_name'	=>	'varchar(99)',
 		'l_name'	=>	'varchar(99)',
-		'pict_id'	=>	'smallint NOT NULL AUTO_INCREMENT',
+		'pict_id'	=>	'smallint NOT NULL',
 		'isadmin'	=>	'bool NOT NULL'
 	);
 
 $db->exec("USE " . $DB_NAME);
-$db->exec(create_table('users', $user_a, 'ID'));
+$db->exec(create_table('users', $user_a));
 
-// var_dump($db);
+// Load database files (DUMMY CONTENT);
 
 ?>
