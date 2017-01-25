@@ -44,4 +44,31 @@ function connect_db($new){
 
 }
 
+function insert_datas ($table, $datas)
+{
+	$start = "insert into " . $table;
+	$keys = "(";
+	$vals = "VALUES (";
+
+	$i = 0;
+	foreach ($datas as $key => $val) {
+		$keys = $keys . $key;
+		if (!is_numeric($val) and !is_bool($val))
+			$val = "'" . $val . "'";
+		$vals = $vals . $val;
+		if ($i < count($datas) - 1)
+		{
+			$keys = $keys . ", ";
+			$vals = $vals . ", ";
+		}
+		else
+		{
+			$keys = $keys . ") ";
+			$vals = $vals . ") ";
+		}
+		$i++;
+	}
+	return $start . $keys . $vals;
+}
+
 ?>

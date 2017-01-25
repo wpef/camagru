@@ -3,19 +3,25 @@
 require_once('..' . '/config/manage_db.php');
 
 class User {
+
 	public			$login;
-	private			$passwd;
+	private			$_passwd;
 	public			$f_name;
 	public			$name;
 	public			$mail;
 	public static	$verbose = FALSE;
 	public			$isadmin;
 
-	/* ==> DEFAULT METHOD <== */
+/* ==> DEFAULT METHOD <== */
 	public function __construct($log) {
-	// create class getting infos from BDD searching for login
-	// ==> (SELECT login, mdp, etc. FROM users WHERE login == $login)
-		
+
+		//IF (!user_exists($log))
+		if ($log === "__new__") {
+			return;
+		}
+		//ELSE
+
+		//Connect to db
 		$db = connect_db(FALSE);
 
 		//setting query string;
@@ -23,7 +29,9 @@ class User {
 
 		//getting result;
 		$db->exec("USE " . $DB_NAME);
-		$usr = $db->query($query)->fetch();
+		$curs = $db->query($query);
+		$usr = $curs->fetch();
+		$curs->closeCursor();
 
 		//setting vars
 		$this->login = $usr['login'];
@@ -31,8 +39,9 @@ class User {
 		$this->mail = $usr['mail'];
 		$this->f_name = $usr['f_name'];
 		$this->name = $usr['f_name'] . " " . $usr['l_name'];
-		$this->isadmin = $usr['isadmin'];		
+		$this->isadmin = $usr['isadmin'];
 
+		//VERBOSE
 		if (self::$verbose)
 			echo ($this);
 	}
@@ -47,6 +56,8 @@ class User {
 		else
 			$ad = "NO";
 
+		if (!$this->login)
+			return "USER :\tNot found!\n---------------------------\n";
 		$st = "USER :\n";
 		$log = "\t" . "Login = " . $this->login . "\n"; 
 		$name = "\t" . "Name = " . $this->name . "\n";
@@ -57,22 +68,45 @@ class User {
 		return ($st . $log . $name . $mail . $adm . $end);
 	}
 
-	/* MY METHODS */
-	public function auth($log, $pass)
+/* ==> MY METHODS <== */
+	private function auth($log, $pass)
 	{
-		//if $_POST[login] ==> get_mdp && compare;
+	//$log & $pass must be sent by $_POST; $pass is sent hashed;
+		if ($log === $this->login && $pass === $this->_passwd)
+			return TRUE;
+		return FALSE;
 	}
 
 	public function create($usr_infos)
 	{
+	//$usr_infos must be an array in which every key corresponds to the DB entries;
+
 		if (!is_array($usr_infos))
 			return FALSE;
+		
+		//Check required values;
+		if (!key_exists('login', $usr_infos) || !key_exists('pass', $usr_infos) || !key_exists('mail', $usr_infos))
+			return FALSE;
+
+		//send query;
+		$db = connect_db(FALSE);
+		$query = insert_datas('users', $usr_infos);
+		var_dump($query);
+		$db->exec('USE ' . $DB_NAME);
+		
+		try { $db->exec($query);
+		} catch (PDOexception $e) {
+			die ('ERROR CREATING USER: ' . $e->getMessage());
+		}
+
+		//VERBOSE
+		if (self::$verbose)
+			echo "USER :" . $usr_infos['login'] . " added to DB" . PHP_EOL;
+		
+		//Create OBJECT
+		$this->__construct($usr_infos['login']);
+		return $this;
  	}
 }
-
-
-// DEBUG
-User::$verbose = TRUE;
-$usr = new User('pef');
 
 ?>

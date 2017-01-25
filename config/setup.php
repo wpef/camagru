@@ -19,8 +19,7 @@ $user_a = array (
 		'mail'		=>	'varchar(30) NOT NULL',
 		'f_name'	=>	'varchar(99)',
 		'l_name'	=>	'varchar(99)',
-		'pict_id'	=>	'smallint NOT NULL',
-		'isadmin'	=>	'bool NOT NULL'
+		'isadmin'	=>	"bool DEFAULT 0"
 	);
 
 $db->exec("USE " . $DB_NAME);
