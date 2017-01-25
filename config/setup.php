@@ -3,17 +3,10 @@
 require_once('database.php');
 require_once('manage_db.php');
 
-$_SESSION['db_exists'] = true;
-
 $create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
 
-//Connect to MySql (db not created yet);
-try {
-	$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOexception $e) {
-	die('ERROR CREATING DB :' . $e->getMessage() . '\n' . var_dump($db));
-}
+//Connect to MySql (db not created yet) and get the PDO object;
+$db = connect_db(TRUE);
 
 //Create DB
 $db->exec($create_db) or die (print_r($db->errorInfo(), true));

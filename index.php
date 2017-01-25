@@ -1,8 +1,7 @@
 <?php
 
-define ('_ROOT_', $_SERVER['DOCUMENT_ROOT']);
 session_start();
-
-include_once(_ROOT_ . '/config/setup.php');
+define ('_ROOT_', $_SERVER['DOCUMENT_ROOT']);
+include_once( _ROOT_ . '/config/setup.php');
 
 ?>

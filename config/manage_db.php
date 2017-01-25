@@ -26,15 +26,20 @@ function create_table($name, $values) {
 
 }
 
-function connect_db(){
-// connect_db try to create a connexion to CAMAGRU DATABASE, and return the PDO object if it worked;
+function connect_db($new){
+// connect_db try to create a connexion to CAMAGRU DATABASE, and return the PDO object if it worked; $new must be set to TRUE if the databases is to be created and FALSE if it already exists;
+	global $DB_USER, $DB_PASSWORD, $DB_DSN, $DB_NAME;
+
 
 	try {
-		$db = new PDO($DB_DSN, $DB_NAME, $DB_PASSWORD);
+		if ($new)
+			$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
+		else
+			$db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 		return $db;
 	}
 	catch (PDOexcpetion $e) {
-		die ('DB CONNECTION ERROR: ', $e->getMessage());
+		die ('DB CONNECTION ERROR: ' . $e->getMessage());
 	}
 
 }
