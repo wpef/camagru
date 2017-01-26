@@ -1,25 +1,39 @@
-<- Color ----------------------------------------------------------------------
-The Color class handles RGB colors.
+<- User ----------------------------------------------------------------------
+The User class handles datas for registered users.
 
-An instance can be contructed from either a RGB value:
-new Color( array( 'rgb' => 12345 ) );
+An instance can be contructed from either an Array :
+new User ( array( 'login' => 'abc' , 'pass' => '0dk3', 'mail' => 'xx@xx.xx' [...] ) );
+Which will INSERT a new user in DB;
 
-Or from distinct red, green, blue constitutives:
-new Color( array( 'red' => 255, 'green' => 255, 'blue' => 255 ) );
+This array contains keys=>values as : (entries between [] are optional) 
+'login' => 'user_login'
+'pass' => 'hashed password'
+'mail' => 'xx@xx.xx'
+['l_name' => 'last Name']
+['f_name' => 'first Name']
+['isadmin' => TRUE or FALSE]
 
-Red, green, blue constitutives and RGB values are converted to intergers.
-Negative or > to 255 color constitutives are left as is.
-Any other use is undefined behaviour.
+Or from a single string :
+new User( 'login' );
+Which will set all vars for an existing user;
+
+The class provides the following vars :
+public			$login;
+private			$_passwd;
+public			$f_name;
+public			$name;
+public			$mail;
+public static	$verbose = FALSE;
+public			$isadmin;
 
 The class provides the following methods :
 
-Color   add( Color $rhs );
-Adds each color constitutive and returns a new Color instance.
+Color   auth( str $log, str $pass );
+Return TRUE if the given HASHED $pass corresponds to the User->_passwd for a given $log; 
 
-Color   sub( Color $rhs );
-Substracts each color constitutive and returns a new Color instance.
+Color   getInfos( str $log );
+Set all objects vars from DB looking for $log as login value
 
-Color   mult( $f );
-Multiplies each color constitutive by factor $f and returns a new Color
-instance.
----------------------------------------------------------------------- Color ->
+Color   create( array $infos );
+Insert datas in Camagru.Users table as given in $infos. Every $infos=>keys must correspon to a table entry or the php script will throw an error 
+---------------------------------------------------------------------- User ->

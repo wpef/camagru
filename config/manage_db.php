@@ -28,6 +28,7 @@ function create_table($name, $values) {
 
 function connect_db($new){
 // connect_db try to create a connexion to CAMAGRU DATABASE, and return the PDO object if it worked; $new must be set to TRUE if the databases is to be created and FALSE if it already exists;
+// MUST SET EROOR TYPE !!!!!!
 	global $DB_USER, $DB_PASSWORD, $DB_DSN, $DB_NAME;
 
 
@@ -46,6 +47,7 @@ function connect_db($new){
 
 function insert_datas ($table, $datas)
 {
+//This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
 	$start = "insert into " . $table;
 	$keys = "(";
 	$vals = "VALUES (";
