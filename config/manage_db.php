@@ -73,4 +73,18 @@ function insert_datas ($table, $datas)
 	return $start . $keys . $vals;
 }
 
+function user_exists ($log)
+{
+	if (is_array($log))
+		$log = $log['login'];
+	$db = connect_db(FALSE);
+	$query = "select * from users where login='" . $log . "';";
+	$curs = $db->exec($query);
+	$count = $curs->countRow();
+	$curs->closeCursor();
+	if ($count == 1)
+		return TRUE;
+	return FALSE;
+}
+
 ?>

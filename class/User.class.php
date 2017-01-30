@@ -14,15 +14,15 @@ class User {
 
 /* ==> DEFAULT METHOD <== */
 	public function __construct($log) {
-	//Might be improved, by automatically checking if exists before create;
-		if (is_array($log))
-			$this->create($log);
-		else if (is_string($log))
+	// if user exists on DB, all vars will be set, else it will be added to DB
+		if (user_exists($log))
 		{
 			$this->getInfos($log);
 			if (self::$verbose)
 				echo $this . " CONSTRUCTED" . PHP_EOL;
 		}
+		else
+			$this->create($log);
 	}
 
 	public function __destruct() {
