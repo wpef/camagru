@@ -11,6 +11,7 @@ class User {
 	public			$mail;
 	public static	$verbose = FALSE;
 	public			$isadmin;
+	public			$confirmed;
 
 /* ==> DEFAULT METHOD <== */
 	public function __construct($log) {
@@ -22,10 +23,7 @@ class User {
 				echo $this . " CONSTRUCTED" . PHP_EOL;
 		}
 		else
-		{
-			var_dump(user_exists($log));
 			$this->create($log);
-		}
 	}
 
 	public function __destruct() {
@@ -118,6 +116,28 @@ class User {
 		
 		//Create OBJECT
 		$this->__construct($usr_infos['login']);
+ 	}
+
+ 	public function confirm($token)
+ 	{
+ 		if ($token == hash('whirlpool', $this->login))
+ 		{
+ 			$this->confirmed = TRUE;
+
+ 			//set var in db;
+ 			$query = "update users set confirmed=1 where login='$this->login'";
+ 			$db = connect_db(FALSE);
+ 			$db->exec('USE' . $DB_NAME);
+ 			try { $db->exec($query);}
+ 			catch (PDOexception $e) {
+ 				die ('ERROR UPDATING USER: ' . $e->getMessage());
+			}
+
+			//ret;
+ 			return TRUE;
+ 		}
+ 		else
+ 			return FALSE;
  	}
  }
 

@@ -20,7 +20,8 @@ $user_a = array (
 		'mail'		=>	'varchar(30) NOT NULL',
 		'f_name'	=>	'varchar(99)',
 		'l_name'	=>	'varchar(99)',
-		'isadmin'	=>	"bool DEFAULT 0"
+		'isadmin'	=>	'bool DEFAULT 0',
+		'confirmed'	=>	'bool DEFAULT 0'
 	);
 
 $admin_a = array (
@@ -29,7 +30,8 @@ $admin_a = array (
 	'mail' => 'f.demoncade@gmail.com',
 	'f_name' => 'admin',
 	'l_name' => 'admin',
-	'isadmin' => TRUE
+	'isadmin' => TRUE,
+	'confirmed' => TRUE
 	);
 
 $db->exec("USE " . $DB_NAME);
