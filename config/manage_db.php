@@ -80,6 +80,8 @@ function user_exists ($log)
 	$db = connect_db(FALSE);
 	$query = "select * from users where login='" . $log . "';";
 	$curs = $db->exec($query);
+	if (!$curs || $curs == 0)
+		return FALSE;
 	$count = $curs->countRow();
 	$curs->closeCursor();
 	if ($count == 1)

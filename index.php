@@ -1,7 +1,5 @@
 <?php
-
 session_start();
-define ('_ROOT_', $_SERVER['DOCUMENT_ROOT']);
-include_once( _ROOT_ . '/config/setup.php');
-
+define ('_ROOT_', getenv('HTTP_HOST'));
+include_once($_SERVER['DOCUMENT_ROOT'] . '/config/setup.php');
 ?>

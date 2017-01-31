@@ -1,6 +1,6 @@
 <?php
 
-require_once('..' . '/config/manage_db.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/config/manage_db.php');
 
 class User {
 
@@ -22,7 +22,10 @@ class User {
 				echo $this . " CONSTRUCTED" . PHP_EOL;
 		}
 		else
+		{
+			echo "CREATE;";
 			$this->create($log);
+		}
 	}
 
 	public function __destruct() {
@@ -111,21 +114,5 @@ class User {
 		$this->__construct($usr_infos['login']);
  	}
  }
-
- /* DEBUG */
-
-User::$verbose = TRUE;
-
-$pef_a = Array (
-	'login' => 'pef',
-	'pass' => 'osef',
-	'mail' => 'osef@sisi.fr',
-	'f_name' => 'foulques',
-	'isadmin' => 1
-	);
-
-$pef = new User($pef_a);
-$new = new User('pef');
-
 
 ?>

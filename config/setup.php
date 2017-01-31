@@ -2,6 +2,7 @@
 
 require_once('database.php');
 require_once('manage_db.php');
+require_once($_SERVER['DOCUMENT_ROOT']  . "/class/User.class.php");
 
 $create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
 
@@ -22,8 +23,19 @@ $user_a = array (
 		'isadmin'	=>	"bool DEFAULT 0"
 	);
 
+$admin_a = array (
+	'login' => 'admin',
+	'pass' => hash('whirlpool','admin'),
+	'mail' => 'f.demoncade@gmail.com',
+	'f_name' => 'admin',
+	'l_name' => 'admin',
+	'isadmin' => TRUE
+	);
+
 $db->exec("USE " . $DB_NAME);
 $db->exec(create_table('users', $user_a));
+User::$verbose = TRUE;
+new User ($admin_a);
 
 // Load database files (DUMMY CONTENT);
 
