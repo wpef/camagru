@@ -34,7 +34,6 @@ $admin_a = array (
 
 $db->exec("USE " . $DB_NAME);
 $db->exec(create_table('users', $user_a));
-User::$verbose = TRUE;
 new User ($admin_a);
 
 // Load database files (DUMMY CONTENT);
