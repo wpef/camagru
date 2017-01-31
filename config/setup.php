@@ -16,7 +16,7 @@ $db->exec($create_db) or die (print_r($db->errorInfo(), true));
 $user_a = array (
 		'ID'		=>	'SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY',
 		'login' 	=>	'varchar(15) NOT NULL',
-		'pass'		=>	'varchar(99) NOT NULL',
+		'pass'		=>	'varchar(199) NOT NULL',
 		'mail'		=>	'varchar(30) NOT NULL',
 		'f_name'	=>	'varchar(99)',
 		'l_name'	=>	'varchar(99)',

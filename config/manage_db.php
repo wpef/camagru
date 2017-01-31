@@ -70,19 +70,19 @@ function insert_datas ($table, $datas)
 		}
 		$i++;
 	}
-	return $start . $keys . $vals;
+	return $start . $keys . $vals . ";";
 }
 
 function user_exists ($log)
 {
 	if (is_array($log))
-		$log = $log['login'];
+		$login = $log['login'];
+	else
+		$login = $log;
 	$db = connect_db(FALSE);
-	$query = "select * from users where login='" . $log . "';";
-	$curs = $db->exec($query);
-	if (!$curs || $curs == 0)
-		return FALSE;
-	$count = $curs->countRow();
+	$query = "select * from users where login='" . $login . "';";
+	$curs = $db->query($query);
+	$count = $curs->rowCount();
 	$curs->closeCursor();
 	if ($count == 1)
 		return TRUE;

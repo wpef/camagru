@@ -23,7 +23,7 @@ class User {
 		}
 		else
 		{
-			echo "CREATE;";
+			var_dump(user_exists($log));
 			$this->create($log);
 		}
 	}
@@ -65,6 +65,9 @@ class User {
 	public function getInfos($log) {
 	//fills the new User vars with database datas;
 
+		//check for array
+		if (is_array($log))
+			$log = $log['login'];
 		//Connect to db
 		$db = connect_db(FALSE);
 
@@ -91,10 +94,13 @@ class User {
 
 		if (!is_array($usr_infos))
 			return FALSE;
-		
+
 		//Check required values;
 		if (!key_exists('login', $usr_infos) || !key_exists('pass', $usr_infos) || !key_exists('mail', $usr_infos))
+		{
+			echo "lacking required key" . PHP_EOL;
 			return FALSE;
+		}
 
 		//send query;
 		$db = connect_db(FALSE);
@@ -108,7 +114,7 @@ class User {
 
 		//VERBOSE
 		if (self::$verbose)
-			echo "USER : " . $usr_infos['login'] . " added to DB" . PHP_EOL;
+			echo "USER : " . $usr_infos['login'] . " added to DB" . PHP_EOL . "<br/>";
 		
 		//Create OBJECT
 		$this->__construct($usr_infos['login']);
