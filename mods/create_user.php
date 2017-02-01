@@ -38,7 +38,7 @@ $message = "
 <body>
 <p>Hello " . $current_user->name . ",</p>
 <p>You have just created an account on Camagru.com, but you still need to activate your account</p>
-<p>Here is the link to activate :<br/><a href='http://localhost:8080/mods/confirm_account.php?login=" . $current_user->login . "&token=" . $token .  "'> Activate my account</a></p>
+<p>Here is the link to activate :<br/><a href=\"http://localhost:8080/mods/confirm_account.php?login=" . $current_user->login . "&token=" . $token .  "\"> Activate my account</a></p>
 <p>Thanks for activating the account.</p>
 <p>Peace. <3</p>
 </body>
