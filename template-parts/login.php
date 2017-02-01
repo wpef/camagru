@@ -1,6 +1,8 @@
-<a class = "log" href = "/pages/signin.php">
-	Sign in
-</a>
-<a class = "log" href = "/pages/signup.php">
-	Sign Up
-</a>
+<ul id='login'>
+	<li>
+		<a class = "log" href = "/template-parts/signin.php"> Sign in </a>
+	</li>
+	<li>
+		<a class = "log" href = "/template-parts/signup.php"> Sign Up </a>
+	</li>
+</ul>

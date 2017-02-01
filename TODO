@@ -2,5 +2,5 @@ SIGN UP
 	-- verify MAIL pattern;
 	- Primary key = login;
 	- Check if mail exists;
-	- Auto connect after confirm;
+//	- Auto connect after confirm;
 

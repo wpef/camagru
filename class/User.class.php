@@ -151,6 +151,26 @@ class User {
  		echo "Please confirm your account before signing in";
  		return FALSE;
  	}
+
+ 	public function logout()
+ 	{
+ 		foreach ($_COOKIE as $key => $val) {
+			setcookie($key, "", time()-3600);
+		}
+		if (isset($_COOKIE))
+			unset ($_COOKIE);
+
+		foreach ($_SESSION as $key => $val) {
+			$_SESSION[$key] = "";
+			unset($_SESSION[$key]);
+		}
+		if (isset($_SESSION))
+			unset ($_SESSION);
+
+		session_destroy();
+		$this->__destruct();
+		echo "You were succesfully logged out";
+ 	}
  }
 
 ?>
