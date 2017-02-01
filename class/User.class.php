@@ -31,13 +31,12 @@ class User {
 			echo "USER : " . $this->login . " DESTRUCTED" . PHP_EOL;
 	}
 
-	public function __toString () {
-		if ($this->isadmin)
-			$ad = "YES";
-		else
-			$ad = "NO";
+	public function __toString () {		
 		if (!$this->login)
 			return "USER :\tNot found!\n---------------------------\n";
+		
+		$ad = $this->isadmin ? "YES" : "NO";
+		
 		$st = "USER :\n";
 		$log = "\t" . "Login = " . $this->login . "\n"; 
 		$name = "\t" . "Name = " . $this->name . "\n";
@@ -53,9 +52,9 @@ class User {
 
 /* ==> MY METHODS <== */
 
-	private function auth($log, $pass) {
+	public function auth($pass) {
 	//$log & $pass must be sent by $_POST; $pass is sent hashed;
-		if ($log === $this->login && $pass === $this->_passwd)
+		if ($pass === $this->_passwd)
 			return TRUE;
 		return FALSE;
 	}
@@ -85,6 +84,7 @@ class User {
 		$this->f_name = $usr['f_name'];
 		$this->name = $usr['f_name'] . " " . $usr['l_name'];
 		$this->isadmin = $usr['isadmin'];
+		$this->confirmed = $usr['confirmed'];
 	}
 
 	public function create($usr_infos) {
@@ -138,6 +138,18 @@ class User {
  		}
  		else
  			return FALSE;
+ 	}
+
+ 	public function signin()
+ 	{
+ 		if ($this->confirmed)
+ 		{
+ 			$_SESSION['log'] = TRUE;
+ 			$_SESSION['user'] = $this;
+ 			return TRUE;
+ 		}
+ 		echo "Please confirm your account before signing in";
+ 		return FALSE;
  	}
  }
 
