@@ -1,0 +1,4 @@
+SIGN UP
+	- Primary key = login;
+	- Check if mail exists;
+	- Auto connect after confirm;
