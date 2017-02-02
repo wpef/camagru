@@ -174,7 +174,9 @@ class User {
 
  	public function modif($attr, $val)
  	{
- 		//modif method is used to modify an attribute into the DB. It also update the vars in the User object; 
+ 		//modif method is used to modify an attribute into the DB. It also update the vars in the User object;
+ 		if ($attr == 'ID')
+ 			return FALSE;
  		$db = connect_db(FALSE);
  		$val = is_string($val) ? "'".$val."'" : $val;
  		$qry = "update users set " . $attr . "=" . $val . "where login='$this->login';";
