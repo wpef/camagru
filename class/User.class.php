@@ -7,6 +7,7 @@ class User {
 	public			$login;
 	private			$_passwd;
 	public			$f_name;
+	public			$l_name;
 	public			$name;
 	public			$mail;
 	public static	$verbose = FALSE;
@@ -82,6 +83,7 @@ class User {
 		$this->_passwd = $usr['pass'];
 		$this->mail = $usr['mail'];
 		$this->f_name = $usr['f_name'];
+		$this->l_name = $usr['l_name'];
 		$this->name = $usr['f_name'] . " " . $usr['l_name'];
 		$this->isadmin = $usr['isadmin'];
 		$this->confirmed = $usr['confirmed'];
@@ -125,15 +127,13 @@ class User {
  			$this->confirmed = TRUE;
 
  			//set var in db;
- 			$query = "update users set confirmed=1 where login='$this->login'";
+ 			$query = "update users set confirmed=1 where login='$this->login';";
  			$db = connect_db(FALSE);
  			$db->exec('USE' . $DB_NAME);
  			try { $db->exec($query);}
  			catch (PDOexception $e) {
  				die ('ERROR UPDATING USER: ' . $e->getMessage());
 			}
-
-			//ret;
  			return TRUE;
  		}
  		else
@@ -170,6 +170,20 @@ class User {
 		session_destroy();
 		$this->__destruct();
 		echo "You were succesfully logged out";
+ 	}
+
+ 	public function modif($attr, $val)
+ 	{
+ 		//modif method is used to modify an attribute into the DB. It also update the vars in the User object; 
+ 		$db = connect_db(FALSE);
+ 		$val = is_string($val) ? "'".$val."'" : $val;
+ 		$qry = "update users set " . $attr . "=" . $val . "where login='$this->login';";
+ 		try { $db->exec($qry);}
+ 		catch (PDOexception $e) {
+ 			die ('ERROR UPDATING USER: ' . $e->getMessage());
+ 		}
+ 		$this->getInfos($this->login);
+ 		return TRUE;
  	}
  }
 

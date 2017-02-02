@@ -7,8 +7,9 @@ include_once 'head.php';
 	</a>
 	<div id="account">
 		<?php 
-		if ($_SESSION['log'])
-			include ($_SERVER['DOCUMENT_ROOT'] . '/template-parts/myaccount.php');
+		if ($_SESSION['log']) {
+			include ($_SERVER['DOCUMENT_ROOT'] . '/template-parts/account_menu.php');
+		}
 		else
 			include ($_SERVER['DOCUMENT_ROOT'] . '/template-parts/login.php');
 		?>
