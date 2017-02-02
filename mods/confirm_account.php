@@ -1,7 +1,7 @@
 <?php
 
 include ($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
-header('Refresh: 3; URL=/index.php'); //send to sign in page. 
+header('Refresh: 1; URL=/index.php'); //send to sign in page. 
 
 
 if (!$_GET)

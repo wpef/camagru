@@ -3,6 +3,7 @@
 include_once ($_SERVER["DOCUMENT_ROOT"] . "/config/manage_db.php");
 include_once ($_SERVER["DOCUMENT_ROOT"] . "/class/User.class.php");
 session_start();
+header('Refresh: 1; URL=/index.php');
 
 if (!$_POST) { return FALSE; }
 
@@ -24,6 +25,7 @@ foreach ($_POST as $key => $value) {
 	if ($key != 'submit' && $key != 'old_pw' && $key != 'new_pw1' && $key != 'new_pw2' && $key != 'login' && !empty($value))
 	{
 		$_SESSION['user']->modif($key, $value);
+		echo "The " . $key . " value as been modified.<br>";
 	}
 }
 

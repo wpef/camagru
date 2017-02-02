@@ -187,6 +187,11 @@ class User {
  		$this->getInfos($this->login);
  		return TRUE;
  	}
+
+ 	public function token()
+ 	{
+ 		return hash('md5', $_passwd);
+ 	}
  }
 
 ?>

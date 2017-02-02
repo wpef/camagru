@@ -2,7 +2,7 @@
 
 include_once ($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
 session_start(); //for debug
-header('Refresh: 3; URL=/index.php');
+header('Refresh: 1; URL=/index.php');
 
 if (!$_POST['login'] || !$_POST['pass'])
 {
