@@ -1,7 +1,7 @@
 <?php
 
-include_once ($_SERVER["DOCUMENT_ROOT"] . "/config/manage_db.php");
-include_once ($_SERVER["DOCUMENT_ROOT"] . "/class/User.class.php");
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/config/manage_db.php");
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/class/User.class.php");
 session_start();
 
 if ($_GET['action'] == 'reset' || $_GET['action'] == 'send')
@@ -10,7 +10,7 @@ if ($_GET['action'] == 'reset' || $_GET['action'] == 'send')
 
 <?php if ($_GET['action'] == 'getinfos') : ?>
 
-	<form name="reset_pass" method="post" action="/mods/reset_pass.php?action=send">
+	<form name="reset_pass" method="post" action="/camagru/mods/reset_pass.php?action=send">
 	Login : <input type="text" name="login" required/><br>
 	Mail  : <input type="text" name="mail" required /><br>
 	<input type="submit" name="submit" value="Send reset link" /><br>
@@ -42,7 +42,7 @@ if ($_GET['action'] == 'send')
 	<body>
 	<p>Hello " . $usr->name . ",</p>
 	<p>This message contains a link to reset your password on Camagru.com, if you did not request it, ignore this message.</p>
-	<p>Here is the link to reset your password :<br/><a href=\"http://localhost:8080/mods/reset_pass.php?action=confirm&login=" . $usr->login . "&token=" . $token .  "\">Reset my password</a></p>
+	<p>Here is the link to reset your password :<br/><a href=\"http://localhost:8080/camagru/mods/reset_pass.php?action=confirm&login=" . $usr->login . "&token=" . $token .  "\">Reset my password</a></p>
 	<p>Peace. <3</p>
 	</body>
 	</html>
@@ -74,7 +74,7 @@ if (isset($_SESSION['user']) && $token === $_SESSION['user']->token()) :
 ?>
 
 	<p> You are resetting the password for <?php echo $log ?>.</p>
-	<form name="reset" method="post" action="/mods/reset_pass.php?action=reset">
+	<form name="reset" method="post" action="/camagru/mods/reset_pass.php?action=reset">
 	New Password : <input type="text" name="new_pw" required/><br>
 	Confirm Password  : <input type="text" name="new_pw1" required /><br>
 	<input type="submit" name="submit" value="Reset password" /><br>

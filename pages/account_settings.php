@@ -1,8 +1,8 @@
 <?php
 
 //REQUIRED
-include_once ($_SERVER["DOCUMENT_ROOT"] . "/config/manage_db.php");
-include_once ($_SERVER["DOCUMENT_ROOT"] . "/class/User.class.php");
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/config/manage_db.php");
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/class/User.class.php");
 include_once ('functions.php');
 session_start();
 

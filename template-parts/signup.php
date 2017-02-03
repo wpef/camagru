@@ -1,4 +1,4 @@
-<form name="signup" action="/mods/signup.php?action=create" method="post" />
+<form name="signup" action="/camagru/mods/signup.php?action=create" method="post" />
 	<fieldset>
 		<legend>Required Informations :</legend>
 		Login : <br>
@@ -17,4 +17,4 @@
 	</fieldset>
 	<input type="submit" value="Sign Up !">
 </form>
-<a href = "/pages/login.php?action=signin">I already have an account !</a>
+<a href = "/camagru/pages/login.php?action=signin">I already have an account !</a>

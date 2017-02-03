@@ -2,8 +2,8 @@
 include_once 'head.php';
 ?>
 <header>
-	<a href = "/">
-		<img src = "/img/logo.png" id='logo'/>
+	<a href = "/camagru/">
+		<img src = "/camagru/img/logo.png" id='logo'/>
 	</a>
 	<div id="account">
 		<?php 
