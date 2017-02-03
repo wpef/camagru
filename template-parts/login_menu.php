@@ -1,8 +1,8 @@
 <ul id='login'>
 	<li>
-		<a class = "log" href = "/template-parts/signin.php"> Sign in </a>
+		<a class = "log" href = "/pages/login.php?action=signin"> Sign in </a>
 	</li>
 	<li>
-		<a class = "log" href = "/template-parts/signup.php"> Sign Up </a>
+		<a class = "log" href = "/pages/login.php?action=signup"> Sign Up </a>
 	</li>
 </ul>

@@ -2,6 +2,7 @@
 
 //REQUIRED
 include_once ($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
+include_once ('functions.php');
 session_start();
 
 //REDIRECTION IF NEEDED
@@ -12,14 +13,7 @@ if ($_SESSION['log'])
 include_once($_SERVER['DOCUMENT_ROOT'] . '/template-parts/header.php');
 
 //ALERT
-if (!empty($_SESSION['message']) || !empty($_SESSION['alert']))
-{
-	if (!empty($_SESSION['message']))
-		echo "<p class='message'>" . $_SESSION['message'] . '</p>';
-	if (!empty($_SESSION['alert']))
-		echo "<p class='alert'>" . $_SESSION['alert'] . '</p>';
-	unset($_SESSION['message']); unset($_SESSION['alert']); 
-}
+display_alerts();
 
 //CONTENT
 if ($_GET['action'] == 'signin')

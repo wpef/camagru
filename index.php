@@ -3,27 +3,27 @@
 //REQUIRED
 include_once($_SERVER['DOCUMENT_ROOT'] . '/config/setup.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/class/User.class.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/pages/functions.php');
 session_start();
 
 //REDIRECTION IF NEEDED
-if (!$_SESSION['log'])
+if (!isset($_GET['action']) && !$_SESSION['log'])
 {
 	$_SESSION['alert'] = 'You must be logged in to access this page, please log in or create an account !';
 	exit(header('Location: /pages/login.php'));
+}
+
+if ($_GET['action'] == 'logout')
+{
+	$_SESSION['message'] = "You were successfully logout.";
+	header('refreshLocation: /pages/login.php')
 }
 
 //HEADER HTML
 include_once($_SERVER['DOCUMENT_ROOT'] . '/template-parts/header.php');
 
 //ALERT
-if (!empty($_SESSION['message']) || !empty($_SESSION['alert']))
-{
-	if (!empty($_SESSION['message']))
-		echo "<p class='message'>" . $_SESSION['message'] . '</p>';
-	if (!empty($_SESSION['alert']))
-		echo "<p class='alert'>" . $_SESSION['alert'] . '</p>';
-	unset($_SESSION['message']); unset($_SESSION['alert']); 
-}
+display_alerts();
 
 //CONTENT
 

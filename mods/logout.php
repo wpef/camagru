@@ -7,7 +7,9 @@ if ($_SESSION['user'])
 {
 	$_SESSION['user']->logout();
 }
-$_SESSION['message'] = "You were successfully logout.";
+else
+	session_destroy();
 
-header('Location: /index.php');
+$_SESSION['message'] = "You were successfully logout.";
+header('Location: /index.php?action=logout');
 ?>
