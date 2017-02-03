@@ -11,7 +11,7 @@ include_once 'head.php';
 			include ($_SERVER['DOCUMENT_ROOT'] . '/template-parts/account_menu.php');
 		}
 		else
-			include ($_SERVER['DOCUMENT_ROOT'] . '/template-parts/login.php');
+			include ($_SERVER['DOCUMENT_ROOT'] . '/template-parts/login_menu.php');
 		?>
 	</div>
 	<nav id="main_nav">

@@ -1,5 +1,4 @@
-<?php include_once ($_SERVER['DOCUMENT_ROOT'] . '/template-parts/head.php'); ?>
-<form name="signup" action="/mods/create_user.php" method="post" />
+<form name="signup" action="/mods/signup.php?action=create" method="post" />
 	<fieldset>
 		<legend>Required Informations :</legend>
 		Login : <br>
@@ -18,3 +17,4 @@
 	</fieldset>
 	<input type="submit" value="Sign Up !">
 </form>
+<a href = "/pages/login.php?action=signin">I already have an account !</a>

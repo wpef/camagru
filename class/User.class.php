@@ -169,7 +169,6 @@ class User {
 
 		session_destroy();
 		$this->__destruct();
-		echo "You were succesfully logged out";
  	}
 
  	public function modif($attr, $val)

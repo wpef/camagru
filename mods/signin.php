@@ -1,27 +1,32 @@
 <?php
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
-session_start(); //for debug
-header('Refresh: 1; URL=/index.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/config/manage_db.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/class/User.class.php');
+session_start();
+
+header('Location: /pages/login.php?action=signin');
 
 if (!$_POST['login'] || !$_POST['pass'])
 {
-	echo "An error occured";
-	var_dump($_POST);
+	$_SESSION['alert'] = "An error occured";
 	return FALSE;
 }
 
 $user = new User($_POST['login']);
+
 if (!$user)
-	echo "The login you provided is not registered"; //resend to signin;
-if ($user->auth(hash('whirlpool', $_POST['pass']))) {
-	if ($user->signin()) {
-		echo "You were succesfully logged in"; //send to index;
+	$_SESSION['alert'] = "The login you provided is not registered";
+
+if ($user->auth(hash('whirlpool', $_POST['pass'])))
+{
+	if ($user->signin())
+	{
+		$_SESSION['message'] = "You were succesfully logged in.";
 		return TRUE;
 	}
 	else
-		echo "The password you provided does not match your login.";
+		$_SESSION['alert'] = "Wrong password or login.";
 }
-return FALSE; //re-send to signin;
+return FALSE; 
 
 ?>

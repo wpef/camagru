@@ -1,11 +1,13 @@
 <?php
 
 include_once ($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
+session_start();
 
-session_start(); //for debug
-header('Refresh: 1; URL=/index.php');
+if ($_SESSION['user'])
+{
+	$_SESSION['user']->logout();
+}
+$_SESSION['message'] = "You were successfully logout.";
 
-$_SESSION['user']->logout();
-
-
+header('Location: /index.php');
 ?>

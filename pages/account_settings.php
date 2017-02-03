@@ -1,5 +1,4 @@
 <?php
-
 include_once ($_SERVER["DOCUMENT_ROOT"] . "/config/manage_db.php");
 include_once ($_SERVER["DOCUMENT_ROOT"] . "/class/User.class.php");
 session_start();

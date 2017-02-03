@@ -1,18 +1,14 @@
-<?php
+<?php 
 
 //REQUIRED
-include_once($_SERVER['DOCUMENT_ROOT'] . '/config/setup.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/class/User.class.php');
+include_once ($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
 session_start();
 
 //REDIRECTION IF NEEDED
-if (!$_SESSION['log'])
-{
-	$_SESSION['alert'] = 'You must be logged in to access this page, please log in or create an account !';
-	exit(header('Location: /pages/login.php'));
-}
+if ($_SESSION['log'])
+	exit(header('Location: /index.php'));
 
-//HEADER HTML
+//HEADER
 include_once($_SERVER['DOCUMENT_ROOT'] . '/template-parts/header.php');
 
 //ALERT
@@ -26,6 +22,11 @@ if (!empty($_SESSION['message']) || !empty($_SESSION['alert']))
 }
 
 //CONTENT
+if ($_GET['action'] == 'signin')
+	include($_SERVER['DOCUMENT_ROOT'] . '/template-parts/signin.php');
+else
+	include($_SERVER['DOCUMENT_ROOT'] . '/template-parts/signup.php');
+
 
 //FOOTER
 include_once($_SERVER['DOCUMENT_ROOT'] . '/template-parts/footer.php');
