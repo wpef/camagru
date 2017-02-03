@@ -16,7 +16,7 @@ if (!isset($_GET['action']) && !$_SESSION['log'])
 if ($_GET['action'] == 'logout')
 {
 	$_SESSION['message'] = "You were successfully logout.";
-	header('refreshLocation: /pages/login.php')
+	header('Location: /pages/login.php'); //refresh
 }
 
 //HEADER HTML
@@ -26,6 +26,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/template-parts/header.php');
 display_alerts();
 
 //CONTENT
+include_once($_SERVER['DOCUMENT_ROOT'] . '/template-parts/video.php');
 
 //FOOTER
 include_once($_SERVER['DOCUMENT_ROOT'] . '/template-parts/footer.php');
