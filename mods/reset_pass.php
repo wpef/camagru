@@ -5,7 +5,7 @@ include_once ($_SERVER["DOCUMENT_ROOT"] . "/class/User.class.php");
 session_start();
 
 if ($_GET['action'] == 'reset' || $_GET['action'] == 'send')
-	header('Refresh: 1; URL=/index.php'); //send to login
+	header('Refresh: 1; URL=/camagru/index.php'); //send to login
 ?>
 
 <?php if ($_GET['action'] == 'getinfos') : ?>

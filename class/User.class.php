@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/config/manage_db.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/config/manage_db.php');
 
 class User {
 

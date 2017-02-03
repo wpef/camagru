@@ -6,13 +6,13 @@ session_start();
 
 if (!$_POST) {
 	$_SESSTION['alert'] = "an error occured.";
-	exit(header('Location: /pages/account_settings.php'));
+	exit(header('Location: /camagru/pages/account_settings.php'));
 }
 
 if (modif_account())
-	header('Location: /index.php');
+	header('Location: /camagru/index.php');
 else
-	header('Location: /pages/account_settings.php');
+	header('Location: /camagru/pages/account_settings.php');
 
 function modif_account()
 {

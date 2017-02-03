@@ -1,5 +1,5 @@
 <?php
-define ('_ROOT_', $_SERVER['DOCUMENT_ROOT']);
+define ('_ROOT_', $_SERVER['DOCUMENT_ROOT'] . '/camagru/');
 include_once(_ROOT_ . '/config/setup.php');
 ?>
 

@@ -1,7 +1,7 @@
 <?php
 
-include_once($_SERVER['DOCUMENT_ROOT'] . '/config/manage_db.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/class/User.class.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/config/manage_db.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/class/User.class.php');
 session_start();
 
 function create_user()
@@ -77,17 +77,17 @@ function confirm_user()
 if ($_GET['action'] == 'create')
 {
 	if (create_user())
-		header('Location: /pages/login.php?action=signin');
+		header('Location: /camagru/pages/login.php?action=signin');
 	else
-		header('Location: /pages/login.php?action=signup');
+		header('Location: /camagru/pages/login.php?action=signup');
 }
 
 if ($_GET['action'] == 'confirm')
 {
 	if (confirm_user())
-		header('Location: /pages/login.php?action=signin');
+		header('Location: /camagru/pages/login.php?action=signin');
 	else
-		header('Location: /pages/login.php?action=signup');
+		header('Location: /camagru/pages/login.php?action=signup');
 
 }
 

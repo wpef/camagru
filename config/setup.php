@@ -2,7 +2,7 @@
 
 require_once('database.php');
 require_once('manage_db.php');
-require_once($_SERVER['DOCUMENT_ROOT']  . "/class/User.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/'  . "/class/User.class.php");
 
 $create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
 

@@ -1,6 +1,6 @@
 <?php
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/class/User.class.php");
 session_start();
 
 if ($_SESSION['user'])
@@ -11,5 +11,5 @@ else
 	session_destroy();
 
 $_SESSION['message'] = "You were successfully logout.";
-header('Location: /index.php?action=logout');
+header('Location: /camagru/index.php?action=logout');
 ?>

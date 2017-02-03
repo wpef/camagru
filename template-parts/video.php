@@ -1,7 +1,7 @@
 <video id="video"></video>
 <button id="startbutton">Prendre une photo</button>
 <ul id="stickers">
-	<?php include_once($_SERVER['DOCUMENT_ROOT'] . 'template-parts/sitckers_list.php') ?>
+	<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . 'template-parts/sitckers_list.php') ?>
 	<!--  Foreach ($query_res as filtre) { echo <li onclick='select_sticker()'> . IMAGE . </li>} -->
 	<!-- function select_sticker() {onclick setAttribute(id, 'select')} -->
 </ul>
