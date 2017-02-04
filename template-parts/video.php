@@ -1,10 +1,7 @@
-<video id="video"></video>
+<?php include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . 'template-parts/stickers_list.php') ?>
+<div id="cover"><video id="video"></video></div>
 <button id="startbutton">Prendre une photo</button>
-<ul id="stickers">
-	<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . 'template-parts/sitckers_list.php') ?>
-	<!--  Foreach ($query_res as filtre) { echo <li onclick='select_sticker()'> . IMAGE . </li>} -->
 	<!-- function select_sticker() {onclick setAttribute(id, 'select')} -->
-</ul>
 <canvas id="canvas" style="display: none"></canvas>
 <img style="display: none" src="http://placekitten.com/g/320/261" id="photo" alt="photo">
 
@@ -53,11 +50,12 @@ video.addEventListener('canplay', function(ev){
 	}, false);
 
 function takepicture() {
+	var stick = document.querySelector('#selected');
 	canvas.width = width;
 	canvas.height = height;
 	canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-	//RE-DRAW avec le png
-	// aide (https://openclassrooms.com/forum/sujet/enregistrer-sur-dossier-du-serveur-un-canvas)  ==> toDataURL() renvoie une image encodée en base64), en ajax ou via un formulaire.
+	if (stick)
+		canvas.getContext('2d').drawImage(stick, 0, 0, width, height);
 	var data = canvas.toDataURL('image/png');
 	photo.setAttribute('src', data);
 	photo.setAttribute('style', ' ');

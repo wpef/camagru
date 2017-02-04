@@ -1,3 +1,3 @@
-<script type="text/javascript" src="/script/message.js"></script>
+<script type="text/javascript" src="/camagru/script/script.js"></script>
 </body>
 </html>

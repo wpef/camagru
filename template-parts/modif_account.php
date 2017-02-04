@@ -1,4 +1,4 @@
-<form name='modif' action='/mods/modif_account.php' method='post' />
+<form name='modif' action="/camagru/mods/modif_account.php" method='post' />
 	Login (cannot be modify):
 	<input type='text' name='login' value='<?php echo $_SESSION['user']->login ?>' readonly/><br>
 	Mail :
