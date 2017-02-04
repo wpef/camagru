@@ -34,9 +34,16 @@ $admin_a = array (
 	'confirmed' => TRUE
 	);
 
-$db->exec("USE " . $DB_NAME);
-$db->exec(create_table('users', $user_a));
-new User ($admin_a);
+try {
+	$db->exec("USE " . $DB_NAME);
+	$db->exec(create_table('users', $user_a));
+	new User ($admin_a);
+} catch (PDOexcpetion $e) {
+		die ('DB ERROR: ' . $e->getMessage());
+	}
+
+echo "<p class='message'>THE SITE IS SETUP</p>
+<a href='/index.php'>Visit</a>";
 
 // Load database files (DUMMY CONTENT);
 

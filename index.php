@@ -1,7 +1,6 @@
 <?php
 
 //REQUIRED
-include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/config/setup.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/class/User.class.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/pages/functions.php');
 session_start();
@@ -27,7 +26,6 @@ display_alerts();
 
 //CONTENT
 include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/video.php');
-
 //FOOTER
 include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/footer.php');
 
