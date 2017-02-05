@@ -26,6 +26,7 @@ display_alerts();
 
 //CONTENT
 include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/video.php');
+
 //FOOTER
 include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/footer.php');
 

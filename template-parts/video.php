@@ -1,5 +1,6 @@
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . 'template-parts/stickers_list.php') ?>
-<div id="cover"><video id="video"></video></div>
+<canvas id="cover" style='position:absolute'></canvas>
+<video id="video"></video>
 <button id="startbutton">Prendre une photo</button>
 	<!-- function select_sticker() {onclick setAttribute(id, 'select')} -->
 <canvas id="canvas" style="display: none"></canvas>
@@ -10,13 +11,22 @@
 
 //setting vars
 var		streaming = false,
-		video        = document.querySelector('#video'),
-		cover        = document.querySelector('#cover'),
-		canvas       = document.querySelector('#canvas'),
-		photo        = document.querySelector('#photo'),
-		startbutton  = document.querySelector('#startbutton'),
+		video       = document.querySelector('#video'),
+		cover       = document.querySelector('#cover'),
+		canvas      = document.querySelector('#canvas'),
+		photo       = document.querySelector('#photo'),
+		stickers	= document.getElementsByClassName('sticks'),
+		startbutton = document.querySelector('#startbutton'),
+		stick_on	= false,
 		width = 520,
 		height = 0;
+
+var drawOnStream = function() {
+	if (stick_on)
+		cover.getContext('2d').clearRect(0,0,width,height);
+	cover.getContext('2d').drawImage(this, 0, 0, width, height);
+	stick_on = true;
+}
 
 navigator.getMedia = (	navigator.getUserMedia ||
 						navigator.webkitGetUserMedia ||
@@ -31,6 +41,9 @@ navigator.getMedia(
 		var vendorURL = window.URL || window.webkitURL;
 		video.src = vendorURL.createObjectURL(stream);
 		video.play();
+		for (var i = 0; i < stickers.length; i++) {
+			stickers[i].addEventListener("click", drawOnStream, false);
+		};
 	},
 	function(err) {
 		console.log("An error occured! " + err);
@@ -45,6 +58,8 @@ video.addEventListener('canplay', function(ev){
 		video.setAttribute('height', height);
 		canvas.setAttribute('width', width);
 		canvas.setAttribute('height', height);
+		cover.setAttribute('width', width);
+		cover.setAttribute('height', height);
 		streaming = true;
 	}
 	}, false);
