@@ -5,4 +5,4 @@
 		<input type="text" name="pass" required /> <br>
 		<input type="submit" name="submit" value="Sign In !">
 </form>
-<a href = "/camagru/mods/reset_pass.php?action=getinfos">I have forgotten my password</a>
+<a href = "/camagru/pages/login.php?action=reset&act=getinfos">I have forgotten my password</a>

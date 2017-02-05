@@ -18,6 +18,8 @@ display_alerts();
 //CONTENT
 if ($_GET['action'] == 'signin')
 	include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/signin.php');
+else if ($_GET['action'] == 'reset')
+	include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/mods/reset_pass.php');
 else
 	include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/signup.php');
 

@@ -1,16 +1,8 @@
-<?php
+<?php include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/config/manage_db.php"); ?>
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/config/manage_db.php");
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/class/User.class.php");
-session_start();
+<?php if ($_GET['act'] == 'getinfos') : ?>
 
-if ($_GET['action'] == 'reset' || $_GET['action'] == 'send')
-	header('Refresh: 1; URL=/camagru/index.php'); //send to login
-?>
-
-<?php if ($_GET['action'] == 'getinfos') : ?>
-
-	<form name="reset_pass" method="post" action="/camagru/mods/reset_pass.php?action=send">
+	<form name="reset_pass" method="post" action="/camagru/pages/login.php?action=reset&act=send">
 	Login : <input type="text" name="login" required/><br>
 	Mail  : <input type="text" name="mail" required /><br>
 	<input type="submit" name="submit" value="Send reset link" /><br>
@@ -20,17 +12,17 @@ if ($_GET['action'] == 'reset' || $_GET['action'] == 'send')
 
 <?php 
 
-if ($_GET['action'] == 'send')
+if ($_GET['act'] == 'send')
 {
 	$usr = new User($_POST['login']);
 	
 	if (!$usr || $usr->mail !== $_POST['mail'])
 	{ 
-		echo "Wrong loging or email adress provided." ;
+		$_SESSION['alert'] = "Wrong loging or email adress provided." ;
+		header('Location: /camagru/login.php?action=reset');
 		return FALSE;
 	}
 
-	//else : prepare mail
 	$to = $usr->mail;
 	$subject = "Reset your password for Camagru.com";
 	$token = $usr->token();
@@ -42,7 +34,7 @@ if ($_GET['action'] == 'send')
 	<body>
 	<p>Hello " . $usr->name . ",</p>
 	<p>This message contains a link to reset your password on Camagru.com, if you did not request it, ignore this message.</p>
-	<p>Here is the link to reset your password :<br/><a href=\"http://localhost:8080/camagru/mods/reset_pass.php?action=confirm&login=" . $usr->login . "&token=" . $token .  "\">Reset my password</a></p>
+	<p>Here is the link to reset your password :<br/><a href=\"http://localhost:8080/camagru/pages/login.php?action=reset&act=confirm&login=" . $usr->login . "&token=" . $token .  "\">Reset my password</a></p>
 	<p>Peace. <3</p>
 	</body>
 	</html>
@@ -53,16 +45,16 @@ if ($_GET['action'] == 'send')
 
 	//send mail
 	if (mail($to, $subject, $message, $headers))
-		echo "We've just sent you an email with a link to reset your password.";
+		$_SESSION['message'] = "We've just sent you an email with a link to reset your password.";
 	else
-		echo 'Password reset request rejected, the e-mail could not be sent';
-
+		$_SESSION['alert'] = 'Password reset request rejected, the e-mail could not be sent';
+	header('Location: /camagru/login.php?action=signin');
 }
 ?>
 
 <?php
 
-if ($_GET['action'] == 'confirm') :
+if ($_GET['act'] == 'confirm') :
 	$log = $_GET['login'];
 	$token = $_GET['token'];
 
@@ -74,7 +66,7 @@ if (isset($_SESSION['user']) && $token === $_SESSION['user']->token()) :
 ?>
 
 	<p> You are resetting the password for <?php echo $log ?>.</p>
-	<form name="reset" method="post" action="/camagru/mods/reset_pass.php?action=reset">
+	<form name="reset" method="post" action="/camagru/pages/login.php?action=reset&act=reset">
 	New Password : <input type="text" name="new_pw" required/><br>
 	Confirm Password  : <input type="text" name="new_pw1" required /><br>
 	<input type="submit" name="submit" value="Reset password" /><br>
@@ -83,16 +75,18 @@ if (isset($_SESSION['user']) && $token === $_SESSION['user']->token()) :
 <?php endif; endif; ?>
 
 <?php
-if ($_GET['action'] == 'reset')
+if ($_GET['act'] == 'reset')
 {
 	if ($_POST['new_pw'] === $_POST['new_pw1'])
 	{
 		$_SESSION['user']->modif('pass', hash('whirlpool', $_POST['new_pw1']));
-		echo "Your password has been successfully reset, you may now login with your new password";
+		$_SESSION['message'] = "Your password has been successfully reset, you may now login with your new password";
+		header('Location: /camagru/pages/login.php?action=signin');
 	}
 	else
 	{
-		echo "The passwords you provided are not the same.";
+		$_SESSION['alert'] = "The passwords you provided are not the same.";
+		header('Location: /camagru/pages/login.php?action=reset&act=getinfos');
 	}
 }
 
