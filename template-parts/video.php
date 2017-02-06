@@ -5,6 +5,10 @@
 	<!-- function select_sticker() {onclick setAttribute(id, 'select')} -->
 <canvas id="canvas" style="display: none"></canvas>
 <img style="display: none" src="http://placekitten.com/g/320/261" id="photo" alt="photo">
+<form enctype="multipart/form-data" action="/camagru/mods/ul_img.php" method="post">
+	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+	<input name="userfile" type="file" id='file_input'/>
+
 
 <script>
 (function() {
@@ -74,6 +78,7 @@ function takepicture() {
 	var data = canvas.toDataURL('image/png');
 	photo.setAttribute('src', data);
 	photo.setAttribute('style', ' ');
+	copy(data, '/camagru/photos');
 }
 
 startbutton.addEventListener(

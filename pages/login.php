@@ -14,7 +14,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/header.p
 
 //ALERT
 display_alerts();
-var_dump($_SESSION);
 
 //CONTENT
 if ($_GET['action'] == 'signin')

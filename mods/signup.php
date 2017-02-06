@@ -63,7 +63,7 @@ function confirm_user()
 	if ($user->confirm($_GET['token']))
 	{
 		$user->signin();
-		$_SESSION['message'] = "Your account was successfully verified. You can now sign in using your account details.";
+		$_SESSION['message'] = "Your account was successfully verified. You are now signed in as " . $user->login;
 		return TRUE;
 	}
 	else
