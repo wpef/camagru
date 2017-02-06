@@ -14,12 +14,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/header.p
 
 //ALERT
 display_alerts();
+var_dump($_SESSION);
 
 //CONTENT
 if ($_GET['action'] == 'signin')
 	include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/signin.php');
 else if ($_GET['action'] == 'reset')
-	include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/mods/reset_pass.php');
+	include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/reset_pass.php');
 else
 	include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/signup.php');
 

@@ -1,16 +1,8 @@
-<?php include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/config/manage_db.php"); ?>
+<?php
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/config/manage_db.php");
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/class/User.class.php");
 
-<?php if ($_GET['act'] == 'getinfos') : ?>
-
-	<form name="reset_pass" method="post" action="/camagru/pages/login.php?action=reset&act=send">
-	Login : <input type="text" name="login" required/><br>
-	Mail  : <input type="text" name="mail" required /><br>
-	<input type="submit" name="submit" value="Send reset link" /><br>
-	</form>
-
-<?php endif; ?>
-
-<?php 
+session_start(); 
 
 if ($_GET['act'] == 'send')
 {
@@ -19,7 +11,7 @@ if ($_GET['act'] == 'send')
 	if (!$usr || $usr->mail !== $_POST['mail'])
 	{ 
 		$_SESSION['alert'] = "Wrong loging or email adress provided." ;
-		header('Location: /camagru/login.php?action=reset');
+		header('Location: /camagru/pages/login.php?action=reset&act=getinfos');
 		return FALSE;
 	}
 
@@ -48,33 +40,9 @@ if ($_GET['act'] == 'send')
 		$_SESSION['message'] = "We've just sent you an email with a link to reset your password.";
 	else
 		$_SESSION['alert'] = 'Password reset request rejected, the e-mail could not be sent';
-	header('Location: /camagru/login.php?action=signin');
+	header('Location: /camagru/pages/login.php?action=signin');
 }
-?>
 
-<?php
-
-if ($_GET['act'] == 'confirm') :
-	$log = $_GET['login'];
-	$token = $_GET['token'];
-
-if (isset($_SESSION['user']))
-	unset($_SESSION['user']);
-$_SESSION['user'] = new User($log);
-if (isset($_SESSION['user']) && $token === $_SESSION['user']->token()) :
-
-?>
-
-	<p> You are resetting the password for <?php echo $log ?>.</p>
-	<form name="reset" method="post" action="/camagru/pages/login.php?action=reset&act=reset">
-	New Password : <input type="text" name="new_pw" required/><br>
-	Confirm Password  : <input type="text" name="new_pw1" required /><br>
-	<input type="submit" name="submit" value="Reset password" /><br>
-	</form>
-
-<?php endif; endif; ?>
-
-<?php
 if ($_GET['act'] == 'reset')
 {
 	if ($_POST['new_pw'] === $_POST['new_pw1'])
