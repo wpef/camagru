@@ -1,6 +1,6 @@
 <?php
 
-include_once($_SERVER['DOCUMENT_ROOT'] . "/camagru/config/inc.php");
+include_once(ROOT . "config/inc.php");
 
 class User {
 

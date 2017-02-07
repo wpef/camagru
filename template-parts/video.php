@@ -5,9 +5,10 @@
 <button id="startbutton">Prendre une photo</button>
 <canvas id="canvas" style="display: none"></canvas>
 <img style="display: none" src="#" id="photo" alt="photo">
-<form enctype="multipart/form-data" action="<?php echo WEBROOT . mods/ul_img.php ?>" method="post">
+<form enctype="multipart/form-data" action="<?php echo WEBROOT . 'mods/ul_img.php' ?>" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-	<input name="userfile" type="file" id='file_input'/>
+	<input name="userfile" type="file" id='file_input' hidden/>
+</form>
 
 
 <script>
@@ -22,8 +23,8 @@ var		streaming = false,
 		stickers	= document.getElementsByClassName('sticks'),
 		startbutton = document.querySelector('#startbutton'),
 		stick_on	= false,
-		width = 520,
-		height = 0;
+		width		= 520,
+		height		= 0;
 
 var drawOnStream = function() {
 	if (stick_on)
@@ -78,7 +79,22 @@ function takepicture() {
 	var data = canvas.toDataURL('image/png');
 	photo.setAttribute('src', data);
 	photo.setAttribute('style', ' ');
-	copy(data, '/camagru/photos');
+
+	//AJAX TRY
+	var page = '<?php echo WEBROOT . 'mods/upload.php' ?>';
+	
+	var formData = new FormData();
+	formData.append('pic', data, 'photo');
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', page , true);
+	xhr.onload = function () {
+  		if (xhr.status === 200) {
+  			alert('New pic added to gallery !'); } //debug
+    	else {
+    		alert('An error occurred!'); }
+    };
+    xhr.send(formData);
 }
 
 startbutton.addEventListener(
