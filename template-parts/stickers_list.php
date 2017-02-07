@@ -15,7 +15,7 @@
 
 <ul id="stickers-list">
 <?php
-$dir = $_SERVER['DOCUMENT_ROOT'] . "/camagru/stickers/";
+$dir = ROOT . 'stickers/';
 $sticks = glob($dir . "*.png");
 foreach ($sticks as $s) {
 	$s = "/camagru/stickers/" . basename($s);

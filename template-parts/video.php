@@ -1,11 +1,11 @@
-<?php include($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . 'template-parts/stickers_list.php') ?>
+<?php include(ROOT . 'template-parts/stickers_list.php') ?>
+
 <canvas id="cover" style='position:absolute'></canvas>
 <video id="video"></video>
 <button id="startbutton">Prendre une photo</button>
-	<!-- function select_sticker() {onclick setAttribute(id, 'select')} -->
 <canvas id="canvas" style="display: none"></canvas>
-<img style="display: none" src="http://placekitten.com/g/320/261" id="photo" alt="photo">
-<form enctype="multipart/form-data" action="/camagru/mods/ul_img.php" method="post">
+<img style="display: none" src="#" id="photo" alt="photo">
+<form enctype="multipart/form-data" action="<?php echo WEBROOT . mods/ul_img.php ?>" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
 	<input name="userfile" type="file" id='file_input'/>
 

@@ -1,15 +1,13 @@
 <?php
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/class/User.class.php");
-session_start();
+include_once ('../config/inc.php');
 
 if ($_SESSION['user'])
-{
 	$_SESSION['user']->logout();
-}
 else
 	session_destroy();
 
 $_SESSION['message'] = "You were successfully logout.";
-header('Location: /camagru/index.php?action=logout');
+header('Location: '. WEBROOT . 'index.php?action=logout');
+
 ?>

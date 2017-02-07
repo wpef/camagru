@@ -1,8 +1,6 @@
 <?php
 
-require_once('database.php');
-require_once('manage_db.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/'  . "/class/User.class.php");
+require_once('inc.php');
 
 $create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
 
@@ -26,7 +24,7 @@ try {
 	}
 
 echo "<p class='message'>THE SITE IS SET UP</p>
-<a href='/index.php'>Visit</a>";
+<a href='../index.php'>Visit</a>";
 
 // Load database files (DUMMY CONTENT);
 

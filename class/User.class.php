@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/config/manage_db.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . "/camagru/config/inc.php");
 
 class User {
 

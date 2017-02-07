@@ -1,12 +1,12 @@
-<form name='modif' action="/camagru/mods/modif_account.php" method='post' />
+<form name='modif' action="<? echo WEBROOT . 'mods/modif_account.php'; ?>" method='post' />
 	Login (cannot be modify):
 	<input type='text' name='login' value='<?php echo $_SESSION['user']->login ?>' readonly/><br>
 	Mail :
 	<input type='text' name='mail' value='<?php echo $_SESSION['user']->mail ?>' /><br>
 	Password :<br>
-	Old password : <input type='text' name='old_pw' /><br>
-	New password : <input type='text' name='new_pw1'/><br>
-	Confirm new password : <input type="text" name="new_pw2"/><br>
+	Old password : <input type='password' name='old_pw'/><br>
+	New password : <input type='password' name='new_pw1'/><br>
+	Confirm new password : <input type="password" name='new_pw2'/><br>
 	First name :
 	<input type='text' name='f_name' value='<?php echo $_SESSION['user']->f_name ?>' /><br>
 	Last Name :

@@ -1,18 +1,16 @@
 <?php
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/config/manage_db.php");
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . "/class/User.class.php");
-session_start();
+include_once('../config/inc.php');
 
 if (!$_POST) {
 	$_SESSTION['alert'] = "an error occured.";
-	exit(header('Location: /camagru/pages/account_settings.php'));
+	exit(header('Location: '. WEBROOT . 'pages/account_settings.php'));
 }
 
 if (modif_account())
-	header('Location: /camagru/index.php');
+	header('Location: '. WEBROOT . '/index.php');
 else
-	header('Location: /camagru/pages/account_settings.php');
+	header('Location: '. WEBROOT . 'pages/account_settings.php');
 
 function modif_account()
 {

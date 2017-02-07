@@ -1,11 +1,9 @@
 <?php
 
-include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/config/manage_db.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/class/User.class.php');
-session_start();
+include_once('../config/inc.php');
 
 sign_in();
-header('Location: /camagru/pages/login.php?action=signin');
+header('Location: '. WEBROOT . 'pages/login.php?action=signin');
 
 function sign_in() {
 	if (!$_POST['login'] || !$_POST['pass'])

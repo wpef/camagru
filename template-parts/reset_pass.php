@@ -10,15 +10,15 @@ if ($_GET['act'] == 'confirm') :
 
 if (isset($_SESSION['user']) && $token === $_SESSION['user']->token()) : ?>
 	<p> You are resetting the password for <?php echo $log ?>.</p>
-	<form name="reset" method="post" action="/camagru/mods/reset_pass.php?act=reset">
-	New Password : <input type="text" name="new_pw" required/><br>
-	Confirm Password  : <input type="text" name="new_pw1" required /><br>
+	<form name="reset" method="post" action="<?php echo WEBROOT . 'mods/reset_pass.php?act=reset'?>">
+	New Password : <input type="password" name="new_pw" required/><br>
+	Confirm Password  : <input type="password" name="new_pw1" required/><br>
 	<input type="submit" name="submit" value="Reset password" /><br>
 	</form>
 <?php endif; ?>
 
 <?php else : ?>
-	<form name="reset_pass" method="post" action="/camagru/mods/reset_pass.php?act=send">
+	<form name="reset_pass" method="post" action="<?php echo WEBROOT . 'mods/reset_pass.php?act=send'?>">
 	Login : <input type="text" name="login" required/><br>
 	Mail  : <input type="text" name="mail" required /><br>
 	<input type="submit" name="submit" value="Send reset link" /><br>

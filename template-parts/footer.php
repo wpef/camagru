@@ -1,3 +1,3 @@
-<script type="text/javascript" src="/camagru/script/script.js"></script>
+<script type="text/javascript" src="<?php echo WEBROOT . 'script/script.js'?>"></script>
 </body>
 </html>

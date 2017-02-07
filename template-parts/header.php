@@ -1,17 +1,16 @@
-<?php
-include_once 'head.php';
-?>
+<?php include_once 'head.php'; ?>
+
 <header>
-	<a href = "/camagru/">
-		<img src = "/camagru/img/logo.png" id='logo'/>
+	<a href = "<?php echo WEBROOT ?>">
+		<img src = "<?php echo WEBROOT . '/img/logo.png'?>" id='logo'/>
 	</a>
 	<div id="account">
 		<?php 
 		if ($_SESSION['log']) {
-			include ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/account_menu.php');
+			include ('account_menu.php');
 		}
 		else
-			include ($_SERVER['DOCUMENT_ROOT'] . '/camagru/' . '/template-parts/login_menu.php');
+			include ('login_menu.php');
 		?>
 	</div>
 	<nav id="main_nav">
