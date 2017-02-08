@@ -88,13 +88,7 @@ function takepicture() {
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', page , true);
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.onload = function () {
-  		if (xhr.status === 200) {
-  			alert('New pic added to gallery !'); } //debug
-    	else {
-    		alert('An error occurred!'); }
-    };
+	//xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(formData);
 }
 
