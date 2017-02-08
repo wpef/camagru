@@ -3,8 +3,6 @@ include_once('../config/inc.php');
 
 define('DIR', ROOT . "photos/");
 
-file_put_contents("/Users/fde-monc/http/MyWebSite/camagru/text.php", "yoyoyo"); //debug
-
 $imgb64 = $_POST["pic"];
 
 if (empty($_POST))
