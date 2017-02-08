@@ -2,12 +2,17 @@
 include_once('../config/inc.php');
 
 define('DIR', WEBROOT . "photos/");
-if (!empty($_FILES)){
-	if (!move_uploaded_file('photo', DIR . "photo.png"))
-		$_SESSION['alert'] = "An error occured while uploading file";
-}
-else {
-	$_SESSION['alert'] = "File not found."; 
-}
-exit();
+static $i = 0;
+
+
+$imgb64 = $_POST['pic'];
+if (empty($imgb64))
+	exit();
+
+$imgb64 = str_replace(' ','+',$imgb64); //JS to PHP decode
+$imgb64 = substr($data,strpos($data,",")+1); //remove data:img/png ...
+$img = base64_decode($imgb64); //decode string
+
+file_put_contents(WEBROOT . 'photo'.$i++.'.png', $img);
+
 ?>

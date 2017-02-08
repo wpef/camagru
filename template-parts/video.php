@@ -82,12 +82,13 @@ function takepicture() {
 
 	//AJAX TRY
 	var page = '<?php echo WEBROOT . 'mods/upload.php' ?>';
-	
+
 	var formData = new FormData();
-	formData.append('pic', data, 'photo');
+	formData.append('pic', data);
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', page , true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.onload = function () {
   		if (xhr.status === 200) {
   			alert('New pic added to gallery !'); } //debug
