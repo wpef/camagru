@@ -8,7 +8,7 @@ function display_alerts()
 			echo "<p id='message' onclick='hide_mess(this)'>" . $_SESSION['message'] . '</p>';
 		if (!empty($_SESSION['alert']))
 			echo "<p id='alert' onclick='hide_mess(this)'>" . $_SESSION['alert'] . '</p>';
-		unset($_SESSION['message']); unset($_SESSION['alert']); 
+		unset($_SESSION['message']); unset($_SESSION['alert']);
 	}
 }
 

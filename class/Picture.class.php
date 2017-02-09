@@ -1,8 +1,8 @@
 <?php
 
-include_once(ROOT . "config/inc.php");
-define('DIR', ROOT . "photos/");
-
+//include_once(ROOT . "config/inc.php");
+//define('DIR', ROOT . "photos/");
+session_start(); //debug 
 
 class Picture {
 	public		$owner;
@@ -14,11 +14,10 @@ class Picture {
 
 /* ==> DEFAULT METHOD <== */
 	public function __construct($datas) {
-		if (!is_array($datas)
-			|| !array_key_exists('src', $datas))
-			return FALSE;
-		proceed_array($datas);
-		return $this;
+		if (is_array($datas) && array_key_exists('src', $datas))
+			$this->proceed_array($datas);
+		else
+			$this->__destruct();
 	}
 
 	public function __destruct() {
@@ -27,7 +26,7 @@ class Picture {
 	}
 
 	public function __toString () {
-		return "IMG :" . $this->src . PHP_EOL;
+		return "IMG :" . $this->src . " from " . $this->owner . PHP_EOL;
 	}
 
 /* ==> My Functions <== */
@@ -58,5 +57,14 @@ class Picture {
 		return TRUE;
 	}
 }
+
+// $new = array(
+// 	'src' => "yyo",
+// 	'name' => "photo",
+// 	'owner' => $_SESSION['user']->login);
+
+// $pict = new Picture($new);
+// if (!empty($pict))
+// 	echo $pict;
 
 ?>
