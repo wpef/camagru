@@ -44,6 +44,7 @@ class Picture {
 					break;
 				case 'owner' :
 					$this->owner = $v;
+					break;
 			}
 		}
 	}

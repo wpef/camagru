@@ -5,10 +5,6 @@
 <button id="startbutton">Prendre une photo</button>
 <canvas id="canvas" style="display: none"></canvas>
 <img style="display: none" src="#" id="photo" alt="photo">
-<form enctype="multipart/form-data" action="<?php echo WEBROOT . 'mods/ul_img.php' ?>" method="post">
-	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-	<input name="userfile" type="file" id='file_input' hidden/>
-</form>
 
 
 <script>
@@ -80,7 +76,7 @@ function takepicture() {
 	photo.setAttribute('src', data);
 	photo.setAttribute('style', ' ');
 
-	//AJAX TRY
+//	AJAX TRY
 	var page = '<?php echo WEBROOT . 'mods/upload.php' ?>';
 
 	var formData = new FormData();
