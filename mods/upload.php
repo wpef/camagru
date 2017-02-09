@@ -21,8 +21,6 @@ $imgb64 = $_POST["pic"];
 // 	'name' => $img_name,
 // 	'owner' => $_SESSION['user']->login);
 
- file_put_contents(DIR . 'img64.png', $imgb64);
-
 $pict = new Picture(array('data' => $imgb64)); //tested
 
 if (!empty($pict->error))

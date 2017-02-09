@@ -60,21 +60,18 @@ class Picture {
 		$d = str_replace(' ','+',$d); //JS to PHP decode
 		$d = substr($d,strpos($d,",")+1); //remove data:img/png ...
 		$datas = base64_decode($d); //decode string
-		
+
 		//Check & upload
-		if (_checkDatas($datas))
+		if ($this->_checkDatas($datas) === TRUE)
 		{
-			//upload
-			if ($this->_uploadImg($datas))
-			{
-				//set vars;
-				if (!isset($this->name))
-					$this->name = $this->_getNewName();
-				if (!isset($this->src))
-					$this->src = DIR . $this->name;
-				if (!isset($this->owner))
+			if (!isset($this->name))
+				$this->name = $this->_getNewName();
+			if (!isset($this->src))
+				$this->src = DIR . $this->name;
+			if (!isset($this->owner))
 					$this->owner = $_SESSION['user']->login;
-			}
+
+			$this->_uploadImg($datas);
 		}
 		else
 			$this->error = "WRONG FORMAT";
@@ -82,7 +79,7 @@ class Picture {
 
 	private function _uploadImg($img)
 	{
-		if (file_put_contents($img_src, $img))
+		if (file_put_contents($this->src, $img))
 			return TRUE;
 		else
 			$this->error = "An error occured uploading the file.";
@@ -109,11 +106,15 @@ class Picture {
 	}
 }
 
-$new = array('data' => file_get_contents(DIR . 'img64.png'));
+/*$new = array('data' => file_get_contents(DIR . 'img64.png'),
+	'owner' => 'C WAM');
 
-//$pict = new Picture($new);
+$pict = new Picture();
+$pict->proceedDatas($new['data']);
+if ($pict->error)
+echo $pict->error;
 
 if (!empty($pict))
 	echo $pict;
-
+*/
 ?>
