@@ -77,7 +77,7 @@ class Picture {
 			}
 		}
 		else
-			$this->error .= "WRONG FORMAT";
+			$this->error = "WRONG FORMAT";
 	}
 
 	private function _uploadImg($img)
@@ -109,10 +109,10 @@ class Picture {
 	}
 }
 
-$new = array( 'data' => file_get_contents(DIR . 'img64.png')
-	);
+$new = array('data' => file_get_contents(DIR . 'img64.png'));
 
-$pict = new Picture($new);
+//$pict = new Picture($new);
+
 if (!empty($pict))
 	echo $pict;
 
