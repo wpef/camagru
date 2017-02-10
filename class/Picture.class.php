@@ -29,7 +29,6 @@ class Picture {
 	public function __toString () {
 		return "IMG :" . $this->src . " from " . $this->owner . PHP_EOL;
 	}
-/* ==> GET & SET <== */
 
 /* ==> My Functions <== */
 
