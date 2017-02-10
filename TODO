@@ -3,3 +3,6 @@ SIGN UP
 	- Primary key = login;
 	- Check if mail exists;
 	-- Check mot de passs => peut pas etre un mot de la langue francaise
+
+VIDEO 
+	-- MERGe cote serveur
