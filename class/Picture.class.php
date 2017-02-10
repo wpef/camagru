@@ -4,6 +4,8 @@
 //define('DIR', ROOT . "photos/");
 //end
 
+define ('MAX_SIZE', 1000000);
+
 class Picture {
 	public		$owner;
 	public		$src;
@@ -56,12 +58,12 @@ class Picture {
 	public function proceedDatas($d)
 	{		
 		//proceed datas;
-		$d = str_replace(' ','+',$d); //JS to PHP decode
-		$d = substr($d,strpos($d,",")+1); //remove data:img/png ...
-		$datas = base64_decode($d); //decode string
+		$datas = str_replace(' ','+',$d); //JS to PHP decode
+		$datas = substr($datas,strpos($datas,",")+1); //remove data:img/png ...
+		$datas = base64_decode($datas); //decode string
 
 		//Check & upload
-		if ($this->_checkDatas($datas) === TRUE)
+		if ($this->_checkDatas($d) === TRUE)
 		{
 			if (!isset($this->name))
 				$this->name = $this->_getNewName();
@@ -72,13 +74,12 @@ class Picture {
 
 			$this->_uploadImg($datas);
 		}
-		else
-			$this->error = "WRONG FORMAT";
 	}
 
 	private function _uploadImg($img)
 	{
 		if (file_put_contents($this->src, $img))
+			//push to db;
 			return TRUE;
 		else
 			$this->error = "An error occured uploading the file.";
@@ -96,7 +97,24 @@ class Picture {
 	}
 
 	private function _checkDatas($d) {
-		//proceed HERE;
+		//check type
+		if ((substr($d, 0, 22)) !== 'data:image/png;base64,') {
+			$this->error = "Wrong image type (must be a .png file)";
+			return FALSE;
+		}
+
+		//check size
+		if ($len = strlen($d) > MAX_SIZE) {
+			$len = $len / 100;
+			$this->error = "Wrong image size ($len KB / 1MB max.)";
+			return FALSE;
+		}
+
+		//check user
+		if (!isset($this->owner) and !isset($_SESSION['user']->login)) {
+			$this->error = "An unexpected error occured : (OWNER)";
+			return FALSE;
+		}
 		return TRUE;
 	}
 
