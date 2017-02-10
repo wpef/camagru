@@ -2,7 +2,4 @@ SIGN UP
 	-- verify MAIL pattern; --> PATTERN attribute on <input>
 	- Primary key = login;
 	- Check if mail exists;
-
--- change all mails links !!!!
-
--- HIDE PASWORD FIELD !!!!!
+	-- Check mot de passs => peut pas etre un mot de la langue francaise

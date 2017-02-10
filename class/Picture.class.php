@@ -118,8 +118,8 @@ class Picture {
 		return TRUE;
 	}
 
-	public function add_todb() { 
-		return TRUE;
+	private function _pushToDb() { 
+		
 	}
 }
 
