@@ -15,8 +15,14 @@ $user_a = array (
 		'confirmed'	=>	'bool DEFAULT 0'
 	);
 
-	//image
-
+	//pictures
+$pic_a = array (
+		'pic_src'		=>	'varchar(199) NOT NULL',
+		'pic_owner' 	=>	'varchar(15) NOT NULL',
+		'pic_name'		=>	'varchar(30) NOT NULL',
+		'pic_coms'		=>	'SMALLINT UNSIGNED NOT NULL', // ==> other table
+		'pic_likes'		=>	'SMALLINT UNSIGNED NOT NULL' // ==> other table
+	);
 
 //ADMIN USER
 $admin_user = array (

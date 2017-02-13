@@ -118,8 +118,14 @@ class Picture {
 		return TRUE;
 	}
 
-	private function _pushToDb() { 
-		
+	private function _pushToDb() {
+		//check required
+		if (!isset($this->owner || $this->src || $this->name))
+			return FALSE;
+
+		//send query;
+		$db = connect_db(FALSE);
+		$query = insert_datas('pictures', $picture_array)
 	}
 }
 
