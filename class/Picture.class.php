@@ -120,12 +120,12 @@ class Picture {
 
 	private function _pushToDb() {
 		//check required
-		if (!isset($this->owner || $this->src || $this->name))
+		if (!isset($this->owner) || !isset($this->src) || !isset($this->name))
 			return FALSE;
 
 		//send query;
 		$db = connect_db(FALSE);
-		$query = insert_datas('pictures', $picture_array)
+		$query = insert_datas('pictures', $picture_array);
 	}
 }
 

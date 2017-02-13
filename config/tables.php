@@ -17,11 +17,22 @@ $user_a = array (
 
 	//pictures
 $pic_a = array (
+		'pic_id'		=>	'SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY',
 		'pic_src'		=>	'varchar(199) NOT NULL',
 		'pic_owner' 	=>	'varchar(15) NOT NULL',
 		'pic_name'		=>	'varchar(30) NOT NULL',
 		'pic_coms'		=>	'SMALLINT UNSIGNED NOT NULL', // ==> other table
 		'pic_likes'		=>	'SMALLINT UNSIGNED NOT NULL' // ==> other table
+	);
+
+$com_a = array (
+		'com_pic'		=>	'SMALLINT UNSIGNED NOT NULL',
+		//...
+	);
+
+$tables = array (
+	'users' => $user_a,
+	'pictures' => $pic_a
 	);
 
 //ADMIN USER
