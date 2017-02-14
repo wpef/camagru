@@ -123,9 +123,41 @@ class Picture {
 		if (!isset($this->owner) || !isset($this->src) || !isset($this->name))
 			return FALSE;
 
-		//send query;
+		//getobj;
 		$db = connect_db(FALSE);
-		$query = insert_datas('pictures', $picture_array);
+		
+		//prepare query
+		$start = "insert into " . $table;
+		$keys = "(";
+		$vals = "VALUES (";
+
+		$i = 0;
+		foreach ($datas as $key => $val) {
+			$keys .= $key;
+			$vals .= '?';
+			if ($i < count($datas) - 1)
+			{
+				$keys .= ", ";
+				$vals .= ", ";
+			}
+			else
+			{
+				$keys .= ") ";
+				$vals .= ") ";
+			}
+			$i++;
+		}
+		$p_query = $start . $keys . $vals . ";";
+		$db->prepare($p_query);
+
+		//set vars
+		foreach ($datas as $key => $value) {
+			$db->bindValue($i, $value);
+			$i++;
+		}
+
+		//exec
+		$db->execute();
 	}
 }
 
