@@ -17,13 +17,13 @@ include_once('tables.php');
 //push tables + admin to DB; (need other tables)
 try {
 	$db->exec("USE " . $DB_NAME);
-	foreach ($tables as $name => $v) {
+	foreach ($tables as $name => $v)
 		$db->exec(create_table($name, $v));
-	}
 	new User ($admin_user);
-} catch (PDOexcpetion $e) {
-		die ('DB ERROR: ' . $e->getMessage());
 	}
+catch (PDOexcpetion $e) {
+die ('DB ERROR: ' . $e->getMessage());
+}
 
 echo "<p class='message'>THE SITE IS SET UP</p>
 <a href='../index.php'>Visit</a>";

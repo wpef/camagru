@@ -76,29 +76,25 @@ function insert_datas ($table, $datas)
 			$i++;
 		}
 		$p_query = $start . $keys . $vals . ";";
+		$query = $p_query;
 		
-		try { $db->prepare($p_query); }
+		try { $p_query = $db->prepare($p_query); }
 		catch (PDOexcpetion $e) {
-			var_dump($p_query);
-		die ("ERROR PREPARING QUERY : $p_query :" . $e->getMessage());
+		die ("ERROR PREPARING QUERY : $query :" . $e->getMessage());
 		}
 
 		//set vars
 		$i = 1;
 		foreach ($datas as $key => $value) {
-		if ( $db->bindValue($i, $value) === FALSE )
-		{
-			var_dump($p_query);
+		if ( $p_query->bindValue($i, $value) === FALSE )
 			die ("ERROR BINDING VALUE : $key -> $value");
-		}
 		$i++;
 		}
 
 		//exec
-		try { $db->execute(); }
+		try { $p_query->execute(); }
 		catch (PDOexcpetion $e) {
-			var_dump($p_query);
-		die ("ERROR EXECUTING QUERY : $p_query :" . $e->getMessage());
+		die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
 		}
 }
 
