@@ -31,13 +31,13 @@ function connect_db($new){
 // MUST SET ERROR TYPE !!!!!!
 	global $DB_USER, $DB_PASSWORD, $DB_DSN, $DB_NAME;
 
-
 	try {
 		if ($new)
 			$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
 		else
 			$db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 		$db->exec("USE " . $DB_NAME);
+		//set error
 		return $db;
 	}
 	catch (PDOexcpetion $e) {

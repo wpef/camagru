@@ -22,17 +22,29 @@ $pic_a = array (
 		'pic_owner' 	=>	'varchar(15) NOT NULL',
 		'pic_name'		=>	'varchar(30) NOT NULL',
 		'pic_coms'		=>	'SMALLINT UNSIGNED NOT NULL', // ==> other table
-		'pic_likes'		=>	'SMALLINT UNSIGNED NOT NULL' // ==> other table
+		'pic_likes'		=>	'SMALLINT UNSIGNED NOT NULL',
+		'added_on'		=>	'DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP' // ==> other table
 	);
 
 $com_a = array (
 		'com_pic'		=>	'SMALLINT UNSIGNED NOT NULL',
-		//...
+		'com_cont'		=>	'TEXT NOT NULL',
+		'com_date'		=>	'DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+		'com_author'	=>	'varchar(15) NOT NULL'
 	);
+
+$likes_a = array (
+		'like_pic'		=>	'SMALLINT UNSIGNED NOT NULL',
+		'like_author'	=>	'varchar(15) NOT NULL'
+	);
+
+
 
 $tables = array (
 	'users' => $user_a,
-	'pictures' => $pic_a
+	'pictures' => $pic_a,
+	'likes' => $likes_a,
+	'comments' => $com_a
 	);
 
 //ADMIN USER
