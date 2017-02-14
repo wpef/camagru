@@ -21,7 +21,6 @@ function create_table($name, $values) {
 			$col = $col . ', ';
 		$i++;
 	}
-
 	return $create . $col . $end;
 
 }

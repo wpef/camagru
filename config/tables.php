@@ -23,13 +23,13 @@ $pic_a = array (
 		'pic_name'		=>	'varchar(30) NOT NULL',
 		'pic_coms'		=>	'SMALLINT UNSIGNED NOT NULL', // ==> other table
 		'pic_likes'		=>	'SMALLINT UNSIGNED NOT NULL',
-		'added_on'		=>	'DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP' // ==> other table
+		'added_on'		=>	'DATETIME NOT NULL' // ==> other table
 	);
 
 $com_a = array (
 		'com_pic'		=>	'SMALLINT UNSIGNED NOT NULL',
 		'com_cont'		=>	'TEXT NOT NULL',
-		'com_date'		=>	'DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+		'com_date'		=>	'DATETIME NOT NULL',
 		'com_author'	=>	'varchar(15) NOT NULL'
 	);
 

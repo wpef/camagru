@@ -13,7 +13,6 @@ $db->exec($create_db) or die (print_r($db->errorInfo(), true));
 //Create tables var;
 include_once('tables.php');
 
-
 //push tables + admin to DB; (need other tables)
 try {
 		$db->exec("USE " . $DB_NAME);
