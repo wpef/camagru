@@ -103,14 +103,7 @@ class User {
 		}
 
 		//send query;
-		$db = connect_db(FALSE);
-		$query = insert_datas('users', $usr_infos);
-		$db->exec('USE ' . $DB_NAME);
-		
-		try { $db->exec($query);
-		} catch (PDOexception $e) {
-			die ('ERROR CREATING USER: ' . $e->getMessage());
-		}
+		insert_datas('users', $usr_infos);
 
 		//VERBOSE
 		if (self::$verbose)

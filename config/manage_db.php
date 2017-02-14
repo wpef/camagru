@@ -49,29 +49,57 @@ function connect_db($new){
 function insert_datas ($table, $datas)
 {
 //This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
-	$start = "insert into " . $table;
-	$keys = "(";
-	$vals = "VALUES (";
+//getobj;
 
-	$i = 0;
-	foreach ($datas as $key => $val) {
-		$keys = $keys . $key;
-		if (!is_numeric($val) and !is_bool($val))
-			$val = "'" . $val . "'";
-		$vals = $vals . $val;
-		if ($i < count($datas) - 1)
-		{
-			$keys = $keys . ", ";
-			$vals = $vals . ", ";
+		//connect
+		$db = connect_db(FALSE);
+		
+		//prepare query
+		$start = "insert into " . $table;
+		$keys = "(";
+		$vals = "VALUES (";
+
+		$i = 0;
+		foreach ($datas as $key => $val) {
+			$keys .= $key;
+			$vals .= '?';
+			if ($i < count($datas) - 1)
+			{
+				$keys .= ", ";
+				$vals .= ", ";
+			}
+			else
+			{
+				$keys .= ") ";
+				$vals .= ") ";
+			}
+			$i++;
 		}
-		else
+		$p_query = $start . $keys . $vals . ";";
+		
+		try { $db->prepare($p_query); }
+		catch (PDOexcpetion $e) {
+			var_dump($p_query);
+		die ("ERROR PREPARING QUERY : $p_query :" . $e->getMessage());
+		}
+
+		//set vars
+		$i = 1;
+		foreach ($datas as $key => $value) {
+		if ( $db->bindValue($i, $value) === FALSE )
 		{
-			$keys = $keys . ") ";
-			$vals = $vals . ") ";
+			var_dump($p_query);
+			die ("ERROR BINDING VALUE : $key -> $value");
 		}
 		$i++;
-	}
-	return $start . $keys . $vals . ";";
+		}
+
+		//exec
+		try { $db->execute(); }
+		catch (PDOexcpetion $e) {
+			var_dump($p_query);
+		die ("ERROR EXECUTING QUERY : $p_query :" . $e->getMessage());
+		}
 }
 
 function user_exists ($log)
