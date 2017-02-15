@@ -78,9 +78,10 @@ class Picture {
 
 	private function _uploadImg($img)
 	{
-		if (file_put_contents($this->src, $img))
-			//push to db;
+		if (file_put_contents($this->src, $img)) {
+			$this->_pushToDb();
 			return TRUE;
+		}
 		else
 			$this->error = "An error occured uploading the file.";
 			return FALSE;	
@@ -123,41 +124,17 @@ class Picture {
 		if (!isset($this->owner) || !isset($this->src) || !isset($this->name))
 			return FALSE;
 
-		//getobj;
-		$db = connect_db(FALSE);
-		
-		//prepare query
-		$start = "insert into " . $table;
-		$keys = "(";
-		$vals = "VALUES (";
+		//turn $this to array
+		date_default_timezone_set('Europe/Paris');
+		$datas = array(
+		'pic_src'		=>	$this->src,
+		'pic_owner' 	=>	$this->owner,
+		'pic_name'		=>	$this->name,
+		'added_on'		=>	date('Y-m-d H:i:s', time()) // ==> other table
+		);
 
-		$i = 0;
-		foreach ($datas as $key => $val) {
-			$keys .= $key;
-			$vals .= '?';
-			if ($i < count($datas) - 1)
-			{
-				$keys .= ", ";
-				$vals .= ", ";
-			}
-			else
-			{
-				$keys .= ") ";
-				$vals .= ") ";
-			}
-			$i++;
-		}
-		$p_query = $start . $keys . $vals . ";";
-		$db->prepare($p_query);
-
-		//set vars
-		foreach ($datas as $key => $value) {
-			$db->bindValue($i, $value);
-			$i++;
-		}
-
-		//exec
-		$db->execute();
+		//push
+		insert_datas('pictures', $datas);
 	}
 }
 
