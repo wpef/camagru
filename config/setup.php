@@ -20,6 +20,7 @@ try {
 			$db->exec(create_table($name, $v));
 		}
 		new User ($admin_user);
+		get_sample_images();
 	}
 catch (PDOexcpetion $e) {
 die ('DB ERROR: ' . $e->getMessage());

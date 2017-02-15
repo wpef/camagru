@@ -18,7 +18,7 @@
 $dir = ROOT . 'stickers/';
 $sticks = glob($dir . "*.png");
 foreach ($sticks as $s) {
-	$s = "/camagru/stickers/" . basename($s);
+	$s = WEBROOT . "stickers/" . basename($s);
 	echo "<li>"
 	. "<img onclick=\"select_stick(this)\" class=\"sticks\" src=\"$s\"/>"
 	. "</li>";

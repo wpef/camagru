@@ -17,8 +17,11 @@ class Picture {
 
 /* ==> DEFAULT METHOD <== */
 	public function __construct($datas) {
-		if (is_array($datas))
-			$this->proceedArray($datas);
+		if (is_array($datas)) {
+			if ($this->proceedArray($datas) &&
+				self::$verbose)
+				echo $this . "CONSTRUCTED" . PHP_EOL;
+		}
 		else
 			$this->error = "NO DATAS";
 	}
@@ -52,6 +55,12 @@ class Picture {
 			//push file & set unset vars;
 			if (array_key_exists('data', $a))
 				$this->proceedDatas($a['data']);
+			else if (
+			(isset($this->src) &&
+			isset($this->owner) &&
+			isset($this->name)) &&
+			file_exists($a['dir']))
+				$this->_pushToDb();
 		}
 	}
 

@@ -4,5 +4,9 @@ SIGN UP
 	- Check if mail exists;
 	-- Check mot de passs => peut pas etre un mot de la langue francaise
 
+SETUP 
+	- Add Sample dir to fill DB
+
+
 VIDEO 
-	-- MERGe cote serveur
+	-- MERGE cote serveur
