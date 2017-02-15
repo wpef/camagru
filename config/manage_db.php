@@ -97,6 +97,88 @@ function insert_datas ($table, $datas)
 		}
 }
 
+function get_datas ($table, $datas)
+{
+//This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
+//getobj;
+
+		//connect
+		$db = connect_db(FALSE);
+		
+		//prepare query
+		$sel = "";
+		$cond = "";
+
+		$i = 0;
+		foreach ($datas as $key => $val) {
+			switch ($key) {
+				case 'select' :
+					if (!is_array($val)) {
+						$cond = $val;
+						break;
+					}
+					foreach ($val as $v) {
+						if ($i + 1 < count($val))
+							$sel .= "?,";
+						else $sel .= "? ";
+						$i++;
+					}
+					break;
+				
+				case 'where' :
+					$i = 0;
+					if (!is_array($val)) {
+						$cond = $val;
+						break;
+					}
+					foreach($val as $v) {
+						if ($i + 1 < count($val))
+							$cond .= "? AND ";
+						else $cond .= "?";
+						$i++;
+					}
+					break;
+				
+				case 'order' :
+					$order = $val;
+			}
+		}
+		
+		if (empty($sel))
+			$sel = '*';
+
+		$p_query =	"select " . $sel .
+					" from " . $table;
+		
+		if (!empty($cond))
+			$p_query .= " where " . $cond;
+		if (!empty($order))
+			$p_query .= " order by " . $order;
+		$p_query .= ';';
+
+		 $query = $p_query;
+		
+		 try { $p_query = $db->prepare($p_query); }
+		 catch (PDOexcpetion $e) {
+		 die ("ERROR PREPARING QUERY : $query :" . $e->getMessage());
+		 }
+
+
+//JEN SUIS LA !!!!
+	//set vars
+		if (is_array($datas['select']))
+		foreach ($datas['select'] as $)
+			if ( $p_query->bindValue($i, $value) === FALSE )
+				die ("ERROR BINDING VALUE : $key -> $value");
+		}
+
+		//exec
+		try { $p_query->execute(); }
+		catch (PDOexcpetion $e) {
+		die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
+		}
+}
+
 function user_exists ($log)
 {
 	if (is_array($log))

@@ -37,6 +37,14 @@ class Picture {
 
 /* ==> My Functions <== */
 
+	public function toImgHTML($echo)
+	{
+		$s = "<img src=\"" . $this->src . "\""; 
+		if ($echo)
+			echo $s;
+		return $s;
+	}
+
 	public function proceedArray($a) {
 		foreach ($a as $d => $v)
 		{

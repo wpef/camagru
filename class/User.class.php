@@ -184,6 +184,15 @@ class User {
  	{
  		return hash('md5', $_passwd);
  	}
+
+ 	public function getImages($order) {
+ 		$sel = array('pic_src', 'pic_name'); //comments and like;
+ 		$a = array('select' => $sel,
+ 			'where' => 'pic_owner = ' . $this->login,
+ 			'order' => !empty($order) ? $order : 'added_on');
+ 		
+ 		$images = get_datas('pictures', $a);
+ 	}
  }
 
 ?>
