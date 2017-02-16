@@ -12,4 +12,20 @@ function display_alerts()
 	}
 }
 
+function getImagesTab($datas)
+{
+	$images = array();
+	foreach ($datas as $i)
+ 		{
+ 			$array = array(
+ 				'src' => $i['pic_src'],
+ 				'name' => $i['pic_name'],
+ 				'owner' => $i['pic_owner'],
+ 				'date' => $i['added_on']
+ 				);
+ 			$images[] = new Picture ($array);
+ 		}
+ 		return ($images);
+}
+
 ?>

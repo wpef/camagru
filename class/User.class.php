@@ -66,27 +66,24 @@ class User {
 		//check for array
 		if (is_array($log))
 			$log = $log['login'];
-		//Connect to db
-		$db = connect_db(FALSE);
 
 		//setting query string;
-		$query = "select * FROM users WHERE login = '" . $log . "';";
+		$query = "SELECT * FROM users WHERE login = ?;";
 
 		//getting result;
-		$db->exec("USE " . $DB_NAME);
-		$curs = $db->query($query);
-		$usr = $curs->fetch();
-		$curs->closeCursor();
+		$res = getDatas($query, $log);
+		//var_dump($res);
 
 		//setting vars
-		$this->login = $usr['login'];
-		$this->_passwd = $usr['pass'];
-		$this->mail = $usr['mail'];
-		$this->f_name = $usr['f_name'];
-		$this->l_name = $usr['l_name'];
-		$this->name = $usr['f_name'] . " " . $usr['l_name'];
-		$this->isadmin = $usr['isadmin'];
-		$this->confirmed = $usr['confirmed'];
+		$res = $res[0];
+		$this->login = $res['login'];
+		$this->_passwd = $res['pass'];
+		$this->mail = $res['mail'];
+		$this->f_name = $res['f_name'];
+		$this->l_name = $res['l_name'];
+		$this->name = $res['f_name'] . " " . $res['l_name'];
+		$this->isadmin = $res['isadmin'];
+		$this->confirmed = $res['confirmed'];
 	}
 
 	public function create($usr_infos) {
@@ -186,19 +183,13 @@ class User {
  	}
 
  	public function getImages() {
- 		$p_query = "SELECT pic_src, pic_name FROM pictures WHERE pic_owner = ? ORDER BY added_on DESC;";
+ 		$p_query = "SELECT pic_src, pic_name, pic_owner, added_on
+ 						FROM pictures WHERE pic_owner = ?
+ 							ORDER BY added_on DESC;";
+ 
  		$images_datas = getDatas($p_query, $this->login);
- 		$images = array();
- 		foreach ($images_datas as $i)
- 		{
- 			$array = array(
- 				'src' => $i['pic_src'],
- 				'name' => $i['pic_name'],
- 				'owner' => $this->login
- 				);
- 			$images[] = new Picture ($array);
- 		}
- 		return ($images);
+ 		$images = getImagesTab($images_datas);
+ 		return $images;
  	}
  }
 
