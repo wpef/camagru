@@ -33,7 +33,7 @@ if ($_GET['action'] == 'confirm')
 			);
 
 		//si login deja utilisé
-		if (user_exists($new_user))
+		if (userExists($new_user))
 		{
 			$_SESSION['alert'] = "The login you are trying to use is already registered. Please try again with a new login";
 			return FALSE;

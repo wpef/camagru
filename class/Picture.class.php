@@ -41,7 +41,7 @@ class Picture {
 	{
 		$s = "<figure>";
 		$s .= "<img src=\"$this->src\"/>";
-		$s .= "<figcaption>$this->name</figcaption>";
+		$s .= "<figcaption>$this->name by $this->owner on $this->date</figcaption>";
 		$s .= "</figure>";
 		return $s;
 	}
@@ -66,6 +66,12 @@ class Picture {
 					$this->date = $v;
 					break;
 			}
+		}
+
+		if (!isset($this->date))
+		{
+			date_default_timezone_set('Europe/Paris');
+			$this->date = date('Y-m-d H:i:s', time());
 		}
 		
 		//treat setup
@@ -104,12 +110,12 @@ class Picture {
 
 	private function _uploadImg($img)
 	{
-		if (file_put_contents($this->src, $img)) {
+		if (file_put_contents(ROOT . 'photos/' . $this->name, $img)) {
 			$this->_pushToDb();
 			return TRUE;
 		}
 		else
-			$this->error = "An error occured uploading the file.";
+			$this->error = "An error occured uploading the file : $this->src";
 			return FALSE;	
 	}
 
@@ -119,7 +125,7 @@ class Picture {
 		do {
 			$file = 'photo' . $i . '.png';
 			$i++;
-			} while (file_exists(DIR . $file));
+			} while (file_exists(ROOT . 'photos/' . $file));
 		return ($file); 
 	}
 
@@ -147,13 +153,9 @@ class Picture {
 
 	private function _pushToDb() {
 		//check required
-		if (!isset($this->owner) || !isset($this->src) || !isset($this->name))
+		if (!isset($this->owner) || !isset($this->src) ||
+				!isset($this->name) || !isset($this->date))
 			return FALSE;
-		if (!isset($this->date))
-		{
-			date_default_timezone_set('Europe/Paris');
-			$this->date = date('Y-m-d H:i:s', time());
-		}
 
 		//turn $this to array
 		$datas = array(

@@ -17,7 +17,7 @@ class User {
 /* ==> DEFAULT METHOD <== */
 	public function __construct($log) {
 	// if user exists on DB, all vars will be set, else it will be added to DB
-		if (user_exists($log))
+		if (userExists($log))
 		{
 			$this->getInfos($log);
 			if (self::$verbose)
@@ -186,7 +186,7 @@ class User {
  	}
 
  	public function getImages() {
- 		$p_query = "SELECT pic_src, pic_name FROM pictures WHERE pic_owner = ? ORDER BY added_on ;";
+ 		$p_query = "SELECT pic_src, pic_name FROM pictures WHERE pic_owner = ? ORDER BY added_on DESC;";
  		$images_datas = getDatas($p_query, $this->login);
  		$images = array();
  		foreach ($images_datas as $i)

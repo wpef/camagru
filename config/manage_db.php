@@ -105,43 +105,46 @@ function getDatas($p_query, $datas)
 		//connect
 		$db = connect_db(FALSE);
 
-		//prepare
+		if (empty($datas))
+			$obj = $db->query($p_query);
+		else {
+			//prepare
+			try { $obj = $db->prepare($p_query); }
+			catch (PDOexcpetion $e) {
+				die ("ERROR PREPARING QUERY : $p_query :" . $e->getMessage());
+			}
 
-		try { $obj = $db->prepare($p_query); }
-		catch (PDOexcpetion $e) {
-			die ("ERROR PREPARING QUERY : $p_query :" . $e->getMessage());
-		}
+			//set vars
+			if (!is_array($datas))
+				$datas = array($datas);
+			$i = 1;
 
-		//set vars
-		if (!is_array($datas))
-			$datas = array($datas);
-		$i = 1;
-
-		//exec
-		try { $obj->execute($datas) ; }
-		catch (PDOexcpetion $e) {
-			die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
+			//exec
+			try { $obj->execute($datas) ; }
+			catch (PDOexcpetion $e) {
+				die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
+			}
 		}
 
 		//read
 		$res = $obj->fetchAll();
-		
+		$obj->closeCursor();
 		return ($res);
 }
 
-function user_exists ($log)
+function userExists ($log)
 {
 	if (is_array($log))
 		$login = $log['login'];
 	else
 		$login = $log;
-	$db = connect_db(FALSE);
-	$query = "select * from users where login='" . $login . "';";
-	$curs = $db->query($query);
-	$count = $curs->rowCount();
-	$curs->closeCursor();
-	if ($count == 1)
+	
+	$p_query = "SELECT login FROM users WHERE login = ?;";
+	$res = getDatas($p_query, $login);
+
+	if (count($res) == 1)
 		return TRUE;
+	
 	return FALSE;
 }
 
