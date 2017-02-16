@@ -1,7 +1,7 @@
 <?php
 //debug
 //include_once('../config/inc.php');
-//define('DIR', ROOT . "photos/");
+define('DIR', WEBROOT . "photos/");
 //end
 
 define ('MAX_SIZE', 1000000);
@@ -10,6 +10,7 @@ class Picture {
 	public		$owner;
 	public		$src;
 	public		$name;
+	public		$date;
 	public		$comments;
 	public		$likes;
 	public		$error;
@@ -18,8 +19,7 @@ class Picture {
 /* ==> DEFAULT METHOD <== */
 	public function __construct($datas) {
 		if (is_array($datas)) {
-			if ($this->proceedArray($datas) &&
-				self::$verbose)
+			if ($this->proceedArray($datas) && self::$verbose)
 				echo $this . "CONSTRUCTED" . PHP_EOL;
 		}
 		else
@@ -37,15 +37,18 @@ class Picture {
 
 /* ==> My Functions <== */
 
-	public function toImgHTML($echo)
+	public function toImgHTML()
 	{
-		$s = "<img src=\"" . $this->src . "\""; 
-		if ($echo)
-			echo $s;
+		$s = "<figure>";
+		$s .= "<img src=\"$this->src\"/>";
+		$s .= "<figcaption>$this->name</figcaption>";
+		$s .= "</figure>";
 		return $s;
 	}
 
 	public function proceedArray($a) {
+
+		//treat STD
 		foreach ($a as $d => $v)
 		{
 			switch ($d) {
@@ -59,15 +62,21 @@ class Picture {
 				case 'owner' :
 					$this->owner = $v;
 					break;
+				case 'date' :
+					$this->date = $v;
+					break;
 			}
 		}
-			//push file & set unset vars;
-		if (file_exists($a['dir']))
+		
+		//treat setup
+		if (array_key_exists('dir', $a) && file_exists($a['dir']))
 		{
 			if (isset($this->src) && isset($this->owner) &&
 					isset($this->name))
 				$this->_pushToDb();
 		}
+
+		//push file & set unset vars;
 		else if (array_key_exists('data', $a))
 			$this->proceedDatas($a['data']);
 	}
@@ -140,14 +149,18 @@ class Picture {
 		//check required
 		if (!isset($this->owner) || !isset($this->src) || !isset($this->name))
 			return FALSE;
+		if (!isset($this->date))
+		{
+			date_default_timezone_set('Europe/Paris');
+			$this->date = date('Y-m-d H:i:s', time());
+		}
 
 		//turn $this to array
-		date_default_timezone_set('Europe/Paris');
 		$datas = array(
 		'pic_src'		=>	$this->src,
 		'pic_owner' 	=>	$this->owner,
 		'pic_name'		=>	$this->name,
-		'added_on'		=>	date('Y-m-d H:i:s', time()) // ==> other table
+		'added_on'		=>	$this->date
 		);
 
 		//push
@@ -155,15 +168,4 @@ class Picture {
 	}
 }
 
-/*$new = array('data' => file_get_contents(DIR . 'img64.png'),
-	'owner' => 'C WAM');
-
-$pict = new Picture();
-$pict->proceedDatas($new['data']);
-if ($pict->error)
-echo $pict->error;
-
-if (!empty($pict))
-	echo $pict;
-*/
 ?>

@@ -186,10 +186,19 @@ class User {
  	}
 
  	public function getImages() {
- 		$sel = array('pic_src', 'pic_name'); //+ comments and like;
- 		
- 		$p_query = "SELECT pic_src, pic_name FROM pictures WHERE pic_owner = ?;";
- 		$images = getDatas($p_query, $this->login);
+ 		$p_query = "SELECT pic_src, pic_name FROM pictures WHERE pic_owner = ? ORDER BY added_on ;";
+ 		$images_datas = getDatas($p_query, $this->login);
+ 		$images = array();
+ 		foreach ($images_datas as $i)
+ 		{
+ 			$array = array(
+ 				'src' => $i['pic_src'],
+ 				'name' => $i['pic_name'],
+ 				'owner' => $this->login
+ 				);
+ 			$images[] = new Picture ($array);
+ 		}
+ 		return ($images);
  	}
  }
 
