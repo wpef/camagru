@@ -60,16 +60,16 @@ class Picture {
 					$this->owner = $v;
 					break;
 			}
+		}
 			//push file & set unset vars;
-			if (array_key_exists('data', $a))
-				$this->proceedDatas($a['data']);
-			else if (
-			(isset($this->src) &&
-			isset($this->owner) &&
-			isset($this->name)) &&
-			file_exists($a['dir']))
+		if (file_exists($a['dir']))
+		{
+			if (isset($this->src) && isset($this->owner) &&
+					isset($this->name))
 				$this->_pushToDb();
 		}
+		else if (array_key_exists('data', $a))
+			$this->proceedDatas($a['data']);
 	}
 
 	public function proceedDatas($d)
@@ -151,7 +151,7 @@ class Picture {
 		);
 
 		//push
-		insert_datas('pictures', $datas);
+		insertDatas('pictures', $datas);
 	}
 }
 
