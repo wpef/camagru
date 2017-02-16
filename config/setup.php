@@ -30,5 +30,19 @@ echo "<p class='message'>THE SITE IS SET UP</p>
 <a href='../index.php'>Visit</a>";
 
 // Load database files (DUMMY CONTENT);
-
+function get_sample_images() {
+	//add all already taken images in photos/dir (might to the same for /sample);
+	$dir = ROOT . 'photos/';
+	$photos = glob($dir . "*.png");
+	foreach ($photos as $p) {
+		$a = array(
+			'src' => WEBROOT . 'photos/' . basename($p),
+			'owner' => 'admin',
+			'name' => basename($p),
+			'dir' => $p
+			);
+		//Picture::$verbose = TRUE; //debug
+		new Picture($a);
+	}
+}
 ?>
