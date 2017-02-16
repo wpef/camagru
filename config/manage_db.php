@@ -104,38 +104,28 @@ function getDatas($p_query, $datas)
 
 		//connect
 		$db = connect_db(FALSE);
-		
-		//save
-		$query = $p_query;
-		
+
 		//prepare
-		try { $p_query = $db->prepare($p_query); }
+
+		try { $obj = $db->prepare($p_query); }
 		catch (PDOexcpetion $e) {
-		die ("ERROR PREPARING QUERY : $query :" . $e->getMessage());
+			die ("ERROR PREPARING QUERY : $p_query :" . $e->getMessage());
 		}
 
 		//set vars
+		if (!is_array($datas))
+			$datas = array($datas);
 		$i = 1;
-		if (is_array($datas)) {
-			foreach ($datas as $d) {
-				if ( $p_query->bindValue($i++, $d) === FALSE )
-					die ("ERROR BINDING VALUE : $key -> $value");
-				}
-		}
-		else {
-			if ( $p_query->bindValue($i++, $d) === FALSE )
-				die ("ERROR BINDING VALUE : $key -> $value");
-		}
 
 		//exec
-		try { $p_query->execute(); }
+		try { $obj->execute($datas) ; }
 		catch (PDOexcpetion $e) {
-		die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
+			die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
 		}
 
 		//read
-		$res = $p_query->fetchAll();
-
+		$res = $obj->fetchAll();
+		
 		return ($res);
 }
 

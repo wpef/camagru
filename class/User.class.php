@@ -188,9 +188,8 @@ class User {
  	public function getImages() {
  		$sel = array('pic_src', 'pic_name'); //+ comments and like;
  		
- 		$p_query = "SELECT pic_src, pic_name FROM pictures WHERE login = ?";
+ 		$p_query = "SELECT pic_src, pic_name FROM pictures WHERE pic_owner = ?;";
  		$images = getDatas($p_query, $this->login);
- 		var_dump($images);
  	}
  }
 
