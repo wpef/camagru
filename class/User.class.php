@@ -103,7 +103,7 @@ class User {
 		}
 
 		//send query;
-		insert_datas('users', $usr_infos);
+		insertDatas('users', $usr_infos);
 
 		//VERBOSE
 		if (self::$verbose)
@@ -185,13 +185,12 @@ class User {
  		return hash('md5', $_passwd);
  	}
 
- 	public function getImages($order) {
- 		$sel = array('pic_src', 'pic_name'); //comments and like;
- 		$a = array('select' => $sel,
- 			'where' => 'pic_owner = ' . $this->login,
- 			'order' => !empty($order) ? $order : 'added_on');
+ 	public function getImages() {
+ 		$sel = array('pic_src', 'pic_name'); //+ comments and like;
  		
- 		$images = get_datas('pictures', $a);
+ 		$p_query = "SELECT pic_src, pic_name FROM pictures WHERE login = ?";
+ 		$images = getDatas($p_query, $this->login);
+ 		var_dump($images);
  	}
  }
 

@@ -45,7 +45,7 @@ function connect_db($new){
 
 }
 
-function insert_datas ($table, $datas)
+function insertDatas ($table, $datas)
 {
 //This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
 //getobj;
@@ -97,7 +97,7 @@ function insert_datas ($table, $datas)
 		}
 }
 
-function get_datas ($table, $datas)
+function getDatas($p_query, $datas)
 {
 //This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
 //getobj;
@@ -105,70 +105,25 @@ function get_datas ($table, $datas)
 		//connect
 		$db = connect_db(FALSE);
 		
-		//prepare query
-		$sel = "";
-		$cond = "";
-
-		$i = 0;
-		foreach ($datas as $key => $val) {
-			switch ($key) {
-				case 'select' :
-					if (!is_array($val)) {
-						$cond = $val;
-						break;
-					}
-					foreach ($val as $v) {
-						if ($i + 1 < count($val))
-							$sel .= "?,";
-						else $sel .= "? ";
-						$i++;
-					}
-					break;
-				
-				case 'where' :
-					$i = 0;
-					if (!is_array($val)) {
-						$cond = $val;
-						break;
-					}
-					foreach($val as $v) {
-						if ($i + 1 < count($val))
-							$cond .= "? AND ";
-						else $cond .= "?";
-						$i++;
-					}
-					break;
-				
-				case 'order' :
-					$order = $val;
-			}
+		//save
+		$query = $p_query;
+		
+		//prepare
+		try { $p_query = $db->prepare($p_query); }
+		catch (PDOexcpetion $e) {
+		die ("ERROR PREPARING QUERY : $query :" . $e->getMessage());
 		}
-		
-		if (empty($sel))
-			$sel = '*';
 
-		$p_query =	"select " . $sel .
-					" from " . $table;
-		
-		if (!empty($cond))
-			$p_query .= " where " . $cond;
-		if (!empty($order))
-			$p_query .= " order by " . $order;
-		$p_query .= ';';
-
-		 $query = $p_query;
-		
-		 try { $p_query = $db->prepare($p_query); }
-		 catch (PDOexcpetion $e) {
-		 die ("ERROR PREPARING QUERY : $query :" . $e->getMessage());
-		 }
-
-
-//JEN SUIS LA !!!!
-	//set vars
-		if (is_array($datas['select']))
-		foreach ($datas['select'] as $)
-			if ( $p_query->bindValue($i, $value) === FALSE )
+		//set vars
+		$i = 1;
+		if (is_array($datas)) {
+			foreach ($datas as $d) {
+				if ( $p_query->bindValue($i++, $d) === FALSE )
+					die ("ERROR BINDING VALUE : $key -> $value");
+				}
+		}
+		else {
+			if ( $p_query->bindValue($i++, $d) === FALSE )
 				die ("ERROR BINDING VALUE : $key -> $value");
 		}
 
@@ -177,6 +132,11 @@ function get_datas ($table, $datas)
 		catch (PDOexcpetion $e) {
 		die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
 		}
+
+		//read
+		$res = $p_query->fetchAll();
+
+		return ($res);
 }
 
 function user_exists ($log)
@@ -193,22 +153,6 @@ function user_exists ($log)
 	if ($count == 1)
 		return TRUE;
 	return FALSE;
-}
-
-function get_sample_images() {
-	//add all already taken images in photos/dir (might to the same for /sample);
-	$dir = ROOT . 'photos/';
-	$photos = glob($dir . "*.png");
-	foreach ($photos as $p) {
-		$a = array(
-			'src' => WEBROOT . 'photos/' . basename($p),
-			'owner' => 'admin',
-			'name' => basename($p),
-			'dir' => $p
-			);
-		//Picture::$verbose = TRUE; //debug
-		new Picture($a);
-	}
 }
 
 ?>
