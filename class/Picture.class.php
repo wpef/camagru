@@ -51,7 +51,7 @@ class Picture {
 			$this->_pushToDb();
 		}
 		else {
-			$this->proceedArray($datas);
+			$this->_proceedArray($datas);
 			$this->_pushToDb();
 		}
 	}
@@ -108,7 +108,7 @@ class Picture {
 		//push
 		if (!isset($this->_id))
 			insertDatas('pictures', $datas);
-		// else alter pic_id = _id;
+		// else alter pic_id = _id; IMPORTANT !!!!
 	}
 	
 	public function toImgHTML()
@@ -135,9 +135,36 @@ class Picture {
 		$res = getDatas($query, $id);
 
 		$this->_proceedArray($res[0]);
-
 	}
 
+	private function _proceedArray($a) {
+
+		//treat STD
+		foreach ($a as $d => $v)
+		{
+			switch ($d) {
+			//set vars;
+				case 'pic_src':
+					$this->src = $v;
+					break;
+				case 'pic_name':
+					$this->name = $v;
+					break;
+				case 'pic_owner' :
+					$this->owner = $v;
+					break;
+				case 'added_on' :
+					$this->date = $v;
+					break;
+			}
+		}
+	}
+
+	public function modify($datas)
+	{
+		//$datas is an array like $db_entry => $new_value;
+		$this->_push($datas);
+	}
 
 /* -> USEFULL METHODS <- */
 	private function _getNewName()
