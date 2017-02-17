@@ -121,7 +121,7 @@ class Picture {
 	}
 
 /* ==> PULL <== */
-	private funcion _pull($id)
+	private function _pull($id)
 	{
 		//except
 		if (!is_numeric($id))
@@ -131,7 +131,7 @@ class Picture {
 		$this->_id = $id;
 
 		//db query;
-		$query = "SELECT * FROM pictures WHERE pic_id = ?;"
+		$query = "SELECT * FROM pictures WHERE pic_id = ?;";
 		$res = getDatas($query, $id);
 
 		$this->_proceedArray($res[0]);

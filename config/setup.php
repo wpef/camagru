@@ -34,15 +34,19 @@ function get_sample_images() {
 	//add all already taken images in photos/dir (might to the same for /sample);
 	$dir = ROOT . 'photos/';
 	$photos = glob($dir . "*.png");
+
+	date_default_timezone_set('Europe/Paris');
+	$p_query = "INSERT INTO pictures (pic_src, pic_owner, pic_name, added_on) ";
+	$p_query .= "VALUES (?, ?, ?, ?);";
+
+	$db = connect_db(FALSE);
+
+	$q = $db->prepare($p_query);
+
 	foreach ($photos as $p) {
-		$a = array(
-			'src' => WEBROOT . 'photos/' . basename($p),
-			'owner' => 'admin',
-			'name' => basename($p),
-			'dir' => $p
-			);
-		//Picture::$verbose = TRUE; //debug
-		new Picture($a);
+		$a = array( WEBROOT . 'photos/' . basename($p), 'admin', 
+			basename($p), date('Y-m-d H:i:s', time()));
+		$q->execute($a);
 	}
 }
 ?>

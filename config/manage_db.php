@@ -97,6 +97,31 @@ function insertDatas ($table, $datas)
 		}
 }
 
+function insertDatas2($p_query, $datas)
+{
+	$db = connect_db(FALSE);
+	
+	if (empty($datas)) {
+		$db->exec($p_query);
+		return;
+	}
+
+	try { $q = $db->prepare($p_query);
+	} catch (PDOexcpetion $e) {
+		die ("ERROR PREPARING QUERY : $p_query :" . $e->getMessage());
+	}
+
+	//set vars
+	if (!is_array($datas))
+		$datas = array($datas);
+
+	//exec
+	try { $q->execute($datas) ;
+	} catch (PDOexcpetion $e) {
+		die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
+	}
+}
+
 function getDatas($p_query, $datas)
 {
 //This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
@@ -117,7 +142,6 @@ function getDatas($p_query, $datas)
 			//set vars
 			if (!is_array($datas))
 				$datas = array($datas);
-			$i = 1;
 
 			//exec
 			try { $obj->execute($datas) ; }
