@@ -20,8 +20,10 @@ class Picture {
 /* ==> DEFAULT METHOD <== */
 	public function __construct($datas) {
 		//takes array paramater, if contains 'data' -> create and push, if contains 'id' vars will be set from DB;
+		
 		if (!is_array($datas))
 			return;
+
 		foreach ($datas as $d => $v) {
 			switch ($d) {
 				case 'id' :
@@ -32,6 +34,7 @@ class Picture {
 					break;
 			}
 		}
+		return ($this);
 	}
 
 	public function __destruct() {
@@ -111,15 +114,6 @@ class Picture {
 		// else alter pic_id = _id; IMPORTANT !!!!
 	}
 	
-	public function toImgHTML()
-	{
-		$s = "<figure>";
-		$s .= "<img src=\"$this->src\"/>";
-		$s .= "<figcaption>$this->name by $this->owner on $this->date</figcaption>";
-		$s .= "</figure>";
-		return $s;
-	}
-
 /* ==> PULL <== */
 	private function _pull($id)
 	{
@@ -138,7 +132,6 @@ class Picture {
 	}
 
 	private function _proceedArray($a) {
-
 		//treat STD
 		foreach ($a as $d => $v)
 		{
@@ -164,6 +157,16 @@ class Picture {
 	{
 		//$datas is an array like $db_entry => $new_value;
 		$this->_push($datas);
+	}
+
+/* ==> DISPLAY <== */
+	public function toImgHTML()
+	{
+		$s = "<figure>";
+		$s .= "<img src=\"$this->src\"/>";
+		$s .= "<figcaption>$this->name by $this->owner on $this->date</figcaption>";
+		$s .= "</figure>";
+		return $s;
 	}
 
 /* -> USEFULL METHODS <- */

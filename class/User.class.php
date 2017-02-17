@@ -183,13 +183,12 @@ class User {
  	}
 
  	public function getImages() {
- 		$p_query = "SELECT pic_src, pic_name, pic_owner, added_on
+ 		$p_query = "SELECT pic_id
  						FROM pictures WHERE pic_owner = ?
  							ORDER BY added_on DESC;";
  
- 		$images_datas = getDatas($p_query, $this->login);
- 		$images = getImagesTab($images_datas);
- 		return $images;
+ 		$images_ids = getDatas($p_query, $this->login);
+ 		return ($images_ids);
  	}
  }
 
