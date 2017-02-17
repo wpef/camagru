@@ -7,6 +7,7 @@ define('DIR', WEBROOT . "photos/");
 define ('MAX_SIZE', 1000000);
 
 class Picture {
+	private		$_id;
 	public		$owner;
 	public		$src;
 	public		$name;
@@ -18,12 +19,19 @@ class Picture {
 
 /* ==> DEFAULT METHOD <== */
 	public function __construct($datas) {
-		if (is_array($datas)) {
-			if ($this->proceedArray($datas) && self::$verbose)
-				echo $this . "CONSTRUCTED" . PHP_EOL;
+		//takes array paramater, if contains 'data' -> create and push, if contains 'id' vars will be set from DB;
+		if (!is_array($datas))
+			return;
+		foreach ($datas as $d => $v) {
+			switch ($d) {
+				case 'id' :
+					$this->_pull($v);
+					break;
+				case 'data' :
+					$this->_push($v);
+					break;
+			}
 		}
-		else
-			$this->error = "NO DATAS";
 	}
 
 	public function __destruct() {
@@ -35,8 +43,74 @@ class Picture {
 		return "IMG :" . $this->src . " from " . $this->owner . PHP_EOL;
 	}
 
-/* ==> My Functions <== */
+/* ==> PUSH <== */
+	private function _push($datas)
+	{
+		if (!isset($this->_id)) {
+			$this->create($datas);
+			$this->_pushToDb();
+		}
+		else {
+			$this->proceedArray($datas);
+			$this->_pushToDb();
+		}
+	}
 
+	public function create($d)
+	{		
+		//proceed datas;
+		$datas = str_replace(' ','+',$d); //JS to PHP decode
+		$datas = substr($datas,strpos($datas,",")+1); //remove data:img/png ...
+		$datas = base64_decode($datas); //decode string
+
+		//Check
+		if ($this->_checkDatas($d) === TRUE)
+		{
+			if (!isset($this->name))
+				$this->name = $this->_getNewName();
+			if (!isset($this->src))
+				$this->src = DIR . $this->name;
+			if (!isset($this->owner))
+					$this->owner = $_SESSION['user']->login;
+			if (!isset($this->date)) {
+				date_default_timezone_set('Europe/Paris');
+				$this->date = date('Y-m-d H:i:s', time());
+			}
+			//upload
+			$this->_uploadImg($datas);
+		}
+	}
+
+	private function _uploadImg($img)
+	{
+		if (file_put_contents(ROOT . 'photos/' . $this->name, $img))
+			return TRUE;
+		else
+			$this->error = "An error occured uploading the file : $this->src";
+			return FALSE;	
+	}
+
+	private function _pushToDb()
+	{
+		//check required
+		if (!isset($this->owner) || !isset($this->src) ||
+				!isset($this->name) || !isset($this->date))
+			return FALSE;
+
+		//turn $this to array
+		$datas = array(
+		'pic_src'		=>	$this->src,
+		'pic_owner' 	=>	$this->owner,
+		'pic_name'		=>	$this->name,
+		'added_on'		=>	$this->date
+		);
+
+		//push
+		if (!isset($this->_id))
+			insertDatas('pictures', $datas);
+		// else alter pic_id = _id;
+	}
+	
 	public function toImgHTML()
 	{
 		$s = "<figure>";
@@ -46,79 +120,26 @@ class Picture {
 		return $s;
 	}
 
-	public function proceedArray($a) {
-
-		//treat STD
-		foreach ($a as $d => $v)
-		{
-			switch ($d) {
-			//set vars;
-				case 'src':
-					$this->src = $v;
-					break;
-				case 'name':
-					$this->name = $v;
-					break;
-				case 'owner' :
-					$this->owner = $v;
-					break;
-				case 'date' :
-					$this->date = $v;
-					break;
-			}
-		}
-
-		if (!isset($this->date))
-		{
-			date_default_timezone_set('Europe/Paris');
-			$this->date = date('Y-m-d H:i:s', time());
-		}
-		
-		//treat setup
-		if (array_key_exists('dir', $a) && file_exists($a['dir']))
-		{
-			if (isset($this->src) && isset($this->owner) &&
-					isset($this->name))
-				$this->_pushToDb();
-		}
-
-		//push file & set unset vars;
-		else if (array_key_exists('data', $a))
-			$this->proceedDatas($a['data']);
-	}
-
-	public function proceedDatas($d)
-	{		
-		//proceed datas;
-		$datas = str_replace(' ','+',$d); //JS to PHP decode
-		$datas = substr($datas,strpos($datas,",")+1); //remove data:img/png ...
-		$datas = base64_decode($datas); //decode string
-
-		//Check & upload
-		if ($this->_checkDatas($d) === TRUE)
-		{
-			if (!isset($this->name))
-				$this->name = $this->_getNewName();
-			if (!isset($this->src))
-				$this->src = DIR . $this->name;
-			if (!isset($this->owner))
-					$this->owner = $_SESSION['user']->login;
-
-			$this->_uploadImg($datas);
-		}
-	}
-
-	private function _uploadImg($img)
+/* ==> PULL <== */
+	private funcion _pull($id)
 	{
-		if (file_put_contents(ROOT . 'photos/' . $this->name, $img)) {
-			$this->_pushToDb();
-			return TRUE;
-		}
-		else
-			$this->error = "An error occured uploading the file : $this->src";
-			return FALSE;	
+		//except
+		if (!is_numeric($id))
+			return FALSE;
+		
+		//set vars;
+		$this->_id = $id;
+
+		//db query;
+		$query = "SELECT * FROM pictures WHERE pic_id = ?;"
+		$res = getDatas($query, $id);
+
+		$this->_proceedArray($res[0]);
+
 	}
 
+
+/* -> USEFULL METHODS <- */
 	private function _getNewName()
 	{
 		$i = 0;
@@ -149,24 +170,6 @@ class Picture {
 			return FALSE;
 		}
 		return TRUE;
-	}
-
-	private function _pushToDb() {
-		//check required
-		if (!isset($this->owner) || !isset($this->src) ||
-				!isset($this->name) || !isset($this->date))
-			return FALSE;
-
-		//turn $this to array
-		$datas = array(
-		'pic_src'		=>	$this->src,
-		'pic_owner' 	=>	$this->owner,
-		'pic_name'		=>	$this->name,
-		'added_on'		=>	$this->date
-		);
-
-		//push
-		insertDatas('pictures', $datas);
 	}
 }
 
