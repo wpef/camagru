@@ -2,12 +2,14 @@
 
 require_once('inc.php');
 
+$drop_db = "DROP DATABASE IF EXISTS " . $DB_NAME . ";";
 $create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
 
 //Connect to MySql (db not created yet) and get the PDO object;
 $db = connect_db(TRUE);
 
 //Create DB
+$db->exec($drop_db) or die (print_r($db->errorInfo(), true));
 $db->exec($create_db) or die (print_r($db->errorInfo(), true));
 
 //Create tables var;
