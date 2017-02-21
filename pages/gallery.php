@@ -15,6 +15,7 @@ include_once(ROOT . '/template-parts/header.php');
 
 //ALERT
 display_alerts();
+?> <div id="debug"></div> <?php
 
 //CONTENT
 include_once(ROOT . 'template-parts/grid.php');

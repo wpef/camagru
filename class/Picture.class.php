@@ -7,7 +7,7 @@ define('DIR', WEBROOT . "photos/");
 define ('MAX_SIZE', 1000000);
 
 class Picture {
-	private		$_id;
+	public		$id;
 	public		$owner;
 	public		$src;
 	public		$name;
@@ -49,7 +49,7 @@ class Picture {
 /* ==> PUSH <== */
 	private function _push($datas)
 	{
-		if (!isset($this->_id)) {
+		if (!isset($this->id)) {
 			$this->create($datas);
 			$this->_pushToDb();
 		}
@@ -109,9 +109,26 @@ class Picture {
 		);
 
 		//push
-		if (!isset($this->_id))
+		if (!isset($this->id))
 			insertDatas('pictures', $datas);
 		// else alter pic_id = _id; IMPORTANT !!!!
+	}
+
+	public function like($login)
+	{
+		//checking if liked
+		$p_query = "SELECT * FROM likes 
+						WHERE like_pic = $this->id AND like_author = $login;";
+		if (count(getDatas($p_query, "")) > 0)
+		{
+			$_SESSION['alert'] = "You can like each picture only once.";
+			exit;
+		}
+
+		//liking
+		insertDatas("likes", array("like_pic" => $this->id, "like_author" => $login));
+		$this->likes++;
+		$this->modify(array('pic_likes', $this->likes));
 	}
 	
 /* ==> PULL <== */
@@ -122,7 +139,7 @@ class Picture {
 			return FALSE;
 		
 		//set vars;
-		$this->_id = $id;
+		$this->id = $id;
 
 		//db query;
 		$query = "SELECT * FROM pictures WHERE pic_id = ?;";
@@ -149,6 +166,9 @@ class Picture {
 				case 'added_on' :
 					$this->date = $v;
 					break;
+				case 'pic_likes' :
+					$this->likes = $v;
+					break;
 			}
 		}
 	}
@@ -156,7 +176,9 @@ class Picture {
 	public function modify($datas)
 	{
 		//$datas is an array like $db_entry => $new_value;
-		$this->_push($datas);
+		$p_query = "UPDATE pictures SET ? = ? WHERE pic_id = $this->id;";
+		foreach ($datas as $d)
+			insertDatas2($p_query, $d);
 	}
 
 /* ==> DISPLAY <== */
@@ -164,7 +186,7 @@ class Picture {
 	{
 		$s = "<figure>";
 		$s .= "<img src=\"$this->src\"/>";
-		$s .= "<figcaption>$this->name by $this->owner on $this->date</figcaption>";
+		$s .= "<figcaption>$this->name by $this->owner on $this->date liked $this->likes time(s)</figcaption>";
 		$s .= "</figure>";
 		return $s;
 	}

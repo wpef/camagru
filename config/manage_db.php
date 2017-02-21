@@ -75,6 +75,7 @@ function insertDatas ($table, $datas)
 			$i++;
 		}
 		$p_query = $start . $keys . $vals . ";";
+		//return ($p_query); ==> function setting p_query
 		$query = $p_query;
 		
 		try { $p_query = $db->prepare($p_query); }
