@@ -24,7 +24,7 @@ class User {
 				echo $this . " CONSTRUCTED" . PHP_EOL;
 		}
 		else
-			$this->create($log);
+			$this->_create($log);
 	}
 
 	public function __destruct() {
@@ -86,7 +86,7 @@ class User {
 		$this->confirmed = $res['confirmed'];
 	}
 
-	public function create($usr_infos) {
+	private function _create($usr_infos) {
 	//$usr_infos must be an array in which every key corresponds to the DB entries;
 
 		if (!is_array($usr_infos))
