@@ -5,8 +5,11 @@ SIGN UP
 	-- Check mot de passs => peut pas etre un mot de la langue francaise
 
 SETUP 
-	- Add Sample dir to fill DB
+	- Add Sample directory to fill DB
 
 
 VIDEO 
 	-- MERGE cote serveur
+
+UI
+	- Verify new name before pushing

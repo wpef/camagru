@@ -116,6 +116,12 @@ class Picture {
 
 	public function like($login)
 	{
+		//checking logged_on
+		if (empty($login))
+		{
+			echo "You must be logged in to like pictures";
+			return FALSE;
+		}
 		//checking owner
 		if ($this->owner == $login)
 		{

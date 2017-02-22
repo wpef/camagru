@@ -12,26 +12,51 @@ foreach ($images_id as $i)
 {
 	$pict = new Picture(array('id' => $i['pic_id']));
 	echo $pict->toImgHTML();
-//	if ($pict->owner === $_SESSION['user']->login)
-//		echo $pict->display('userMenu');
-//	else
+	if ($pict->owner == $_SESSION['user']->login)
+		displayOwnerMenu($pict);
+	else
+		displayPictureMenu($pict);
+}
+
+function displayOwnerMenu($pict)
+{
+	$edit = WEBROOT . "img/assets/edit.png";
+
+	$html =	"<button class='pic_button edit' name='edit' ";
+	$html .= "value='$pict->id'> ";
+	$html .= "<img class='editimg' src='$edit' alt='edit'/>";
+	$html .= "</button>";
+	$html .= "<form id='edit_img$pict->id' style='display:none' >Rename picture : <input type='text' name='newName' value='$pict->name'> </form>";
+
+	echo $html;
+}
+
+function displayPictureMenu($pict)
+{
 	$user = $_SESSION['user']->login;
 	$like = WEBROOT . "img/assets/like.png";
-	echo
-	"<button class=\"likebutton\"
-		name=\"like\"
-		value=\"$pict->id $user\">
-			<img class=\"likeimg\" src=\"$like\" alt=\"like\"/>
-	</button>";
+	
+	$html =	"<button class='pic_button like' name='like' ";
+	$html .= "value='$pict->id $user'> ";
+	$html .= "<img class='likeimg' src='$like' alt='like'/>";
+	$html .= "</button>";
+
+	echo $html;
 }
+
 ?>
 
 <script>
 
-var but = document.getElementsByClassName('likebutton');
+var like = document.getElementsByClassName('like');
 var i = 0;
-while (i < but.length)
-	but[i++].addEventListener("click", like_pict, false); 
+while (i < like.length)
+	like[i++].addEventListener("click", like_pict, false); 
+
+var edit = document.getElementsByClassName('edit');
+var i = 0;
+while (i < edit.length)
+	edit[i++].addEventListener("click", edit_pict, false); 
 
 
 function like_pict()
@@ -67,4 +92,23 @@ function like_pict()
 		}
 	});
 }
+
+function edit_pict()
+{
+	var pic_id = this.value;
+
+	//display form
+	var form = document.getElementById('edit_img' + pic_id);
+	form.removeAttribute('style');
+
+	//watch input change
+	var input = form.getElementsByTagName('input')['newName'];
+	input.addEventListener('change', function() {
+		var newName = this.value;
+		//send to AJAX
+//=====>	sendAjax(?,?,?); //ici
+		//
+	}, false);
+}
+
 </script>
