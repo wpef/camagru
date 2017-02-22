@@ -117,6 +117,8 @@ function insertDatas2($p_query, $datas)
 	if (!is_array($datas))
 		$datas = array($datas);
 
+	//bind params
+
 	//exec
 	try { $q->execute($datas) ;
 	} catch (PDOexcpetion $e) {
@@ -124,10 +126,14 @@ function insertDatas2($p_query, $datas)
 	}
 }
 
+function sendQuery($p_query)
+{
+	insertDatas2($p_query, "");
+}
+
 function getDatas($p_query, $datas)
 {
 //This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
-//getobj;
 
 		//connect
 		$db = connect_db(FALSE);

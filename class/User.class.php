@@ -117,13 +117,8 @@ class User {
  			$this->confirmed = TRUE;
 
  			//set var in db;
- 			$query = "update users set confirmed=1 where login='$this->login';";
- 			$db = connect_db(FALSE);
- 			$db->exec('USE' . $DB_NAME);
- 			try { $db->exec($query);}
- 			catch (PDOexception $e) {
- 				die ('ERROR UPDATING USER: ' . $e->getMessage());
-			}
+ 			$query = "UPDATE users SET confirmed=1 WHERE login='$this->login';";
+ 			sendQuery($query);
  			return TRUE;
  		}
  		else

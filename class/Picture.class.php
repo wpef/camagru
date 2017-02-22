@@ -116,19 +116,48 @@ class Picture {
 
 	public function like($login)
 	{
-		//checking if liked
-		$p_query = "SELECT * FROM likes 
-						WHERE like_pic = $this->id AND like_author = $login;";
-		if (count(getDatas($p_query, "")) > 0)
+		//checking owner
+		if ($this->owner == $login)
 		{
-			$_SESSION['alert'] = "You can like each picture only once.";
-			exit;
+			echo "You cannot like your own picture";
+			return FALSE;
 		}
 
-		//liking
-		insertDatas("likes", array("like_pic" => $this->id, "like_author" => $login));
-		$this->likes++;
-		$this->modify(array('pic_likes', $this->likes));
+		//checking if liked
+		$p_query = "SELECT * FROM likes 
+						WHERE (like_pic = $this->id AND like_author = '$login');";
+
+		//like or unlike
+		if (count(getDatas($p_query, "")) > 0)
+		{
+			echo "unliked";
+			$this->unlike($login);
+			$this->likes = $this->likes - 1;
+		}
+		else
+		{ 
+			echo "liked";
+			insertDatas("likes", array("like_pic" => $this->id, "like_author" => $login));
+			$this->likes++;
+		}
+		
+		//reset likes count;
+		sendQuery("UPDATE pictures SET pic_likes = $this->likes WHERE pic_id = $this->id;");
+
+		return TRUE;
+	}
+
+	public function unlike($login)
+	{
+		sendQuery("DELETE FROM likes WHERE (like_pic = $this->id AND like_author = '$login');");
+	}
+
+	public function modify($datas)
+	{
+		//$datas is an array like $db_entry => $new_value;
+		$p_query = "UPDATE pictures SET ? = ? WHERE pic_id = $this->id;";
+		foreach ($datas as $k => $v)
+			insertDatas2($p_query, array($k, $v));
 	}
 	
 /* ==> PULL <== */
@@ -173,20 +202,17 @@ class Picture {
 		}
 	}
 
-	public function modify($datas)
-	{
-		//$datas is an array like $db_entry => $new_value;
-		$p_query = "UPDATE pictures SET ? = ? WHERE pic_id = $this->id;";
-		foreach ($datas as $d)
-			insertDatas2($p_query, $d);
-	}
-
 /* ==> DISPLAY <== */
 	public function toImgHTML()
 	{
-		$s = "<figure>";
+		$s = "<figure id='pic$this->id'>";
 		$s .= "<img src=\"$this->src\"/>";
-		$s .= "<figcaption>$this->name by $this->owner on $this->date liked $this->likes time(s)</figcaption>";
+		$s .= "<figcaption>";
+		$s .= "<span class='pic_name'> $this->name</span> ";
+		$s .= "by <span class='pic_owner'>$this->owner</span> ";
+		$s .= "on <span class='pic_date'>$this->date</span> "; 
+		$s .= "liked <span class='pic_likes'>$this->likes</span> time(s)";
+		$s .= "</figcaption>";
 		$s .= "</figure>";
 		return $s;
 	}

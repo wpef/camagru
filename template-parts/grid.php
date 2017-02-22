@@ -43,12 +43,28 @@ function like_pict()
 	var str = "pic_id=" + pic_id + "&login=" + user ;
 
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', "../mods/edit_pic.php", true);	
+	xhr.open('POST', "../mods/edit_pic.php?act=like", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
 	xhr.addEventListener('readystatechange', function() {
-		//debug
-		document.getElementById('debug').innerHTML=xhr.responseText;
+		var notifDiv = document.createElement('div');
+		notifDiv.className += 'like_notif';
+		notifDiv.innerHTML = xhr.responseText;
+		var fig = document.getElementById('pic' + pic_id);
+	
+		if (this.readyState == 4 && this.status == 200)
+		{	
+			fig.appendChild(notifDiv);
+			var capt = fig.childNodes[1].getElementsByClassName('pic_likes')[0];
+			var number = capt.innerHTML;
+			if (xhr.responseText == "liked")
+				number++;
+			else if (xhr.responseText == "unliked")
+				number--;
+			capt.innerHTML = number;
+			setTimeout(function(){
+				fig.removeChild(notifDiv);}, 500);
+		}
 	});
 }
 </script>
