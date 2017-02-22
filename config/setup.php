@@ -3,19 +3,19 @@
 require_once('inc.php');
 
 $drop_db = "DROP DATABASE IF EXISTS " . $DB_NAME . ";";
-$create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
+$create_db = "CREATE DATABASE " . $DB_NAME . ";";
 
 //Connect to MySql (db not created yet) and get the PDO object;
 $db = connect_db(TRUE);
 
 //Create DB
-$db->exec($drop_db) or die (print_r($db->errorInfo(), true));
-$db->exec($create_db) or die (print_r($db->errorInfo(), true));
+$db->exec($drop_db) or die ("ERROR DROPPING DB : " .print_r($db->errorInfo(), true));
+$db->exec($create_db) or die ("ERROR CREATING DB : " .print_r($db->errorInfo(), true));
 
 //Create tables var;
 include_once('tables.php');
 
-//push tables + admin to DB; (need other tables)
+//push tables + admin to DB;
 try {
 		$db->exec("USE " . $DB_NAME);
 		foreach ($tables as $name => $v) {
@@ -32,6 +32,12 @@ echo "<p class='message'>THE SITE IS SET UP</p>
 <a href='../index.php'>Visit</a>";
 
 // Load database files (DUMMY CONTENT);
+
+
+///////////////////////////////////////
+//////////////////// FUNCTIONS
+////////////////////////////////////
+
 function get_sample_images() {
 	//add all already taken images in photos/dir (might to the same for /sample);
 	$dir = ROOT . 'photos/';

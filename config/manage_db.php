@@ -34,9 +34,11 @@ function connect_db($new){
 		if ($new)
 			$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
 		else
+		{
 			$db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-		$db->exec("USE " . $DB_NAME);
-		//set error
+			$db->exec("USE " . $DB_NAME);
+		}
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		return $db;
 	}
 	catch (PDOexcpetion $e) {
@@ -48,7 +50,6 @@ function connect_db($new){
 function insertDatas ($table, $datas)
 {
 //This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
-//getobj;
 
 		//connect
 		$db = connect_db(FALSE);
