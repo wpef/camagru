@@ -133,13 +133,14 @@ function sendQuery($p_query)
 
 function getDatas($p_query, $datas)
 {
-//This function return a formated SQL string to insert datas to the database.table. $table is the name of the table to be update and $datas is an array where $keys correspond to table entry and $values to their values to be set; 
+//This function returns an array where each entry is a result
 
 		//connect
 		$db = connect_db(FALSE);
 
 		if (empty($datas))
 			$obj = $db->query($p_query);
+		
 		else {
 			//prepare
 			try { $obj = $db->prepare($p_query); }
