@@ -156,15 +156,5 @@ function pop_notif(mess, pic_id)
 		fig.removeChild(notifDiv);}, 500);
 }
 
-function sendAjax(str, file, callback())
-{
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', file, true);	
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.send(str);
-
-	xhr.addEventListener('readystatechange', callback());
-}
-
 
 </script>
