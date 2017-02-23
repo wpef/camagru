@@ -158,6 +158,18 @@ class Picture {
 		sendQuery("DELETE FROM likes WHERE (like_pic = $this->id AND like_author = '$login');");
 	}
 
+	public function addComment($login, $content)
+	{
+		$datas = array (
+			'com_pic' => $this->id,
+			'com_cont' => $content,
+			'com_date' => date('Y-m-d H:i:s', time()),
+			'com_author' => $login
+			);
+		
+		insertDatas('comments', $datas);
+	}
+
 	public function modify($datas)
 	{
 		//$datas is an array like $db_entry => $new_value;
@@ -188,7 +200,8 @@ class Picture {
 		$this->_proceedArray($res[0]);
 	}
 
-	private function _proceedArray($a) {
+	private function _proceedArray($a)
+	{
 		//treat STD
 		foreach ($a as $d => $v)
 		{
@@ -211,6 +224,25 @@ class Picture {
 					break;
 			}
 		}
+	}
+
+	public function getComments($limit)
+	{
+		if (!empty($limit))
+		{
+			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date LIMIT ?";
+			$datas = array($this->id, $limit);
+		}
+		else
+		{
+			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date ;";
+			$datas = array($this->id);
+		}
+
+		$this->comments = getDatas($query, $datas);
+		if (!empty($this->comments))
+			return TRUE;
+		return FALSE;
 	}
 
 /* ==> DISPLAY <== */
