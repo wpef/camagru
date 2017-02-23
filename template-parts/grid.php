@@ -27,7 +27,7 @@ function displayOwnerMenu($pict)
 	$html .= "value='$pict->id'> ";
 	$html .= "<img class='editimg' src='$edit' alt='edit'/>";
 	$html .= "</button>";
-	$html =	"<button class='pic_button del' name='delete' ";
+	$html .= "<button class='pic_button del' name='delete' ";
 	$html .= "value='$pict->id'> ";
 	$html .= "<img class='delimg' src='$del' alt='delete'/>";
 	$html .= "</button>";
@@ -53,6 +53,8 @@ function displayPictureMenu($pict)
 
 <script>
 
+
+//assigning functions to buttons
 var like = document.getElementsByClassName('like');
 var i = 0;
 while (i < like.length)
@@ -63,7 +65,13 @@ var i = 0;
 while (i < edit.length)
 	edit[i++].addEventListener("click", edit_pict, false); 
 
+var del = document.getElementsByClassName('del');
+var i = 0;
+while (i < del.length)
+	del[i++].addEventListener("click", delete_pict, false); 
 
+
+//////// BUTTONS METHODS
 function like_pict()
 {
 	//set vars
@@ -141,6 +149,31 @@ function edit_pict()
 	};
 }
 
+function delete_pict()
+{
+	var pic_id = this.value;
+
+	if (confirm("Are you sure you want to delete this picture ?") !== true)
+		return;
+
+	//send ajax
+	var str = "pic_id=" + pic_id;
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', "../mods/edit_pic.php?act=delete", true);	
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.send(str);
+
+	//Callback func
+	xhr.addEventListener('readystatechange', function() {
+		//display newname
+		if (this.readyState == 4 && this.status == 200)
+		{	
+			var picture = document.getElementById('pic' + pic_id);
+			picture.className = 'deleted';
+		}	
+	});
+}
 
 ///LIB 
 function pop_notif(mess, pic_id)
@@ -153,7 +186,8 @@ function pop_notif(mess, pic_id)
 	
 	fig.appendChild(notifDiv);
 	setTimeout(function(){
-		fig.removeChild(notifDiv);}, 500);
+		if (fig.removeChild(notifDiv));
+	}, 500);
 }
 
 

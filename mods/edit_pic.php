@@ -25,10 +25,16 @@ if ($_GET['act'] == 'like')
 if ($_GET['act'] == 'rename')
 {
 	$newName = $_POST['newName'];
-	//proceed newName
 	if (rename_pic($pic_id, $newName) !== TRUE)
 		return FALSE;
 	echo $newName;
+}
+
+if ($_GET['act'] == 'delete')
+{
+	if (delete_pic($pic_id) !== TRUE)
+		return FALSE;
+	echo "deleted";
 }
 
 
@@ -37,17 +43,28 @@ if ($_GET['act'] == 'rename')
 function like_pic($pic_id, $user)
 {
 	$pict = new Picture(array('id' => $pic_id));
-	if ($pict->like($user))
-		return TRUE;
+	if (userExists($user))
+	{
+		if ($pict->like($user))
+			return TRUE;
+	}
 	return FALSE;
 }
 
 function rename_pic($pic_id, $newName)
 {
 	$pict = new Picture(array('id' => $pic_id));
+	//proceed newName
 	if ($pict->modify(array('pic_name' => $newName)))
 		return TRUE;
 	return FALSE;
+}
+
+function delete_pic($pic_id)
+{
+	sendQuery("DELETE FROM pictures WHERE pic_id = $pic_id;");
+	sendQuery("DELETE FROM likes WHERE like_pic = $pic_id;");
+	return TRUE;
 }
 
 ?>
