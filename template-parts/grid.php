@@ -10,12 +10,15 @@ else if ($_GET['type'] == 'guest')
 
 foreach ($images_id as $i)
 {
+	$user = $_SESSION['user'];
 	$pict = new Picture(array('id' => $i['pic_id']));
-	echo $pict->toImgHTML();
-	if ($pict->owner == $_SESSION['user']->login)
+	
+	echo "<div id='pic$pict->id'>";
+	echo $pict->toImgHTML();	
+	displayPictureMenu($pict, $pict->owner == $user->login);
+	if ($pict->owner == $user->login or $user->isadmin == 1)
 		displayOwnerMenu($pict);
-	else
-		displayPictureMenu($pict);
+	echo "</div>";
 }
 
 function displayOwnerMenu($pict)
@@ -31,19 +34,28 @@ function displayOwnerMenu($pict)
 	$html .= "value='$pict->id'> ";
 	$html .= "<img class='delimg' src='$del' alt='delete'/>";
 	$html .= "</button>";
-	$html .= "<form id='edit_img$pict->id' style='display:none' >Rename picture : <input type='text' name='newName' value='$pict->name'> </form>";
+	$html .= "<form style='display:none' >Rename picture : <input type='text' name='newName' value='$pict->name'> </form>";
 
 	echo $html;
 }
 
-function displayPictureMenu($pict)
+function displayPictureMenu($pict, $owned)
 {
 	$user = $_SESSION['user']->login;
 	$like = WEBROOT . "img/assets/like.png";
-	
-	$html =	"<button class='pic_button like' name='like' ";
+	$com = WEBROOT . "img/assets/com.png";
+
+	$html = "";
+	if (!$owned)
+	{
+		$html =	"<button class='pic_button like' name='like' ";
+		$html .= "value='$pict->id $user'> ";
+		$html .= "<img class='likeimg' src='$like' alt='like'/>";
+		$html .= "</button>";
+	}
+	$html .= "<button class='pic_button com' name='com' ";
 	$html .= "value='$pict->id $user'> ";
-	$html .= "<img class='likeimg' src='$like' alt='like'/>";
+	$html .= "<img class='comimg' src='$com' alt='Comments'/>";
 	$html .= "</button>";
 
 	echo $html;
@@ -70,6 +82,10 @@ var i = 0;
 while (i < del.length)
 	del[i++].addEventListener("click", delete_pict, false); 
 
+var com = document.getElementsByClassName('com');
+var i = 0;
+while (i < com.length)
+	com[i++].addEventListener("click", display_comments, false);
 
 //////// BUTTONS METHODS
 function like_pict()
@@ -92,7 +108,7 @@ function like_pict()
 		if (this.readyState == 4 && this.status == 200)
 		{	
 			pop_notif(xhr.responseText, pic_id);
-			var capt = document.querySelector('#pic' + pic_id).querySelector('figcaption').querySelector('.pic_likes');
+			var capt = document.querySelector('figure#pic' + pic_id).querySelector('figcaption').querySelector('.pic_likes');
 			var number = capt.innerHTML;
 			if (xhr.responseText == "liked")
 				number++;
@@ -108,7 +124,7 @@ function edit_pict()
 	var pic_id = this.value;
 
 	//display form
-	var form = document.getElementById('edit_img' + pic_id);
+	var form = document.querySelector('div#pic' + pic_id).querySelector('form');
 	form.removeAttribute('style');
 
 	//send on RET
@@ -169,8 +185,36 @@ function delete_pict()
 		//display newname
 		if (this.readyState == 4 && this.status == 200)
 		{	
-			var picture = document.getElementById('pic' + pic_id);
-			picture.className = 'deleted';
+			var picture = document.querySelector('div#pic' + pic_id);
+			picture.parentNode.removeChild(picture);
+		}	
+	});
+}
+
+function display_comments()
+{
+	var pic_id = this.value;
+	//add static to hide if not hidden
+	
+	//send ajax
+	var str = "pic_id=" + pic_id;
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', "../mods/edit_pic.php?act=dispCom", true);	
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.send(str);
+
+	//Callback func
+	xhr.addEventListener('readystatechange', function() {
+		//display newname
+		if (this.readyState == 4 && this.status == 200)
+		{	
+			//callback
+			var debug = document.querySelector("#debug");
+			debug.innerHTML = xhr.responseText;
+			//Create div with response
+			//create input for new com
+				//on enter send new com
 		}	
 	});
 }
