@@ -9,7 +9,7 @@ $create_db = "CREATE DATABASE " . $DB_NAME . ";";
 $db = connect_db(TRUE);
 
 //Create DB
-$db->exec($drop_db) or die ("ERROR DROPPING DB : " .print_r($db->errorInfo(), true));
+//$db->exec($drop_db) or die ("ERROR DROPPING DB : " .print_r($db->errorInfo(), true));
 $db->exec($create_db) or die ("ERROR CREATING DB : " .print_r($db->errorInfo(), true));
 
 //Create tables var;

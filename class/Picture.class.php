@@ -161,9 +161,14 @@ class Picture {
 	public function modify($datas)
 	{
 		//$datas is an array like $db_entry => $new_value;
-		$p_query = "UPDATE pictures SET ? = ? WHERE pic_id = $this->id;";
 		foreach ($datas as $k => $v)
-			insertDatas2($p_query, array($k, $v));
+		{
+			if (is_string($v))
+				$v = "'$v'";
+			sendQuery("UPDATE pictures SET $k = $v WHERE pic_id = $this->id;");
+		}
+		$this->_pull($this->id);
+		return TRUE;
 	}
 	
 /* ==> PULL <== */
