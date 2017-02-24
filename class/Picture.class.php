@@ -248,15 +248,12 @@ class Picture {
 /* ==> DISPLAY <== */
 	public function toImgHTML()
 	{
-		$s = "<figure id='pic$this->id'>";
-		$s .= "<img src=\"$this->src\"/>";
-		$s .= "<figcaption>";
-		$s .= "<span class='pic_name'> $this->name</span> ";
-		$s .= "by <span class='pic_owner'>$this->owner</span> ";
-		$s .= "on <span class='pic_date'>$this->date</span> "; 
-		$s .= "liked <span class='pic_likes'>$this->likes</span> time(s)";
-		$s .= "</figcaption>";
-		$s .= "</figure>";
+		$page = WEBROOT . "pages/gallery?type=guest&user=";
+
+		$s = 	"<section class='image'>";
+		$s .= 	"<img src=\"$this->src\"/>";
+		$s .=	"</section>";
+		
 		return $s;
 	}
 

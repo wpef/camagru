@@ -12,53 +12,64 @@ foreach ($images_id as $i)
 {
 	$user = $_SESSION['user'];
 	$pict = new Picture(array('id' => $i['pic_id']));
-	
-	echo "<div id='pic$pict->id'>";
-	echo $pict->toImgHTML();	
-	displayPictureMenu($pict, $pict->owner == $user->login);
-	if ($pict->owner == $user->login or $user->isadmin == 1)
-		displayOwnerMenu($pict);
-	echo "</div>";
+
+ 	echo "<article class='picture' id='pic$pict->id'>";
+ 		displayPictureHeader($pict, $user);
+		echo $pict->toImgHTML();
+	//	displayPictureDetails($pict, $user);
+		displayPictureButtons($pict, $user);
+	echo "</article>";
+//	displayPictureMenu($pict, $pict->owner == $user->login);
+//	if ($pict->owner == $user->login or $user->isadmin == 1)
+//		displayOwnerMenu($pict);
 }
 
-function displayOwnerMenu($pict)
+function displayPictureHeader($pict, $user)
 {
 	$edit = WEBROOT . "img/assets/edit.png";
 	$del = WEBROOT . "img/assets/del.png";
 
-	$html =	"<button class='pic_button edit' name='edit' ";
-	$html .= "value='$pict->id'> ";
-	$html .= "<img class='editimg' src='$edit' alt='edit'/>";
-	$html .= "</button>";
-	$html .= "<button class='pic_button del' name='delete' ";
-	$html .= "value='$pict->id'> ";
-	$html .= "<img class='delimg' src='$del' alt='delete'/>";
-	$html .= "</button>";
-	$html .= "<form style='display:none' >Rename picture : <input type='text' name='newName' value='$pict->name'> </form>";
+	$s = 	"<section class='details'>";
+	$s .= 	"by&nbsp;<a class='pic_owner' href='$page$pict->owner'>$pict->owner</a>";
+	$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$pict->date</span> "; 
+	$s .= 	"</section>";
 
-	echo $html;
+	echo "<header class='pic_header'>";
+	if ($pict->owner == $user->login)
+	{
+		echo "<i class=\"pic_button del fa fa-times\" aria-hidden=\"true\"></i>";
+		echo "<i class=\"pic_button edit fa fa-pencil-square-o fa-2x\"></i>";
+		echo "<input type='text 'class='pic_name' name='newName' value='$pict->name' readonly='true'>";
+		echo $s;
+		echo "</header>";
+	}
+	else
+	{
+		echo "<h2 class='pic_name'>$pict->name</h2>";
+		echo $s;
+		echo "</header>";
+	}
 }
 
-function displayPictureMenu($pict, $owned)
+function displayPictureButtons($pict, $user)
 {
-	$user = $_SESSION['user']->login;
 	$like = WEBROOT . "img/assets/like.png";
-	$com = WEBROOT . "img/assets/com.png";
-
-	$html = "";
-	if (!$owned)
+ 	$com = WEBROOT . "img/assets/com.png";
+	
+	if ($pict->owner !== $user->login)
 	{
-		$html =	"<button class='pic_button like' name='like' ";
-		$html .= "value='$pict->id $user'> ";
-		$html .= "<img class='likeimg' src='$like' alt='like'/>";
-		$html .= "</button>";
+		echo "<button class='pic_button like' name='like' ";
+ 		echo "value='$pict->id $user->login'> ";
+ 		echo "<img class='likeimg' src='$like' alt='like'/>";
+		echo "</button>";
 	}
-	$html .= "<button class='pic_button com' name='com' ";
-	$html .= "value='$pict->id $user'> ";
-	$html .= "<img class='comimg' src='$com' alt='Comments'/>";
-	$html .= "</button>";
-
-	echo $html;
+	else
+		echo "<img class='likeimg' src='$like' alt='like'/>";
+	echo "<span class='pic_likes'>$pict->likes likes</span>";
+	echo "<button class='pic_button com' name='com' ";
+	echo "value='$pict->id $user->login'> ";
+	echo "<img class='comimg' src='$com' alt='Comments'/>";
+	echo "</button>";
 }
 
 ?>
@@ -72,7 +83,7 @@ var i = 0;
 while (i < like.length)
 	like[i++].addEventListener("click", like_pict, false); 
 
-var edit = document.getElementsByClassName('edit');
+var edit = document.getElementsByClassName('pic_header');
 var i = 0;
 while (i < edit.length)
 	edit[i++].addEventListener("click", edit_pict, false); 
@@ -121,15 +132,17 @@ function like_pict()
 
 function edit_pict()
 {
-	var pic_id = this.value;
+	this.removeEventListener("click", edit_pict, false); 
 
-	//display form
-	var form = document.querySelector('div#pic' + pic_id).querySelector('form');
-	form.removeAttribute('style');
+	var id = this.parentNode.id;
+	var pic_id = id.substr(3);
 
-	//send on RET
-	var input = form.getElementsByTagName('input')['newName'];
-	input.onkeypress = function(e) {
+	//Hide title
+	var title = document.querySelector('article#' + id).querySelector('input.pic_name');
+	title.removeAttribute('readonly');
+	title.className += ' editing';
+
+	title.onkeypress = function(e) {
 		var key = e.charCode || e.keyCode || 0;
 		if (key == 13)
 		{
@@ -148,19 +161,16 @@ function edit_pict()
 
 			//Callback func
 			xhr.addEventListener('readystatechange', function() {
-				//hide field
-				form.style.display = 'none';
-
 				//display newname
 				if (this.readyState == 4 && this.status == 200)
 				{	
-					var picture = document.getElementById('pic' + pic_id);
-					picture = picture.querySelector('figcaption');
-					var pic_name = picture.querySelector('.pic_name');
-					pic_name.innerHTML = xhr.responseText;
+					title.innerHTML = xhr.responseText;
+					title.setAttribute('readonly', true);
+					title.className = 'pic_name';
 					pop_notif("edited", pic_id);
+					this.addEventListener("click", edit_pict, false);
 				}
-	});
+			});
 		}
 	};
 }
@@ -233,6 +243,5 @@ function pop_notif(mess, pic_id)
 		if (fig.removeChild(notifDiv));
 	}, 500);
 }
-
 
 </script>
