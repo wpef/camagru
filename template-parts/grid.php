@@ -1,4 +1,5 @@
 <?php
+
 if ($_GET['type'] == 'user')
 	$images_id = $_SESSION['user']->getImages();
 
@@ -178,7 +179,7 @@ function edit_pict()
 				{	
 					title.innerHTML = xhr.responseText;
 					title.setAttribute('readonly', true);
-					
+
 					//POP NOTIF IMAGE OR GREEN SUBLINE
 					pop_notif("EDITED !", pic_id, title);
 				}

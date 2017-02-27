@@ -52,10 +52,20 @@ function get_sample_images() {
 
 	$q = $db->prepare($p_query);
 
+	$rand = 0;
 	foreach ($photos as $p) {
-		$a = array( WEBROOT . 'photos/' . basename($p), 'admin', 
-			basename($p), date('Y-m-d H:i:s', time()));
+		if ($rand % 3)
+		{
+			$a = array( WEBROOT . 'photos/' . basename($p), 'guest', 
+				basename($p), date('Y-m-d H:i:s', time() + (15 * $rand)));
+		}
+		else
+		{
+			$a = array( WEBROOT . 'photos/' . basename($p), 'admin', 
+				basename($p), date('Y-m-d H:i:s', time() + (15 * $rand)));
+		}
 		$q->execute($a);
+		$rand++;
 	}
 }
 ?>
