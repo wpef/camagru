@@ -8,6 +8,7 @@ else if ($_GET['type'] == 'guest')
  		$images_id = getDatas($p_query, "");
 }
 
+echo "<div class='grid-wrapper'>";
 foreach ($images_id as $i)
 {
 	$user = $_SESSION['user'];
@@ -23,6 +24,7 @@ foreach ($images_id as $i)
 //	if ($pict->owner == $user->login or $user->isadmin == 1)
 //		displayOwnerMenu($pict);
 }
+echo "</div>";
 
 function displayPictureHeader($pict, $user)
 {
@@ -34,22 +36,25 @@ function displayPictureHeader($pict, $user)
 	$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$pict->date</span> "; 
 	$s .= 	"</section>";
 
+	$edit_icon = "<i class=\"edit fa fa-pencil-square-o fa-2x\"></i>";
+	$del_icon = "<i class=\"del fa fa-times\" aria-hidden=\"true\"></i>";
+
 	echo "<header class='pic_header'>";
-	if ($pict->owner == $user->login)
+	if ($user->isadmin OR $pict->owner == $user->login)
 	{
-		$edit_icon = "<i class=\"pic_button edit fa fa-pencil-square-o fa-2x\"></i>";
-		echo "<i class=\"pic_button del fa fa-times\" aria-hidden=\"true\"></i>";
-		echo $edit_icon;
-		echo "<input type='text 'class='pic_name' name='newName' value='$pict->name' readonly='true'>";
-		echo $s;
-		echo "</header>";
+		echo $del_icon;
+		if ($pict->owner == $user->login)
+		{
+			echo $edit_icon;
+			echo "<input type='text 'class='pic_name' name='newName' value='$pict->name' readonly='true'>";
+		}
+		else
+			echo "<h2 class='pic_name'>$pict->name</h2>";
 	}
 	else
-	{
 		echo "<h2 class='pic_name'>$pict->name</h2>";
-		echo $s;
-		echo "</header>";
-	}
+	echo $s;
+	echo "</header>";
 }
 
 function displayPictureButtons($pict, $user)
@@ -65,7 +70,7 @@ function displayPictureButtons($pict, $user)
 		echo "</button>";
 	}
 	else
-		echo "<img class='likeimg' src='$like' alt='like'/>";
+		echo "<img class='likeimg pic_button' src='$like' alt='like'/>";
 	echo "<span class='pic_likes'>$pict->likes likes</span>";
 	echo "<button class='pic_button com' name='com' ";
 	echo "value='$pict->id $user->login'> ";
@@ -169,16 +174,18 @@ function edit_pict()
 					title.setAttribute('readonly', true);
 					title.className = 'pic_name';
 					pop_notif("edited", pic_id);
-					this.addEventListener("click", edit_pict, false);
 				}
 			});
 		}
 	};
+	this.addEventListener("click", edit_pict, false);
 }
 
 function delete_pict()
 {
-	var pic_id = this.value;
+	var id = this.parentNode.parentNode.id;
+	var pic_id = id.substr(3);
+	console.log(pic_id);
 
 	if (confirm("Are you sure you want to delete this picture ?") !== true)
 		return;
@@ -193,10 +200,10 @@ function delete_pict()
 
 	//Callback func
 	xhr.addEventListener('readystatechange', function() {
-		//display newname
+		//hide card
 		if (this.readyState == 4 && this.status == 200)
 		{	
-			var picture = document.querySelector('div#pic' + pic_id);
+			var picture = document.querySelector('article#pic' + pic_id);
 			picture.parentNode.removeChild(picture);
 		}	
 	});
