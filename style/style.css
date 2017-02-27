@@ -38,11 +38,13 @@ article.picture header {
 
 	/*TITLES*/
 
+article.picture h2.pic_name {
+	font-weight: initial;
+}
+
 article.picture .pic_name {
 	font-size : 2.4em;
 	text-align: center;
-	
-	width: 100%;
 	padding: 0.5em 0;
 	margin : auto;
 
@@ -53,7 +55,6 @@ article.picture .pic_name {
     border: none;
     -webkit-rtl-ordering: inherit;
     user-select: inherit;
-    font-weight: bold;
 }
 	/*BUTTONS*/
 
