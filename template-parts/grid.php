@@ -39,9 +39,8 @@ function displayPictureHeader($pict, $user)
 	{
 		$edit_icon = "<i class=\"pic_button edit fa fa-pencil-square-o fa-2x\"></i>";
 		echo "<i class=\"pic_button del fa fa-times\" aria-hidden=\"true\"></i>";
-		echo "<div class='edit'> $edit_icon";
+		echo $edit_icon;
 		echo "<input type='text 'class='pic_name' name='newName' value='$pict->name' readonly='true'>";
-		echo "</div>";
 		echo $s;
 		echo "</header>";
 	}

@@ -10,6 +10,8 @@ body {
 
 /*PICTURES DISPLAY*/
 
+	/* WRAPPERS */
+
 article.picture {
 	max-width: 520px;
 	display: inline-block;
@@ -23,19 +25,16 @@ article.picture {
 }
 
 article.picture header {
-	padding: 0 1em 5px 1em;
-	display: inline-block;
+	padding: 0 1em 1em 1em;
 }
 
-div.edit {
-	display: inline-block;
-}
+	/*TITLES*/
 
 article.picture .pic_name {
 	font-size : 2.4em;
 	text-align: center;
-	display: block;
-	max-width: 100%;
+	
+	width: 100%;
 	padding: 0.5em 0;
 	margin : auto;
 
@@ -48,25 +47,27 @@ article.picture .pic_name {
     user-select: inherit;
     font-weight: bold;
 }
+	/*BUTTONS*/
 
-.pic_header .edit:hover i.edit {
+article.picture .pic_header:hover i.edit {
 	display: initial !important;
-	/*position: absolute !important;*/
-	float: right;
+	float: left;
 }
 
 i.edit {
 	display: none !important;
-	float: right;
+	position: relative;
+	float: left;
 }
 
 i.del {
 	color : #c13131;
 	font-size: 2em;
-	text-align: right;
-	position: absolute;
+	float: right;
+	position: relative;
 }
 
+	/*DETAILS*/
 
 article.picture a, .pic_owner {
 	text-decoration: none;
