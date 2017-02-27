@@ -3,7 +3,7 @@
 require_once('inc.php');
 
 $drop_db = "DROP DATABASE IF EXISTS " . $DB_NAME . ";";
-$create_db = "CREATE DATABASE " . $DB_NAME . ";";
+$create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
 
 //Connect to MySql (db not created yet) and get the PDO object;
 $db = connect_db(TRUE);
@@ -22,6 +22,7 @@ try {
 			$db->exec(create_table($name, $v));
 		}
 		new User ($admin_user);
+		new User ($guest_user);
 		get_sample_images();
 	}
 catch (PDOexcpetion $e) {

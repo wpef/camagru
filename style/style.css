@@ -10,6 +10,14 @@ body {
 
 /*PICTURES DISPLAY*/
 
+div.grid-wrapper {
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
 	/* WRAPPERS */
 
 article.picture {

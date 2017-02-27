@@ -57,4 +57,13 @@ $admin_user = array (
 	'confirmed' => TRUE
 	);
 
+$guest_user = array (
+	'login' => 'guest',
+	'pass' => hash('whirlpool','guest'),
+	'mail' => 'f.demoncade@gmail.com',
+	'f_name' => 'Guest',
+	'l_name' => 'Demo',
+	'confirmed' => TRUE
+	);
+
 ?>
