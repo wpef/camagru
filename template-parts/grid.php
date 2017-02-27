@@ -71,7 +71,7 @@ function displayPictureButtons($pict, $user)
 	}
 	else
 		echo "<img class='likeimg pic_button' src='$like' alt='like'/>";
-	echo "<span class='pic_likes'>$pict->likes likes</span>";
+	echo "<span class='pic_likes'><span id='likes_count'>$pict->likes</span> likes</span>";
 	echo "<button class='pic_button com' name='com' ";
 	echo "value='$pict->id $user->login'> ";
 	echo "<img class='comimg' src='$com' alt='Comments'/>";
@@ -107,6 +107,8 @@ while (i < com.length)
 //////// BUTTONS METHODS
 function like_pict()
 {
+	this.removeEventListener("click", like_pict, false); 
+	
 	//set vars
 	var val = this.value.split(" ");
 	var pic_id = val[0];
@@ -123,17 +125,18 @@ function like_pict()
 	xhr.addEventListener('readystatechange', function() {
 		//Callback 
 		if (this.readyState == 4 && this.status == 200)
-		{	
-			pop_notif(xhr.responseText, pic_id);
-			var capt = document.querySelector('figure#pic' + pic_id).querySelector('figcaption').querySelector('.pic_likes');
-			var number = capt.innerHTML;
+		{
+			var text = document.querySelector('article#pic' + pic_id + ' .pic_likes');
+			var number = text.querySelector('#likes_count').innerHTML;
+
 			if (xhr.responseText == "liked")
 				number++;
 			else if (xhr.responseText == "unliked")
 				number--;
-			capt.innerHTML = number;
+			text.querySelector('#likes_count').innerHTML = number;
 		}
 	});
+	this.addEventListener("click", like_pict, false);
 }
 
 function edit_pict()
@@ -171,9 +174,9 @@ function edit_pict()
 				if (this.readyState == 4 && this.status == 200)
 				{	
 					title.innerHTML = xhr.responseText;
+					pop_notif("edited", pic_id, title);
 					title.setAttribute('readonly', true);
 					title.className = 'pic_name';
-					pop_notif("edited", pic_id);
 				}
 			});
 		}
@@ -185,7 +188,6 @@ function delete_pict()
 {
 	var id = this.parentNode.parentNode.id;
 	var pic_id = id.substr(3);
-	console.log(pic_id);
 
 	if (confirm("Are you sure you want to delete this picture ?") !== true)
 		return;
@@ -238,17 +240,13 @@ function display_comments()
 }
 
 ///LIB 
-function pop_notif(mess, pic_id)
+function pop_notif(mess, pic_id, target)
 {
-	var fig = document.getElementById('pic' + pic_id);
-
-	var notifDiv = fig.querySelector('.notif') || document.createElement('div');
-		notifDiv.className += 'notif';
-		notifDiv.innerHTML = mess;
+	var stock = target.innerHTML;
 	
-	fig.appendChild(notifDiv);
+	target.innerHTML = mess;
 	setTimeout(function(){
-		if (fig.removeChild(notifDiv));
+		if (target.innerHTML = stock);
 	}, 500);
 }
 
