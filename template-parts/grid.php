@@ -153,7 +153,6 @@ function edit_pict()
 	//Hide title
 	var title = document.querySelector('article#' + id).querySelector('input.pic_name');
 	title.removeAttribute('readonly');
-	title.className += ' editing';
 
 	title.onkeypress = function(e) {
 		var key = e.charCode || e.keyCode || 0;
@@ -178,9 +177,10 @@ function edit_pict()
 				if (this.readyState == 4 && this.status == 200)
 				{	
 					title.innerHTML = xhr.responseText;
-					pop_notif("edited", pic_id, title);
 					title.setAttribute('readonly', true);
-					title.className = 'pic_name';
+					
+					//POP NOTIF IMAGE OR GREEN SUBLINE
+					pop_notif("EDITED !", pic_id, title);
 				}
 			});
 		}
@@ -247,7 +247,7 @@ function display_comments()
 function pop_notif(mess, pic_id, target)
 {
 	var stock = target.innerHTML;
-	
+
 	target.innerHTML = mess;
 	setTimeout(function(){
 		if (target.innerHTML = stock);
