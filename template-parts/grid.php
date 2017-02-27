@@ -107,6 +107,9 @@ while (i < com.length)
 //////// BUTTONS METHODS
 function like_pict()
 {
+	if (typeof this == 'undefined')
+		return;
+
 	this.removeEventListener("click", like_pict, false); 
 	
 	//set vars
@@ -114,29 +117,30 @@ function like_pict()
 	var pic_id = val[0];
 	var user = val[1];
 	var str = "pic_id=" + pic_id + "&login=" + user ;
+	var text = document.querySelector('article#pic' + pic_id + ' .pic_likes');
+	var number = text.querySelector('#likes_count').innerHTML;
 
 	//send ajax
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', "../mods/edit_pic.php?act=like", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
-
 	//display live
 	xhr.addEventListener('readystatechange', function() {
 		//Callback 
 		if (this.readyState == 4 && this.status == 200)
 		{
-			var text = document.querySelector('article#pic' + pic_id + ' .pic_likes');
-			var number = text.querySelector('#likes_count').innerHTML;
-
 			if (xhr.responseText == "liked")
 				number++;
 			else if (xhr.responseText == "unliked")
 				number--;
 			text.querySelector('#likes_count').innerHTML = number;
+			pop_notif(xhr.responseText, pic_id, text);
+			setTimeout(function(){
+				document.querySelector('article#pic' + pic_id + ' .like').addEventListener("click", like_pict, false);
+				}, 500);
 		}
 	});
-	this.addEventListener("click", like_pict, false);
 }
 
 function edit_pict()
