@@ -50,6 +50,8 @@ function like_pic($pic_id, $user)
 		if ($pict->like($user))
 			return TRUE;
 	}
+	else
+		echo "$user is not a valid member";
 	return FALSE;
 }
 

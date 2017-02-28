@@ -58,6 +58,10 @@ article.picture .pic_name {
 }
 	/*BUTTONS*/
 
+.user_actions {
+	padding : 1em;
+}
+
 .edit:hover:before {
 	font-family: FontAwesome;
 	font-size: 2em;
@@ -71,17 +75,33 @@ i.del {
 	position: relative;
 }
 
+.pic_likes {
+	float: left;
+	margin-bottom : 15px;
+}
 
 .pic_likes:before {
-   font-family: FontAwesome;
-   font-size: 2em;
-   content: "\f08a";
+	font-family: FontAwesome;
+	font-size: 2em;
+	content: "\f08a";
+	margin-right: 20px;
 }
 
 .liked:before {
-/*	font-family: FontAwesome; */
 	content: "\f004";
-	color : red;
+	color : #ED0000;
+}
+
+.pic_com {
+	float: right;
+	margin-bottom : 15px;
+}
+
+.pic_com:before {
+	font-family: FontAwesome;
+	font-size: 2em;
+	content: "\f10e";
+	margin-right: 20px;
 }
 
 	/*DETAILS*/

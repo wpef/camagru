@@ -18,7 +18,6 @@ foreach ($images_id as $i)
  	echo "<article class='picture' id='pic$pict->id'>";
  		displayPictureHeader($pict, $user);
 		echo $pict->toImgHTML();
-	//	displayPictureDetails($pict, $user);
 		displayPictureButtons($pict, $user);
 	echo "</article>";
 //	displayPictureMenu($pict, $pict->owner == $user->login);
@@ -37,7 +36,6 @@ function displayPictureHeader($pict, $user)
 	$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$pict->date</span> "; 
 	$s .= 	"</section>";
 
-//	$edit_icon = "<i class=\"edit fa fa-pencil-square-o fa-2x\"></i>";
 	$del_icon = "<i class=\"del fa fa-times\" aria-hidden=\"true\"></i>";
 
 	echo "<header class='pic_header'>";
@@ -55,6 +53,7 @@ function displayPictureHeader($pict, $user)
 	}
 	else
 		echo "<h2 class='pic_name'>$pict->name</h2>";
+	
 	echo $s;
 	echo "</header>";
 }
@@ -64,15 +63,14 @@ function displayPictureButtons($pict, $user)
 	$like = WEBROOT . "img/assets/like.png";
  	$com = WEBROOT . "img/assets/com.png";
 	
-	echo "<span class='pic_likes";
-	if ($pict->owner !== $user->login)
-		echo " likable";
-	echo "'><span id='likes_count'>$pict->likes</span> likes</span>";
-	
-	// echo "<button class='pic_button com' name='com' ";
-	// echo "value='$pict->id $user->login'> ";
-	// echo "<img class='comimg' src='$com' alt='Comments'/>";
-	// echo "</button>";
+ 	echo "<section class='user_actions'>";
+ 	//likes
+		echo "<span class='pic_likes $user->login'>";
+		echo "<span id='likes_count'>$pict->likes</span> like(s)</span>";
+	//coments
+		echo "<span class='pic_com $user->login'>";
+		echo "show comments </span>";
+	echo "</section>";
 }
 
 ?>
@@ -81,7 +79,7 @@ function displayPictureButtons($pict, $user)
 
 
 //assigning functions to buttons
-var like = document.getElementsByClassName('likable');
+var like = document.getElementsByClassName('pic_likes');
 var i = 0;
 while (i < like.length)
 	like[i++].addEventListener("click", like_pict, false); 
@@ -96,7 +94,7 @@ var i = 0;
 while (i < del.length)
 	del[i++].addEventListener("click", delete_pict, false); 
 
-var com = document.getElementsByClassName('com');
+var com = document.getElementsByClassName('pic_com');
 var i = 0;
 while (i < com.length)
 	com[i++].addEventListener("click", display_comments, false);
@@ -110,9 +108,11 @@ function like_pict()
 	this.removeEventListener("click", like_pict, false); 
 	
 	//set vars
-	var val = this.value.split(" ");
-	var pic_id = val[0];
-	var user = val[1];
+	var pic_id = this.parentNode.parentNode.id.substr(3);
+	var user = this.className.split(" ");
+		user = user[user.length - 1];
+	var dis = this;
+
 	var str = "pic_id=" + pic_id + "&login=" + user ;
 	var text = document.querySelector('article#pic' + pic_id + ' .pic_likes');
 	var number = text.querySelector('#likes_count').innerHTML;
@@ -122,19 +122,27 @@ function like_pict()
 	xhr.open('POST', "../mods/edit_pic.php?act=like", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
-	//display live
-	xhr.addEventListener('readystatechange', function() {
-		//Callback 
+	
+	//callback
+	xhr.addEventListener('readystatechange', function() { 
 		if (this.readyState == 4 && this.status == 200)
 		{
 			if (xhr.responseText == "liked")
+			{
 				number++;
+				dis.className = "pic_likes likable liked " + user;
+			}
 			else if (xhr.responseText == "unliked")
+			{
 				number--;
+				dis.className = "pic_likes likable " + user;
+			}
+
 			text.querySelector('#likes_count').innerHTML = number;
+			
 			pop_notif(xhr.responseText, pic_id, text);
 			setTimeout(function(){
-				document.querySelector('article#pic' + pic_id + ' .like').addEventListener("click", like_pict, false);
+				dis.addEventListener("click", like_pict, false);
 				}, 500);
 		}
 	});
