@@ -168,6 +168,7 @@ class Picture {
 			);
 		
 		insertDatas('comments', $datas);
+		return $datas;
 	}
 
 	public function modify($datas)
@@ -226,11 +227,19 @@ class Picture {
 		}
 	}
 
-	public function getComments($limit)
+	public function getComments($limit, $offset)
 	{
-		if (!empty($limit))
+		$db = connect_db(FALSE);
+
+		//SET VARS
+		if (!empty($offset))
 		{
-			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date LIMIT ?";
+			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date LIMIT ?, ?;";
+			$datas = array($this->id, $limit, $offset);	
+		}
+		else if (!empty($limit))
+		{
+			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date LIMIT ?;";
 			$datas = array($this->id, $limit);
 		}
 		else
@@ -239,9 +248,33 @@ class Picture {
 			$datas = array($this->id);
 		}
 
-		$this->comments = getDatas($query, $datas);
-		if (!empty($this->comments))
-			return TRUE;
+		//PREPARE QUERY
+		try {
+			$obj = $db->prepare($query);
+		} catch (PDOexcpetion $e) {
+			die ("ERROR PREPARING QUERY : $p_query :" . $e->getMessage());
+		}
+
+		//BIND PARAMS
+		$i = 1;
+		foreach ($datas as $d) {
+			$obj->bindParam($i, $d, PDO::PARAM_INT);
+			$i++;
+		}
+
+		//EXEC
+		try {
+			$obj->execute(); 
+		} catch (PDOexcpetion $e) {
+			die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
+		}
+		
+		//FETCH
+		$res = $obj->fetchAll();
+		$obj->closeCursor();
+
+		if (!empty($res))
+			return $res;
 		return FALSE;
 	}
 

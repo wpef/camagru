@@ -32,7 +32,7 @@ function displayPictureHeader($pict, $user)
 	$del = WEBROOT . "img/assets/del.png";
 
 	$s = 	"<section class='details'>";
-	$s .= 	"by&nbsp;<a class='pic_owner' href='$page$pict->owner'>$pict->owner</a>";
+	$s .= 	"by&nbsp;<a class='pic_owner' href='WEBROOT . '/pages/grid.php?user=$pict->owner''>$pict->owner</a>";
 	$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$pict->date</span> "; 
 	$s .= 	"</section>";
 
@@ -60,9 +60,6 @@ function displayPictureHeader($pict, $user)
 
 function displayPictureButtons($pict, $user)
 {
-	$like = WEBROOT . "img/assets/like.png";
- 	$com = WEBROOT . "img/assets/com.png";
-	
  	echo "<section class='user_actions'>";
  	//likes
 		echo "<span class='pic_likes $user->login'>";
@@ -75,9 +72,9 @@ function displayPictureButtons($pict, $user)
 
 ?>
 
+<script type="text/javascript" src="<?php echo WEBROOT . 'script/grid_ui.js' ?>"></script>
+
 <script>
-
-
 //assigning functions to buttons
 var like = document.getElementsByClassName('pic_likes');
 var i = 0;
@@ -98,165 +95,5 @@ var com = document.getElementsByClassName('pic_com');
 var i = 0;
 while (i < com.length)
 	com[i++].addEventListener("click", display_comments, false);
-
-//////// BUTTONS METHODS
-function like_pict()
-{
-	if (typeof this == 'undefined')
-		return;
-
-	this.removeEventListener("click", like_pict, false); 
-	
-	//set vars
-	var pic_id = this.parentNode.parentNode.id.substr(3);
-	var user = this.className.split(" ");
-		user = user[user.length - 1];
-	var dis = this;
-
-	var str = "pic_id=" + pic_id + "&login=" + user ;
-	var text = document.querySelector('article#pic' + pic_id + ' .pic_likes');
-	var number = text.querySelector('#likes_count').innerHTML;
-
-	//send ajax
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', "../mods/edit_pic.php?act=like", true);	
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.send(str);
-	
-	//callback
-	xhr.addEventListener('readystatechange', function() { 
-		if (this.readyState == 4 && this.status == 200)
-		{
-			if (xhr.responseText == "liked")
-			{
-				number++;
-				dis.className = "pic_likes likable liked " + user;
-			}
-			else if (xhr.responseText == "unliked")
-			{
-				number--;
-				dis.className = "pic_likes likable " + user;
-			}
-
-			text.querySelector('#likes_count').innerHTML = number;
-			
-			pop_notif(xhr.responseText, pic_id, text);
-			setTimeout(function(){
-				dis.addEventListener("click", like_pict, false);
-				}, 500);
-		}
-	});
-}
-
-function edit_pict()
-{
-	this.removeEventListener("click", edit_pict, false); 
-
-	var id = this.parentNode.id;
-	var pic_id = id.substr(3);
-
-	//Hide title
-	var title = document.querySelector('article#' + id).querySelector('input.pic_name');
-	title.removeAttribute('readonly');
-
-	title.onkeypress = function(e) {
-		var key = e.charCode || e.keyCode || 0;
-		if (key == 13)
-		{
-			//esquive submit
-			e.preventDefault();
-
-			//setting vars
-			var newName = this.value;
-			var str = "pic_id=" + pic_id + "&newName=" + newName;
-
-			//send AJAX
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST', "../mods/edit_pic.php?act=rename", true);	
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send(str);
-
-			//Callback func
-			xhr.addEventListener('readystatechange', function() {
-				//display newname
-				if (this.readyState == 4 && this.status == 200)
-				{	
-					title.innerHTML = xhr.responseText;
-					title.setAttribute('readonly', true);
-
-					//POP NOTIF IMAGE OR GREEN SUBLINE
-					pop_notif("EDITED !", pic_id, title);
-				}
-			});
-		}
-	};
-	this.addEventListener("click", edit_pict, false);
-}
-
-function delete_pict()
-{
-	var id = this.parentNode.parentNode.id;
-	var pic_id = id.substr(3);
-
-	if (confirm("Are you sure you want to delete this picture ?") !== true)
-		return;
-
-	//send ajax
-	var str = "pic_id=" + pic_id;
-
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', "../mods/edit_pic.php?act=delete", true);	
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.send(str);
-
-	//Callback func
-	xhr.addEventListener('readystatechange', function() {
-		//hide card
-		if (this.readyState == 4 && this.status == 200)
-		{	
-			var picture = document.querySelector('article#pic' + pic_id);
-			picture.parentNode.removeChild(picture);
-		}	
-	});
-}
-
-function display_comments()
-{
-	var pic_id = this.value;
-	//add static to hide if not hidden
-	
-	//send ajax
-	var str = "pic_id=" + pic_id;
-
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', "../mods/edit_pic.php?act=dispCom", true);	
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.send(str);
-
-	//Callback func
-	xhr.addEventListener('readystatechange', function() {
-		//display newname
-		if (this.readyState == 4 && this.status == 200)
-		{	
-			//callback
-			var debug = document.querySelector("#debug");
-			debug.innerHTML = xhr.responseText;
-			//Create div with response
-			//create input for new com
-				//on enter send new com
-		}	
-	});
-}
-
-///LIB 
-function pop_notif(mess, pic_id, target)
-{
-	var stock = target.innerHTML;
-
-	target.innerHTML = mess;
-	setTimeout(function(){
-		if (target.innerHTML = stock);
-	}, 500);
-}
 
 </script>

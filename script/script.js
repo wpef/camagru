@@ -8,7 +8,3 @@ var select_stick = function(stick) {
 		old.removeAttribute('id');
 	stick.setAttribute('id', 'selected');
 };
-
-var displayPictureMenu = function(pic_id) {
-	console.log(pic_id);
-};
