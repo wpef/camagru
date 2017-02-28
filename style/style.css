@@ -58,15 +58,10 @@ article.picture .pic_name {
 }
 	/*BUTTONS*/
 
-article.picture .pic_header:hover i.edit {
-	display: initial !important;
-	float: left;
-}
-
-i.edit {
-	display: none !important;
-	position: relative;
-	float: left;
+.edit:hover:before {
+	font-family: FontAwesome;
+	font-size: 2em;
+	content: "\f040";
 }
 
 i.del {
@@ -74,6 +69,19 @@ i.del {
 	font-size: 2em;
 	float: right;
 	position: relative;
+}
+
+
+.pic_likes:before {
+   font-family: FontAwesome;
+   font-size: 2em;
+   content: "\f08a";
+}
+
+.liked:before {
+/*	font-family: FontAwesome; */
+	content: "\f004";
+	color : red;
 }
 
 	/*DETAILS*/

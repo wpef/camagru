@@ -37,7 +37,7 @@ function displayPictureHeader($pict, $user)
 	$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$pict->date</span> "; 
 	$s .= 	"</section>";
 
-	$edit_icon = "<i class=\"edit fa fa-pencil-square-o fa-2x\"></i>";
+//	$edit_icon = "<i class=\"edit fa fa-pencil-square-o fa-2x\"></i>";
 	$del_icon = "<i class=\"del fa fa-times\" aria-hidden=\"true\"></i>";
 
 	echo "<header class='pic_header'>";
@@ -46,8 +46,9 @@ function displayPictureHeader($pict, $user)
 		echo $del_icon;
 		if ($pict->owner == $user->login)
 		{
-			echo $edit_icon;
-			echo "<input type='text 'class='pic_name' name='newName' value='$pict->name' readonly='true'>";
+			echo "<span class='edit'>";
+			echo "<input type='text name='newName' class='pic_name' value='$pict->name' readonly='true'>";
+			echo "</span>";
 		}
 		else
 			echo "<h2 class='pic_name'>$pict->name</h2>";
@@ -63,20 +64,15 @@ function displayPictureButtons($pict, $user)
 	$like = WEBROOT . "img/assets/like.png";
  	$com = WEBROOT . "img/assets/com.png";
 	
+	echo "<span class='pic_likes";
 	if ($pict->owner !== $user->login)
-	{
-		echo "<button class='pic_button like' name='like' ";
- 		echo "value='$pict->id $user->login'> ";
- 		echo "<img class='likeimg' src='$like' alt='like'/>";
-		echo "</button>";
-	}
-	else
-		echo "<img class='likeimg pic_button' src='$like' alt='like'/>";
-	echo "<span class='pic_likes'><span id='likes_count'>$pict->likes</span> likes</span>";
-	echo "<button class='pic_button com' name='com' ";
-	echo "value='$pict->id $user->login'> ";
-	echo "<img class='comimg' src='$com' alt='Comments'/>";
-	echo "</button>";
+		echo " likable";
+	echo "'><span id='likes_count'>$pict->likes</span> likes</span>";
+	
+	// echo "<button class='pic_button com' name='com' ";
+	// echo "value='$pict->id $user->login'> ";
+	// echo "<img class='comimg' src='$com' alt='Comments'/>";
+	// echo "</button>";
 }
 
 ?>
@@ -85,7 +81,7 @@ function displayPictureButtons($pict, $user)
 
 
 //assigning functions to buttons
-var like = document.getElementsByClassName('like');
+var like = document.getElementsByClassName('likable');
 var i = 0;
 while (i < like.length)
 	like[i++].addEventListener("click", like_pict, false); 
