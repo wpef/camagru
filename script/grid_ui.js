@@ -119,10 +119,10 @@ function delete_pict()
 	});
 }
 
-function display_comments()
+function display_comments(event)
 {
 	this.removeEventListener("click", display_comments, false);
-	
+
 	var dis = this;
 	var pic_id = this.parentNode.parentNode.id.substr(3)
 	var user = this.className.split(" ");
@@ -136,7 +136,7 @@ function display_comments()
 	var load = document.createElement('div');
 		load.className = 'load_button';
 		load.innerHTML = 'Show more...';
-	//	load.addEventListener('click', load_coms(pic_id), false);
+	//	load.addEventListener('click', load_more_coms(event, pic_id), false);
 		comments.appendChild(load);
 
 	var input = document.createElement('input');
@@ -158,6 +158,10 @@ function display_comments()
 
 	//get first 3 comments;
 	load_coms(pic_id);
+	var loaded = comments.querySelector('.load_button');
+	loaded.addEventListener('click', load_more_coms(event, pic_id), false);
+//	var load = document.querySelector('#pic' + pic_id + " .load_button");
+//		load.addEventListener('click', load_more_coms(pic_id), false);
 
 	//dis.addEventListener("click", hide_comments(pic_id), false);
 }
@@ -192,7 +196,6 @@ function load_coms(pic_id)
 {
 	var article = document.querySelector("#pic" + pic_id);
 	var comments = article.querySelector('.comments');
-	//NEED TO count already displayed coms;
 
 	//send ajax
 	var str = "pic_id=" + pic_id;
@@ -212,6 +215,14 @@ function load_coms(pic_id)
 			comments.insertBefore(com, comments.firstChild);
 		}
 	});
+}
+
+function load_more_coms(e, pic_id)
+{
+	var article = document.querySelector("#pic" + pic_id);
+	console.log(article);
+	var comments = article.querySelector('section.comments');
+	console.log(comments);
 }
 
 function pop_notif(mess, pic_id, target)
