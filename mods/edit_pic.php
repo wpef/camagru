@@ -122,7 +122,7 @@ function display_comment($com)
 		$author = "<a class='com_author' href='$href'>$author</a>";
 	$date = $com['com_date'];
 		$date = "<span class='com_date'>$date</span>";
-	$cont = $com['content'];
+	$cont = $com['com_cont'];
 
 	echo "<div class='com'>";
 	echo 	"<p class='com_content'>";

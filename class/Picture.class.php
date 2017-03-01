@@ -167,7 +167,8 @@ class Picture {
 			'com_author' => $login
 			);
 		
-		insertDatas('comments', $datas);
+		if (userExists($login))
+			insertDatas('comments', $datas);
 		return $datas;
 	}
 

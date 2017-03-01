@@ -33,7 +33,7 @@ echo "<p class='message'>THE SITE IS SET UP</p>
 <a href='../index.php'>Visit</a>";
 
 // Load database files (DUMMY CONTENT);
-
+get_sample_comments();
 
 ///////////////////////////////////////
 //////////////////// FUNCTIONS
@@ -68,4 +68,18 @@ function get_sample_images() {
 		$rand++;
 	}
 }
+
+function get_sample_comments() {
+	$i = 1;
+	while ($i <= 5)
+	{
+		$pict = new Picture (array('id' => $i));
+		$pict->addComment('admin', "This is a comment, its the comment number $i");
+		$pict->addComment('admin', "This is another comment for number $i");
+		$pict->addComment('guest', "I'm onna drop here a last one");
+		$pict->addComment('guest', "And even another one to see display for load");
+		$i++;
+	}
+}
+
 ?>
