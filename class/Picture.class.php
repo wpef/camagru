@@ -233,19 +233,19 @@ class Picture {
 		$db = connect_db(FALSE);
 
 		//SET VARS
-		if (!empty($offset))
+		if (!empty($offset) && $offset > 0)
 		{
-			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date LIMIT ?, ?;";
+			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC LIMIT ?, ?;";
 			$datas = array($this->id, $limit, $offset);	
 		}
 		else if (!empty($limit))
 		{
-			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date LIMIT ?;";
+			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC LIMIT ?;";
 			$datas = array($this->id, $limit);
 		}
 		else
 		{
-			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date ;";
+			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC;";
 			$datas = array($this->id);
 		}
 

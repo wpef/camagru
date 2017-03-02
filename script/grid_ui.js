@@ -119,16 +119,20 @@ function delete_pict()
 	});
 }
 
-function display_comments(event)
+function init_comments()
 {
-	this.removeEventListener("click", display_comments, false);
+	this.removeEventListener("click", init_comments, false);
+	this.onclick = function () { hide_comments(pic_id); };
 
-	var dis = this;
 	var pic_id = this.parentNode.parentNode.id.substr(3)
-	var user = this.className.split(" ");
-		user = user[user.length - 1];
-	var article = document.querySelector("#pic" + pic_id);
+	display_comMenu(pic_id);
+}
 
+function display_comMenu (pic_id)
+{
+	console.log('displayed ' + pic_id);
+	var article = document.querySelector("#pic" + pic_id);
+	
 	//create new elems
 	var comments = document.createElement('section');
 		comments.className = 'comments';
@@ -136,20 +140,20 @@ function display_comments(event)
 	var load = document.createElement('div');
 		load.className = 'load_button';
 		load.innerHTML = 'Show more...';
-	//	load.addEventListener('click', load_more_coms(event, pic_id), false);
+		load.onclick = function () { load_coms(pic_id); };
 		comments.appendChild(load);
 
 	var input = document.createElement('input');
 		input.type = 'text';
 		input.name = 'comment';
-		// input.onkeypress = function(e) {
-		// 	var key = e.charCode || e.keyCode || 0;
-		// 	if (key == 13)
-		// 	{
-		// 		e.preventDefault(); //esquive submit
-		// 		add_com(pic_id, user, this.value);
-		// 	}
-		// }
+		input.onkeypress = function(e) {
+			var key = e.charCode || e.keyCode || 0;
+			if (key == 13)
+			{
+				e.preventDefault(); //esquive submit
+				add_com(pic_id, this.value);
+			}
+		}
 		comments.appendChild(input);
 
 
@@ -158,20 +162,12 @@ function display_comments(event)
 
 	//get first 3 comments;
 	load_coms(pic_id);
-	var loaded = comments.querySelector('.load_button');
-	loaded.addEventListener('click', load_more_coms(event, pic_id), false);
-//	var load = document.querySelector('#pic' + pic_id + " .load_button");
-//		load.addEventListener('click', load_more_coms(pic_id), false);
-
-	//dis.addEventListener("click", hide_comments(pic_id), false);
 }
 
 ///LIB 
-function add_com(pic_id, user, content)
+function add_com(pic_id, content)
 {
-	var article = document.querySelector('article#pic' + pic_id);
-
-	var str = "pic_id=" + pic_id + "&user=" + user + "&content=" + content;
+	var str = "pic_id=" + pic_id + "&content=" + content;
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', "../mods/edit_pic.php?act=add_com", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -179,50 +175,80 @@ function add_com(pic_id, user, content)
 
 	xhr.addEventListener('readystatechange', function()
 	{
+		var article = document.querySelector('article#pic' + pic_id);
+		console.log(article);
 		if (this.readyState == 4 && this.status == 200)
-			article.querySelector('.comments') += xhr.responseText;
+			article.querySelector('.comments').innerHTML += xhr.responseText;
 	});
 }
 
 function hide_comments(pic_id)
 {
+	console.log('hidden ' + pic_id);
 	var art = document.querySelector('#pic' + pic_id)
 	var sect = art.querySelector('.comments');
 	
-	sect.innerHTML = '';
+	sect.parentNode.removeChild(sect);
+
+	art.querySelector('.pic_com').onclick = function () { display_comMenu(pic_id) };
 }
 
 function load_coms(pic_id)
 {
+	console.log('load ' + pic_id);
 	var article = document.querySelector("#pic" + pic_id);
 	var comments = article.querySelector('.comments');
-
+	var count = comments.querySelectorAll('.com').length;
+	
+	//set hide (change innerHTML) 
+	article.querySelector('.pic_com').onclick = function () { hide_comments(pic_id) };
+	
 	//send ajax
-	var str = "pic_id=" + pic_id;
+	var str = "pic_id=" + pic_id + "&offset=" + count;
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', "../mods/edit_pic.php?act=load_coms", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
 
 	//Callback func
-	xhr.addEventListener('readystatechange', function()
-	{
-		if (this.readyState == 4 && this.status == 200)
+	if (count == 0)
+	{ 
+		xhr.addEventListener('readystatechange', function()
 		{
-			var com = document.createElement('div');
-			com.className = "comments_wrapper";
-			com.innerHTML += xhr.responseText;
-			comments.insertBefore(com, comments.firstChild);
-		}
-	});
-}
-
-function load_more_coms(e, pic_id)
-{
-	var article = document.querySelector("#pic" + pic_id);
-	console.log(article);
-	var comments = article.querySelector('section.comments');
-	console.log(comments);
+			if (xhr.responseText == "<p class='com_error'>No more comments to display</p>")
+			{
+				xhr.responseText = "<p class='com_error'>No comments to display</p>";
+				var load = article.querySelector('.load_button');
+				if (load)
+					load.parentNode.removeChild(load);
+			}
+	
+			if (this.readyState == 4 && this.status == 200)
+			{
+				var com = document.createElement('div');
+				com.className = "comment_wrapper";
+				com.innerHTML = xhr.responseText;
+				comments.insertBefore(com, comments.firstChild);
+			}
+		});
+	}
+	else 
+	{
+		xhr.addEventListener('readystatechange', function()
+		{
+			if (this.readyState == 4 && this.status == 200)
+			{
+				if (xhr.responseText == "<p class='com_error'>No more comments to display</p>")
+				{
+					var load = article.querySelector('.load_button');
+					load.parentNode.removeChild(load);
+				}
+				var wrapper = document.querySelector('#pic' + pic_id + " .comment_wrapper");
+				wrapper.innerHTML += xhr.responseText;
+			}
+		});
+	}
+	return;
 }
 
 function pop_notif(mess, pic_id, target)

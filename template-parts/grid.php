@@ -1,5 +1,8 @@
 <?php
 
+if (empty($_GET))
+	$_GET['type'] = 'guest';
+
 if ($_GET['type'] == 'user')
 	$images_id = $_SESSION['user']->getImages();
 
@@ -94,6 +97,6 @@ while (i < del.length)
 var com = document.getElementsByClassName('pic_com');
 var i = 0;
 while (i < com.length)
-	com[i++].addEventListener("click", display_comments, false);
+	com[i++].addEventListener("click", init_comments, false);
 
 </script>

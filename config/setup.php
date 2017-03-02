@@ -39,7 +39,7 @@ echo "<p class='message'>THE SITE IS SET UP</p>
 <a href='../index.php'>Visit</a>";
 
 // Load database files (DUMMY CONTENT);
-get_sample_comments();
+//get_sample_comments();
 
 ///////////////////////////////////////
 //////////////////// FUNCTIONS
