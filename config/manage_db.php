@@ -138,8 +138,12 @@ function getDatas($p_query, $datas)
 		//connect
 		$db = connect_db(FALSE);
 
-		if (empty($datas))
-			$obj = $db->query($p_query);
+		if (empty($datas)) {
+			try { $obj = $db->query($p_query);}
+			catch (PDOexcpetion $e) {
+				die ("ERROR QUERY : $p_query :" . $e->getMessage());
+			}
+		}
 		
 		else {
 			//prepare
