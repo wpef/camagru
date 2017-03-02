@@ -31,7 +31,7 @@ function connect_db($new){
 	global $DB_USER, $DB_PASSWORD, $DB_DSN, $DB_NAME;
 
 	try {
-		if ($new)
+		if ($new === TRUE)
 			$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
 		else
 		{

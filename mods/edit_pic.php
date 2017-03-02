@@ -36,7 +36,7 @@ switch ($_GET['act']) {
 		break;
 
 	case 'load_coms' :
-		$offset = $_POST['offset'];
+		$offset = $_POST['offset']; //vars checked
 		if (load_coms($pic_id, $offset) !== TRUE)
 			return FALSE;
 		break;
@@ -88,7 +88,7 @@ function delete_pic($pic_id)
 function load_coms($pic_id, $offset)
 {
 	$pict = new Picture(array('id' => $pic_id));
-	$coms = $pict->getComments(3, intval($offset));
+	$coms = $pict->getComments(3, intval($offset)); //comms = bool(FALSE);
 	if (empty($coms))
 		echo "<p class='com_error'>No more comments to display</p>";
 	else

@@ -184,7 +184,7 @@ function add_com(pic_id, content)
 
 function hide_comments(pic_id)
 {
-	console.log('hidden ' + pic_id);
+//	console.log('hidden ' + pic_id);
 	var art = document.querySelector('#pic' + pic_id)
 	var sect = art.querySelector('.comments');
 	
@@ -195,7 +195,7 @@ function hide_comments(pic_id)
 
 function load_coms(pic_id)
 {
-	console.log('load ' + pic_id);
+//	console.log('load ' + pic_id);
 	var article = document.querySelector("#pic" + pic_id);
 	var comments = article.querySelector('.comments');
 	var count = comments.querySelectorAll('.com').length;
@@ -204,7 +204,7 @@ function load_coms(pic_id)
 	article.querySelector('.pic_com').onclick = function () { hide_comments(pic_id) };
 	
 	//send ajax
-	var str = "pic_id=" + pic_id + "&offset=" + count;
+	var str = "pic_id=" + pic_id + "&offset=" + count; //checked
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', "../mods/edit_pic.php?act=load_coms", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

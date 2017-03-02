@@ -236,17 +236,17 @@ class Picture {
 		if (!empty($offset) && $offset > 0)
 		{
 			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC LIMIT ?, ?;";
-			$datas = array($this->id, $limit, $offset);	
+			$datas = array(intval($this->id), $limit, $offset);	
 		}
 		else if (!empty($limit))
 		{
 			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC LIMIT ?;";
-			$datas = array($this->id, $limit);
+			$datas = array(intval($this->id), $limit);
 		}
 		else
 		{
 			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC;";
-			$datas = array($this->id);
+			$datas = array(intval($this->id));
 		}
 
 		//PREPARE QUERY
