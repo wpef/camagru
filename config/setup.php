@@ -9,8 +9,14 @@ $create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
 $db = connect_db(TRUE);
 
 //Create DB
-$db->exec($drop_db) or die ("ERROR DROPPING DB : " .print_r($db->errorInfo(), true));
-$db->exec($create_db) or die ("ERROR CREATING DB : " .print_r($db->errorInfo(), true));
+try { $db->exec($drop_db); }
+catch (PDOexcpetion $e) {;}
+
+try { $db->exec($create_db); }
+catch (PDOexcpetion $e) { die("ERROR CREATING DB : " . $e->getMessage());}
+//or die ("ERROR DROPPING DB : " .print_r($db->errorInfo(), true));
+
+//$db->exec($create_db) or die ("ERROR CREATING DB : " .print_r($db->errorInfo(), true));
 
 //Create tables var;
 include_once('tables.php');
