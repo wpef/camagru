@@ -230,53 +230,20 @@ class Picture {
 
 	public function getComments($limit, $offset)
 	{
-		$db = connect_db(FALSE);
-
 		//SET VARS
 		if (!empty($offset) && $offset > 0)
 		{
-			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC LIMIT ?, ?;";
-			$datas = array(intval($this->id), $limit, $offset);	
+			$query = "SELECT * FROM comments WHERE com_pic = $this->id ORDER BY com_date DESC LIMIT 3, $offset;";
 		}
 		else if (!empty($limit))
-		{
-			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC LIMIT ?;";
-			$datas = array(intval($this->id), $limit);
-		}
+			$query = "SELECT * FROM comments WHERE com_pic = $this->id ORDER BY com_date DESC LIMIT 3;";
 		else
 		{
-			$query = "SELECT * FROM comments WHERE com_pic = ? ORDER BY com_date DESC;";
-			$datas = array(intval($this->id));
+			$query = "SELECT * FROM comments WHERE com_pic = $this->id ORDER BY com_date DESC;";
 		}
 
-		//PREPARE QUERY
-		try {
-			$obj = $db->prepare($query);
-		} catch (PDOexcpetion $e) {
-			die ("ERROR PREPARING QUERY : $p_query :" . $e->getMessage());
-		}
-
-		//BIND PARAMS
-		$i = 1;
-		foreach ($datas as $d) {
-			$obj->bindParam($i, $d, PDO::PARAM_INT);
-			$i++;
-		}
-
-		//EXEC
-		try {
-			$obj->execute(); 
-		} catch (PDOexcpetion $e) {
-			die ("ERROR EXECUTING QUERY : $query :" . $e->getMessage());
-		}
-		
-		//FETCH
-		$res = $obj->fetchAll();
-		$obj->closeCursor();
-
-		if (!empty($res))
-			return $res;
-		return FALSE;
+		$res = getDatas($query, '');
+		return $res;
 	}
 
 /* ==> DISPLAY <== */
