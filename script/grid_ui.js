@@ -152,6 +152,7 @@ function display_comMenu (pic_id)
 			{
 				e.preventDefault(); //esquive submit
 				add_com(pic_id, this.value);
+				this.value = "";
 			}
 		}
 		comments.appendChild(input);
@@ -177,11 +178,14 @@ function add_com(pic_id, content)
 	{
 		if (this.readyState == 4 && this.status == 200)
 		{
-			var sect = document.querySelector('article#pic' + pic_id).querySelector('.comments');
-			var New = document.createElement('div');
-				New.className = 'comment_wrapper';
-				New.innerHTML = xhr.responseText;
-			sect.insertBefore(New, sect.childNodes[0]);
+			var section = document.querySelector("#pic" + pic_id + " .comments")
+			var wrapper = section.querySelector(".comment_wrapper")
+			if (!wrapper)
+			{
+				var wrapper = document.createElement('div');
+					wrapper.className = 'comment_wrapper';
+			}
+			appendComments(section, wrapper, xhr);
 		}
 	});
 }
@@ -201,9 +205,10 @@ function load_coms(pic_id)
 {
 //	console.log('load ' + pic_id);
 	var article = document.querySelector("#pic" + pic_id);
-	var comments = article.querySelector('.comments');
-	var count = comments.querySelectorAll('.com').length;
-	
+	var section = article.querySelector('.comments');
+	var count = section.querySelectorAll('.com').length;
+	console.log(count + " comments already displayed");
+
 	//set hide (change innerHTML) 
 	article.querySelector('.pic_com').onclick = function () { hide_comments(pic_id) };
 	
@@ -214,48 +219,60 @@ function load_coms(pic_id)
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
 
-	//Callback func
-	if (count == 0)
-	{ 
-		console.log("No displayed comments found");
-		xhr.addEventListener('readystatechange', function()
+	xhr.addEventListener('readystatechange', function() {
+		if (this.readyState == 4 && this.status == 200)
 		{
-			if (xhr.responseText == "<p class='com_error'>No more comments to display</p>")
-			{
-				xhr.responseText = "<p class='com_error'>No comments to display</p>";
-				var load = article.querySelector('.load_button');
-				if (load)
-					load.parentNode.removeChild(load);
+			if (count == 0) {
+				var wrapper = document.createElement('div');
+					wrapper.className = "comment_wrapper";
+				appendComments(section, wrapper, xhr);
+				section.insertBefore(wrapper, section.firstChild);
 			}
-	
-			if (this.readyState == 4 && this.status == 200)
+			else 
 			{
-				var com = document.createElement('div');
-				com.className = "comment_wrapper";
-				com.innerHTML = xhr.responseText;
-				comments.insertBefore(com, comments.firstChild);
-			}
-		});
-	}
-	else 
-	{
-		console.log("Found " + count + " comments displayed" );
-		xhr.addEventListener('readystatechange', function()
-		{
-			if (this.readyState == 4 && this.status == 200)
-			{
-				if (xhr.responseText.indexOf("<p class='com_error'>No more comments to display</p>") >= 0)
-				{
-					var load = article.querySelector('.load_button');
-					load.parentNode.removeChild(load);
-				}
-				var recount = xhr.responseText.querySelector('.com');
 				var wrapper = document.querySelector('#pic' + pic_id + " .comment_wrapper");
-				wrapper.innerHTML += xhr.responseText;
+				appendComments(section, wrapper, xhr);
 			}
-		});
+		}
+	});
+}
+
+function appendComments(section, wrapper, xhr)
+{
+	var coms = xhr.responseText.split("##");
+	for (var i = 0; i < coms.length - 1 ; i++)
+	{
+		if (coms[i] == "") { continue; }
+		var com = document.createElement('div');
+			com.className = 'com';
+			com.innerHTML = coms[i];
+		if (com.innerHTML.indexOf("com_error") > -1)
+		{
+			com.className = 'com_error';
+			var finished = 1;
+		}
+		wrapper.appendChild(com);
 	}
-	return;
+
+	if (finished)
+		last_comment(section, wrapper);		
+}
+
+function last_comment(section, wrapper)
+{
+	var count = wrapper.querySelectorAll('.com').length;
+
+	var load = section.querySelector('.load_button');
+	if (load)
+		load.parentNode.removeChild(load);
+
+	var mess = wrapper.querySelector('div.com_error');
+	if (count == 0)
+		mess.innerHTML = "No comments.";
+	else
+		mess.innerHTML = "No more comments."; 
+	
+	wrapper.appendChild(mess);
 }
 
 function pop_notif(mess, pic_id, target)

@@ -12,7 +12,7 @@ if (empty($_POST))
 
 ///////// STD VARS
 $pic_id = $_POST['pic_id'];
-$com_error = "<p class='com_error'>AN ERROR OCCURED</p>";
+$com_error = "<p class='com_error'>AN ERROR OCCURED</p>##";
 
 /////// PARSING
 switch ($_GET['act']) { 
@@ -36,7 +36,7 @@ switch ($_GET['act']) {
 		break;
 
 	case 'load_coms' :
-		$offset = $_POST['offset']; //vars checked
+		$offset = $_POST['offset'];
 		if (load_coms($pic_id, $offset) !== TRUE)
 			return FALSE;
 		break;
@@ -47,7 +47,7 @@ switch ($_GET['act']) {
 		$com = add_com($pic_id, $user, $content);
 		if ( $com == FALSE)
 		{
-			echo $com_error;
+			echo "com_error##";
 			return FALSE;
 		}
 		else
@@ -88,16 +88,16 @@ function delete_pic($pic_id)
 function load_coms($pic_id, $offset)
 {
 	$pict = new Picture(array('id' => $pic_id));
-	$coms = $pict->getComments(3, intval($offset)); //comms = bool(FALSE);
+	$coms = $pict->getComments(3, intval($offset));
 	if (!is_array($coms))
-		echo "<p class='com_error'>No more comments to display</p>";
+		echo "com_error##";
 	else
 	{
 		foreach ($coms as $com)
 			display_comment($com);
 	}
 	if (count($coms) < 3)
-		echo "<p class='com_error'>No more comments to display</p>";
+		echo "com_error##";
 	return TRUE;
 }
 
@@ -117,27 +117,26 @@ function display_comment($com)
 {
 	if (!is_array($com))
 	{
-		echo $com_error;
+		echo "com_error##";
 		return FALSE;
 	}
 
 	$author = $com['com_author'];
-		$href = WEBROOT . '/pages/grid.php?user=$author';
-		$author = "<a class='com_author' href='$href'>$author</a>";
+		$href = WEBROOT . "/pages/grid.php?user=$author";
+	$author = "<a class='com_author' href='$href'>$author</a>";
 	
 	$date = $com['com_date'];
 		$date = "<span class='com_date'>$date</span>";
 	
 	$cont = $com['com_cont'];
 
-	echo "<div class='com'>";
 	echo 	"<p class='com_content'>";
 	echo	$cont;
 	echo	"</p>";
 	echo	"<p class='com_details'>";
 	echo 		"by&nbsp $author";
 	echo 	"&nbsp;on&nbsp; $date</p>"; 
-	echo "</div>";
+	echo	"##";
 }
 
 ?>
