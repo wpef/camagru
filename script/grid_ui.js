@@ -130,7 +130,6 @@ function init_comments()
 
 function display_comMenu (pic_id)
 {
-	console.log('displayed ' + pic_id);
 	var article = document.querySelector("#pic" + pic_id);
 	
 	//create new elems
@@ -192,7 +191,6 @@ function add_com(pic_id, content)
 
 function hide_comments(pic_id)
 {
-//	console.log('hidden ' + pic_id);
 	var art = document.querySelector('#pic' + pic_id)
 	var sect = art.querySelector('.comments');
 	
@@ -203,11 +201,9 @@ function hide_comments(pic_id)
 
 function load_coms(pic_id)
 {
-//	console.log('load ' + pic_id);
 	var article = document.querySelector("#pic" + pic_id);
 	var section = article.querySelector('.comments');
 	var count = section.querySelectorAll('.com').length;
-	console.log(count + " comments already displayed");
 
 	//set hide (change innerHTML) 
 	article.querySelector('.pic_com').onclick = function () { hide_comments(pic_id) };
@@ -240,6 +236,7 @@ function load_coms(pic_id)
 function appendComments(section, wrapper, xhr, appendFirst)
 {
 	var coms = xhr.responseText.split("##");
+
 	for (var i = 0; i < coms.length - 1 ; i++)
 	{
 		if (coms[i] == "") { continue; }

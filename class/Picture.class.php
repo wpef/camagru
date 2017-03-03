@@ -233,7 +233,7 @@ class Picture {
 		//SET VARS
 		if (!empty($offset) && $offset > 0)
 		{
-			$query = "SELECT * FROM comments WHERE com_pic = $this->id ORDER BY com_date DESC LIMIT 3, $offset;";
+			$query = "SELECT * FROM comments WHERE com_pic = $this->id ORDER BY com_date DESC LIMIT $offset, 3;";
 		}
 		else if (!empty($limit))
 			$query = "SELECT * FROM comments WHERE com_pic = $this->id ORDER BY com_date DESC LIMIT 3;";
