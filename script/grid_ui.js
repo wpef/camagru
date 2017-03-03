@@ -175,10 +175,14 @@ function add_com(pic_id, content)
 
 	xhr.addEventListener('readystatechange', function()
 	{
-		var article = document.querySelector('article#pic' + pic_id);
-		console.log(article);
 		if (this.readyState == 4 && this.status == 200)
-			article.querySelector('.comments').innerHTML += xhr.responseText;
+		{
+			var sect = document.querySelector('article#pic' + pic_id).querySelector('.comments');
+			var New = document.createElement('div');
+				New.className = 'comment_wrapper';
+				New.innerHTML = xhr.responseText;
+			sect.insertBefore(New, sect.childNodes[0]);
+		}
 	});
 }
 
