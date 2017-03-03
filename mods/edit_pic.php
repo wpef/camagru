@@ -89,13 +89,15 @@ function load_coms($pic_id, $offset)
 {
 	$pict = new Picture(array('id' => $pic_id));
 	$coms = $pict->getComments(3, intval($offset)); //comms = bool(FALSE);
-	if (empty($coms))
+	if (!is_array($coms))
 		echo "<p class='com_error'>No more comments to display</p>";
 	else
 	{
 		foreach ($coms as $com)
 			display_comment($com);
 	}
+	if (count($coms) < 3)
+		echo "<p class='com_error'>No more comments to display</p>";
 	return TRUE;
 }
 

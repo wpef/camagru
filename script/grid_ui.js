@@ -217,6 +217,7 @@ function load_coms(pic_id)
 	//Callback func
 	if (count == 0)
 	{ 
+		console.log("No displayed comments found");
 		xhr.addEventListener('readystatechange', function()
 		{
 			if (xhr.responseText == "<p class='com_error'>No more comments to display</p>")
@@ -238,15 +239,17 @@ function load_coms(pic_id)
 	}
 	else 
 	{
+		console.log("Found " + count + " comments displayed" );
 		xhr.addEventListener('readystatechange', function()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				if (xhr.responseText == "<p class='com_error'>No more comments to display</p>")
+				if (xhr.responseText.indexOf("<p class='com_error'>No more comments to display</p>") >= 0)
 				{
 					var load = article.querySelector('.load_button');
 					load.parentNode.removeChild(load);
 				}
+				var recount = xhr.responseText.querySelector('.com');
 				var wrapper = document.querySelector('#pic' + pic_id + " .comment_wrapper");
 				wrapper.innerHTML += xhr.responseText;
 			}
