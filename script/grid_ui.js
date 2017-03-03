@@ -185,7 +185,7 @@ function add_com(pic_id, content)
 				var wrapper = document.createElement('div');
 					wrapper.className = 'comment_wrapper';
 			}
-			appendComments(section, wrapper, xhr);
+			appendComments(section, wrapper, xhr, true);
 		}
 	});
 }
@@ -237,7 +237,7 @@ function load_coms(pic_id)
 	});
 }
 
-function appendComments(section, wrapper, xhr)
+function appendComments(section, wrapper, xhr, appendFirst)
 {
 	var coms = xhr.responseText.split("##");
 	for (var i = 0; i < coms.length - 1 ; i++)
@@ -251,7 +251,10 @@ function appendComments(section, wrapper, xhr)
 			com.className = 'com_error';
 			var finished = 1;
 		}
-		wrapper.appendChild(com);
+		if (appendFirst)
+			wrapper.insertBefore(com, wrapper.firstChild);
+		else
+			wrapper.appendChild(com);
 	}
 
 	if (finished)
