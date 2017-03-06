@@ -15,7 +15,7 @@ div.grid-wrapper {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: flex-start;
-	align-items: stretch;
+	align-items: center;
 }
 
 	/* WRAPPERS */
@@ -130,4 +130,44 @@ article.picture section.image img {
 	width :100%;
 	margin :auto;
 	position: relative;
+}
+
+	/*COMMENTS*/
+section.comments {
+	display: block;
+	width: 100%;
+}
+
+section.comments input {
+	display: block;
+	width : 80%;
+	margin : 2em auto 1em auto;
+	font-size: 15px;
+}
+
+section.comments .comment_wrapper {
+	height: 240px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+section.comments .comment_wrapper div.com {
+	padding: 0 1em 0 3em;
+	margin-bottom: 1em;
+}
+
+section.comments .comment_wrapper .com p.com_details {
+	font-weight: bold;
+	margin : 0;
+}
+
+section.comments .comment_wrapper .com p.com_content {
+	margin : 0;
+}
+
+section.comments .comment_wrapper .com span.com_date {
+	font-weight: bold;
+	font-size : 12px;
+	color : #808080;
+	margin-left: 3em;
 }

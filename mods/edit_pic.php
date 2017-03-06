@@ -130,12 +130,8 @@ function display_comment($com)
 	
 	$cont = $com['com_cont'];
 
-	echo 	"<p class='com_content'>";
-	echo	$cont;
-	echo	"</p>";
-	echo	"<p class='com_details'>";
-	echo 		"by&nbsp $author";
-	echo 	"&nbsp;on&nbsp; $date</p>"; 
+	echo	"<p class='com_details'> $author $date </p>"; 
+	echo 	"<p class='com_content'> $cont </p>";
 	echo	"##";
 }
 
