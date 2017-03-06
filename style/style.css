@@ -146,7 +146,7 @@ section.comments input {
 }
 
 section.comments .comment_wrapper {
-	height: 240px;
+	height: 170px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
@@ -170,4 +170,22 @@ section.comments .comment_wrapper .com span.com_date {
 	font-size : 12px;
 	color : #808080;
 	margin-left: 3em;
+}
+
+section.comments .load_button {
+	display: block;
+	height: 2em;
+	text-align: center;
+	background-color: #4ca747;
+	color: white;
+	line-height: 2em;
+}
+
+section.comments .com_error {
+	display: block;
+	height: 2em;
+	text-align: center;
+	background-color: #3d543c;
+	color: darkgrey;
+	line-height: 2em;
 }
