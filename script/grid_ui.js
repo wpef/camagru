@@ -122,9 +122,9 @@ function delete_pict()
 function init_comments()
 {
 	this.removeEventListener("click", init_comments, false);
-	this.onclick = function () { hide_comments(pic_id); };
 
-	var pic_id = this.parentNode.parentNode.id.substr(3)
+	var pic_id = this.parentNode.parentNode.id.substr(3);
+	this.onclick = function () { hide_comments(pic_id); };
 	display_comMenu(pic_id);
 }
 
@@ -135,12 +135,6 @@ function display_comMenu (pic_id)
 	//create new elems
 	var comments = document.createElement('section');
 		comments.className = 'comments';
-
-	var load = document.createElement('div');
-		load.className = 'load_button';
-		load.innerHTML = 'Show more...';
-		load.onclick = function () { load_coms(pic_id); };
-		comments.appendChild(load);
 
 	var input = document.createElement('input');
 		input.type = 'text';
@@ -154,14 +148,13 @@ function display_comMenu (pic_id)
 				this.value = "";
 			}
 		}
-		comments.appendChild(input);
-
+		comments.insertBefore(input, comments.firstChild);
 
 	//add elements to div
 	article.appendChild(comments);
 
 	//get first 3 comments;
-	load_coms(pic_id);
+	load_coms(article);
 }
 
 ///LIB 
@@ -189,27 +182,25 @@ function add_com(pic_id, content)
 	});
 }
 
-function hide_comments(pic_id)
+function hide_comments(article)
 {
-	var art = document.querySelector('#pic' + pic_id)
-	var sect = art.querySelector('.comments');
+	var sect = article.querySelector('.comments');
 	
 	sect.parentNode.removeChild(sect);
 
-	art.querySelector('.pic_com').onclick = function () { display_comMenu(pic_id) };
+	article.querySelector('.pic_com').onclick = function () { display_comMenu(article.id.substr(3)) };
 }
 
-function load_coms(pic_id)
+function load_coms(article)
 {
-	var article = document.querySelector("#pic" + pic_id);
 	var section = article.querySelector('.comments');
 	var count = section.querySelectorAll('.com').length;
 
 	//set hide (change innerHTML) 
-	article.querySelector('.pic_com').onclick = function () { hide_comments(pic_id) };
+	article.querySelector('.pic_com').onclick = function () { hide_comments(article) };
 	
 	//send ajax
-	var str = "pic_id=" + pic_id + "&offset=" + count; //checked
+	var str = "pic_id=" + article.id.substr(3) + "&offset=" + count; //checked
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', "../mods/edit_pic.php?act=load_coms", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -222,11 +213,11 @@ function load_coms(pic_id)
 				var wrapper = document.createElement('div');
 					wrapper.className = "comment_wrapper";
 				appendComments(section, wrapper, xhr);
-				section.insertBefore(wrapper, section.firstChild);
+				section.appendChild(wrapper);
 			}
 			else 
 			{
-				var wrapper = document.querySelector('#pic' + pic_id + " .comment_wrapper");
+				var wrapper = article.querySelector(" .comment_wrapper");
 				appendComments(section, wrapper, xhr);
 			}
 		}
@@ -235,6 +226,15 @@ function load_coms(pic_id)
 
 function appendComments(section, wrapper, xhr, appendFirst)
 {
+	var load = wrapper.querySelector('.load_button');
+	if (load)
+		load.parentNode.removeChild(load);
+
+	var load = document.createElement('div');
+		load.className = 'load_button';
+		load.innerHTML = 'Show more...';
+		load.onclick = function () { load_coms(section.parentNode); };
+
 	var coms = xhr.responseText.split("##");
 
 	for (var i = 0; i < coms.length - 1 ; i++)
@@ -255,16 +255,18 @@ function appendComments(section, wrapper, xhr, appendFirst)
 	}
 
 	if (finished)
-		last_comment(section, wrapper);		
+		last_comment(section, wrapper);
+	else
+		wrapper.appendChild(load);
 }
 
 function last_comment(section, wrapper)
 {
 	var count = wrapper.querySelectorAll('.com').length;
 
-	var load = section.querySelector('.load_button');
+	var load = wrapper.querySelector('.load_button');
 	if (load)
-		load.parentNode.removeChild(load);
+		wrapper.removeChild(load);
 
 	var mess = wrapper.querySelector('div.com_error');
 	if (count == 0)

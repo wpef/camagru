@@ -103,7 +103,7 @@ function load_coms($pic_id, $offset)
 
 function add_com($pic_id, $user, $content)
 {
-	if (empty($content))
+	if (!isset($content))
 		return FALSE;
 	$pict = new Picture (array('id' => $pic_id));
 	$com = $pict->addComment($user, $content);
