@@ -188,6 +188,7 @@ function add_com(pic_id, content)
 					wrapper.className = 'comment_wrapper';
 			}
 			appendComments(section, wrapper, xhr, true);
+			section.appendChild(com_error);
 			wrapper.scrollTop = 0;
 		}
 	});
@@ -244,6 +245,14 @@ function load_coms(article)
 			}
 			if (!finished)
 				section.appendChild(load);
+			else
+			{
+				var mess = document.createElement('div');
+					mess.className = 'com_error';
+					mess.innerHTML = "No more comments."; 
+				
+				section.appendChild(mess);
+			}
 		}
 	});
 }
@@ -260,8 +269,8 @@ function appendComments(section, wrapper, xhr, appendFirst)
 			com.innerHTML = coms[i];
 		if (com.innerHTML.indexOf("com_error") > -1)
 		{
-			com.className = 'com_error';
 			var finished = 1;
+			continue;
 		}
 		if (appendFirst)
 			wrapper.insertBefore(com, wrapper.firstChild);
@@ -282,14 +291,6 @@ function last_comment(section, wrapper)
 	var load = section.querySelector('.load_button');
 	if (load)
 		section.removeChild(load);
-
-	var mess = wrapper.querySelector('div.com_error');
-	if (count == 0)
-		mess.innerHTML = "No comments.";
-	else
-		mess.innerHTML = "No more comments."; 
-	
-	section.appendChild(mess);
 }
 
 function pop_notif(mess, pic_id, target)
