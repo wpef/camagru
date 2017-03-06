@@ -169,7 +169,7 @@ function add_com(pic_id, content)
 	var com_error = document.querySelector("#pic" + pic_id + " .com_error");
 	if (com_error)
 		com_error.parentNode.removeChild(com_error);
-	
+
 	var str = "pic_id=" + pic_id + "&content=" + content;
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', "../mods/edit_pic.php?act=add_com", true);	
@@ -188,6 +188,7 @@ function add_com(pic_id, content)
 					wrapper.className = 'comment_wrapper';
 			}
 			appendComments(section, wrapper, xhr, true);
+			wrapper.scrollTop = 0;
 		}
 	});
 }
