@@ -5,10 +5,7 @@ include_once ('../config/inc.php');
 
 //REDIRECTION IF NEEDED
 if (!$_SESSION['log'])
-{
-	$_SESSION['alert'] = "You must be logged in to access this page.";
-	exit(header('Location: ' . WEBHOST . '/index.php'));
-}
+	exit(header('Location: ' . WEBROOT . 'pages/login.php'));
 
 //HEADER
 include_once(ROOT . '/template-parts/header.php');

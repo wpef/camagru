@@ -125,7 +125,7 @@ function init_comments()
 
 	var pic_id = this.parentNode.parentNode.id.substr(3);
 	this.onclick = function () { hide_comments(pic_id); };
-	this.innerHTML = "Hide comments"; /* TO REMOVE */
+	this.innerHTML = "Hide comments";
 	display_comMenu(pic_id);
 }
 

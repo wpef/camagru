@@ -1,9 +1,6 @@
 <?php
-//debug
-//include_once('../config/inc.php');
-define('DIR', WEBROOT . "photos/");
-//end
 
+define('DIR', WEBROOT . "photos/");
 define ('MAX_SIZE', 1000000);
 
 class Picture {

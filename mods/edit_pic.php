@@ -122,7 +122,7 @@ function display_comment($com)
 	}
 
 	$author = $com['com_author'];
-		$href = WEBROOT . "/pages/grid.php?user=$author";
+		$href = WEBROOT . "/pages/gallery.php?user=$author";
 	$author = "<a class='com_author' href='$href'>$author</a>";
 	
 	$date = $com['com_date'];
