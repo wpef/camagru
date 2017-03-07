@@ -1,6 +1,7 @@
 <?php
 
 //REQUIRED
+define('access', true);
 include_once ('../config/inc.php');
 
 //REDIRECTION IF NEEDED

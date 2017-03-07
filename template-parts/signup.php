@@ -1,3 +1,5 @@
+<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
+
 <form name="signup" action="<?php echo WEBROOT . 'mods/signup.php?action=create'?>" method="post" />
 	<fieldset>
 		<legend>Required Informations :</legend>

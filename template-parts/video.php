@@ -1,3 +1,4 @@
+<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
 <?php include(ROOT . 'template-parts/stickers_list.php') ?>
 
 <canvas id="cover" style='position:absolute'></canvas>

@@ -1,5 +1,7 @@
 <?php
 
+define('access', true);
+
 require_once('inc.php');
 
 $drop_db = "DROP DATABASE IF EXISTS " . $DB_NAME . ";";

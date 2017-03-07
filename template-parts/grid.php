@@ -1,4 +1,5 @@
 <?php
+if(!defined('access')) { die('Direct access not permitted'); }
 
 //SET IMAGES LIST
 

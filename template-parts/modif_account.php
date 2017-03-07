@@ -1,3 +1,5 @@
+<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
+
 <form name='modif' action="<? echo WEBROOT . 'mods/modif_account.php'; ?>" method='post' />
 	Login (cannot be modify):
 	<input type='text' name='login' value='<?php echo $_SESSION['user']->login ?>' readonly/><br>

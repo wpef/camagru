@@ -1,5 +1,4 @@
 <?php
-
 include_once(ROOT . "config/inc.php");
 
 class User {

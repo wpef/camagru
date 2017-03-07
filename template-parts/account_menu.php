@@ -1,3 +1,4 @@
+<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
 <ul id="myaccount">
 	<li><a href = "<?php echo WEBROOT ?>">Take a picture</li>
 	<li><a href = "<?php echo WEBROOT . 'pages/gallery.php?type=guest'; ?>">Gallery</li>

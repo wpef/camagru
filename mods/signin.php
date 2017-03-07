@@ -1,5 +1,4 @@
 <?php
-
 include_once('../config/inc.php');
 
 sign_in();

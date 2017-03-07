@@ -1,3 +1,5 @@
+<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
+
 <form name="signin" action="<?php echo WEBROOT . '/mods/signin.php'?>" method="post" />
 		Login : <br>  <!-- or email -->
 		<input type="text" name="login" required /> <br>

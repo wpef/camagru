@@ -1,3 +1,4 @@
+<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
 <!doctype html>
 <html lang="fr">
 <head>

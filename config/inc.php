@@ -1,8 +1,6 @@
 <?php
-
 // SET HERE DOCUMENT ROOT; 
 $root = "camagru";
-
 
 //NOT TO BE MODIFIED
 	define('ROOT', $_SERVER['DOCUMENT_ROOT'] . "/". $root . "/");

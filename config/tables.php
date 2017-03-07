@@ -1,6 +1,6 @@
 <?php
 
-
+if(!defined('access')) { die('Direct access not permitted'); }
 //TABLES
 
 	//user

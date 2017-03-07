@@ -1,4 +1,5 @@
 <?php
+if(!defined('access')) { die('Direct access not permitted'); }
 
 if ($_GET['act'] == 'confirm') :
 	$log = $_GET['login'];

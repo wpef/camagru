@@ -1,4 +1,7 @@
-<?php include_once 'head.php'; ?>
+<?php
+if(!defined('access')) { die('Direct access not permitted'); }
+include_once 'head.php';
+?>
 
 <header>
 	<a href = "<?php echo WEBROOT . 'pages/gallery.php' ?>">Gallery</a>

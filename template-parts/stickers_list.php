@@ -1,3 +1,5 @@
+<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
+
 <style>
 #stickers-list li {
 	display: inline-block;

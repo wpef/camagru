@@ -1,5 +1,4 @@
 <?php
-
 require_once('database.php');
 
 function create_table($name, $values) {
