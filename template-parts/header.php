@@ -11,17 +11,15 @@ include_once 'head.php';
 	<a href = "<?php echo WEBROOT . 'pages/login.php?action=signin' ?>">Login</a>
 
 <?php else : ?>
-	<div id="h_account">
-	<a href = "<?php echo WEBROOT . 'pages/account_settings.php' ?>">Account</a>
-	<a href = "<?php echo WEBROOT . '/mods/logout.php';?>">Logout</a>
+	<a id='account' onclick="disp_menu()" href="#"> Account </a>
+		<ul id="account_menu">
+			<li><a href = "<?php echo WEBROOT . 'pages/gallery.php?type=user'; ?>">My pictures</li>
+			<li><a href = "<?php echo WEBROOT . 'pages/gallery.php?type=liked'; ?>">Liked pictures</li>
+			<li><a href = "<?php echo WEBROOT . 'pages/account_settings.php'; ?>">Edit account</a></li>
+			<li><a href = "<?php echo WEBROOT . '/mods/logout.php';?>">Logout</a></li>
+		</ul>
 	</div>
-
-	<ul id="myaccount">
-	<li><a href = "<?php echo WEBROOT . 'pages/gallery.php?type=user'; ?>">My pictures</li>
-	<li><a href = "<?php echo WEBROOT . 'pages/gallery.php?type=liked'; ?>">Liked pictures</li>
-	<li><a href = "<?php echo WEBROOT . 'pages/account_settings.php'; ?>">Edit account</a></li>
-	</ul>
 
 <?php endif; ?>
 
-</header>
+</header> <div class='body'>

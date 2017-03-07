@@ -16,7 +16,6 @@ display_alerts();
 
 //CONTENT
 include_once(ROOT . 'template-parts/modif_account.php');
-
 //FOOTER
 include_once(ROOT . 'template-parts/footer.php');
 
