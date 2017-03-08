@@ -1,6 +1,5 @@
+<?php if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ..?error=direct_access');} ?>
 <?php
-if(!defined('access')) { die('Direct access not permitted'); }
-
 if ($_GET['act'] == 'confirm') :
 	$log = $_GET['login'];
 	$token = $_GET['token'];

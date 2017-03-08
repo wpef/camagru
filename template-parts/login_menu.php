@@ -1,4 +1,4 @@
-<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
+<?php if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ..?error=direct_access');} ?>
 <ul id='login'>
 	<li>
 		<a class = "log" href = "<?php echo WEBROOT . 'pages/login.php?action=signin'; ?>"> Sign in </a>

@@ -1,4 +1,4 @@
-<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
+<?php if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ..?error=direct_access');} ?>
 
 <form name="signin" action="<?php echo WEBROOT . '/mods/signin.php'?>" method="post" />
 		Login : <br>  <!-- or email -->

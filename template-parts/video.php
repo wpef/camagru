@@ -1,4 +1,4 @@
-<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
+<?php if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ..?error=direct_access');} ?>
 <?php include(ROOT . 'template-parts/stickers_list.php') ?>
 
 <canvas id="cover" style='position:absolute'></canvas>

@@ -7,6 +7,8 @@ include_once ('config/inc.php');
 //REDIRECTION IF NEEDED
 if (!$_SESSION['log'])
 	exit(header('Location: pages/gallery.php'));
+if ($_GET['error'] == 'direct_access')
+	$_SESSION['alert'] = 'Direct access not permitted';
 
 //HEADER HTML
 include_once('template-parts/header.php');

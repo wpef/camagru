@@ -1,5 +1,5 @@
 <?php
-if(!defined('access')) { die('Direct access not permitted'); }
+if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ../');}
 
 //SET IMAGES LIST
 

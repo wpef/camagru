@@ -1,4 +1,4 @@
-<?php if(!defined('access')) { die('Direct access not permitted'); } ?>
+<?php if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ..?error=direct_access');} ?>
 <ul id="myaccount">
 	<li><a href = "<?php echo WEBROOT ?>">Take a picture</li>
 	<li><a href = "<?php echo WEBROOT . 'pages/gallery.php?type=guest'; ?>">Gallery</li>
