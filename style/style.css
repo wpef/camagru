@@ -2,6 +2,7 @@ html {
 	font-family: Roboto, 'Helvetica Neue', 'Lucida Grande', sans-serif;
 	background-color: rgb(241, 241, 241);
 }
+
 body {
 	margin : 0px;
 }
@@ -37,12 +38,53 @@ body > header a#logo {
 	font-family: 'Pacifico', sans-serif;
 	text-transform: none;
 	font-weight: initial;
-
 }
 
-#account_menu {
+ul#account_menu {
 	display: none;
+	position: absolute;
+	right: 3em;
+	top: 4em;
+	background-color: white;
+	list-style: none;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+	padding : 1em;
+	z-index: 1;
+	border : 1px solid lightgrey;
+	border-top : none;
 }
+ul#account_menu li {
+	line-height: 3em;
+	border-bottom : 1px solid lightgrey;
+}
+
+/* ALERT */
+
+p#alert {
+	background-color: #ca6969;
+    border: 1px solid darkred;
+}
+
+p#message {
+	background-color: #3caf64;
+    border: 1px solid darkgreen;
+}
+
+p#alert, p#message {
+    padding: 1em;
+    text-align: center;
+    color: white;
+}
+
+p#alert:after, p#message:after {
+	content: "\f00d";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    float: right;
+}
+
 
 /*PICTURES DISPLAY*/
 

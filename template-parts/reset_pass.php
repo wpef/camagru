@@ -10,7 +10,7 @@ if ($_GET['act'] == 'confirm') :
 	$_SESSION['user'] = new User($log);
 
 if (isset($_SESSION['user']) && $token === $_SESSION['user']->token()) : ?>
-	<p> You are resetting the password for <?php echo $log ?>.</p>
+	<p id='message'> You are resetting the password for <?php echo $log ?>.</p>
 	<form name="reset" method="post" action="<?php echo WEBROOT . 'mods/reset_pass.php?act=reset'?>">
 	New Password : <input type="password" name="new_pw" required/><br>
 	Confirm Password  : <input type="password" name="new_pw1" required/><br>

@@ -24,7 +24,7 @@ else if ($_GET['type'] == 'guest')
 //CHECK if pictures;
 if (!$_SESSION['log'])
 {
-	echo "<p class='head_alert'>You are seeing this page as guest, you must be logged in to interact with users pictures.</p>";
+	echo "<p id='alert' onclick='hide_mess(this)'>You are seeing this page as guest, you must be logged in to interact with users pictures.</p>";
 }
 
 
