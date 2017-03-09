@@ -134,6 +134,11 @@ article.picture .pic_name {
     -webkit-rtl-ordering: inherit;
     user-select: inherit;
 }
+
+/*check if neede*/
+input.pic_name:focus {
+	outline : none;
+}
 	/*BUTTONS*/
 
 .user_actions {

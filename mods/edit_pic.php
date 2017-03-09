@@ -4,27 +4,35 @@
 include_once('../config/inc.php');
 
 ///////// ERROR HANDLING
+unset($_SESSION['alert']);
+
 if (empty($_POST))
-{
-	echo "AN ERROR OCCURED";
-	return FALSE;
-}
+	$_SESSION['alert'] = "AN ERROR OCCURED";
+else if (!isset($_SESSION['user']))
+	$_SESSION['alert'] = "You must be logged in to interact";
+else if (!userExists($_SESSION['user']->login))
+	$_SESSION['alert'] = "An error occured";
+else if (!is_numeric($_POST['pic_id']))
+	$_SESSION['alert'] = "An error occured";
+
+if (isset($_SESSION['alert']))
+	header('Location: ' . WEBROOT);
 
 ///////// STD VARS
 $pic_id = $_POST['pic_id'];
 $com_error = "<p class='com_error'>AN ERROR OCCURED</p>##";
+$user = $_SESSION['user'];
 
 /////// PARSING
 switch ($_GET['act']) { 
 	case 'like' :
-		$user = $_SESSION['user']->login;
-		if (like_pic($pic_id, $user) !== TRUE)
+		if (like_pic($pic_id, $user->login) !== TRUE)
 			return FALSE;
 		break;
 
 	case 'rename' :
 		$newName = $_POST['newName'];
-		if (rename_pic($pic_id, $newName) !== TRUE)
+		if (rename_pic($pic_id, $user, $newName) !== TRUE)
 			return FALSE;
 		echo $newName;
 		break;
@@ -69,10 +77,11 @@ function like_pic($pic_id, $user)
 	return FALSE;
 }
 
-function rename_pic($pic_id, $newName)
+function rename_pic($pic_id, $user, $newName)
 {
 	$pict = new Picture(array('id' => $pic_id));
-	//proceed newName
+	if ($pict->owner != $user->login AND !$user->isadmin)
+		return FALSE;
 	if ($pict->modify(array('pic_name' => $newName)))
 		return TRUE;
 	return FALSE;
@@ -80,7 +89,7 @@ function rename_pic($pic_id, $newName)
 
 function delete_pic($pic_id)
 {
-	sendQuery("DELETE FROM pictures WHERE pic_id = $pic_id;");
+	sendQuery("DELETE FROM pictures WHERE pic_id = $pic_id AND pic_owner = $user;");
 	sendQuery("DELETE FROM likes WHERE like_pic = $pic_id;");
 	return TRUE;
 }

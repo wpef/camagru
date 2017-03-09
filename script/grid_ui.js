@@ -67,9 +67,17 @@ function edit_pict()
 
 			//setting vars
 			var newName = this.value;
-			var str = "pic_id=" + pic_id + "&newName=" + newName;
+			//check
+			var regexp = new RegExp("^[A-Za-z0-9]*$");
+			if (!regexp.test(newName))
+			{
+				this.style.outlineColor = "red";
+				this.value = "";
+				return;
+			}
 
 			//send AJAX
+			var str = "pic_id=" + pic_id + "&newName=" + newName;
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', "../mods/edit_pic.php?act=rename", true);	
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -149,6 +157,8 @@ function display_comMenu (pic_id)
 			var key = e.charCode || e.keyCode || 0;
 			if (key == 13)
 			{
+				if (this.value.length == 0)
+					return;
 				e.preventDefault(); //esquive submit
 				add_com(pic_id, this.value);
 				this.value = "";

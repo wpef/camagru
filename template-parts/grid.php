@@ -74,7 +74,7 @@ function displayPictureHeader($pict, $user)
 		if ($pict->owner == $user->login)
 		{
 			echo "<span class='edit'>";
-			echo "<input type='text name='newName' class='pic_name' value='$pict->name' readonly='true'>";
+			echo "<input type='text' name='newName' class='pic_name' value='$pict->name' readonly='true'>";
 			echo "</span>";
 		}
 		else
@@ -95,7 +95,7 @@ function displayPictureButtons($pict, $user)
 		echo "<span id='likes_count'>$pict->likes</span> like(s)</span>";
 	//coments
 		echo "<span class='pic_com $user->login'>";
-		echo "show comments </span>";
+		echo "Show comments</span>";
 	echo "</section>";
 }
 
