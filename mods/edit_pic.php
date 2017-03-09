@@ -40,7 +40,6 @@ switch ($_GET['act']) {
 	case 'delete' :
 		if (delete_pic($pic_id) !== TRUE)
 			return FALSE;
-		echo "deleted";
 		break;
 
 	case 'load_coms' :
@@ -50,9 +49,8 @@ switch ($_GET['act']) {
 		break;
 
 	case 'add_com' :
-		$user = $_SESSION['user']->login;
 		$content = $_POST['content'];
-		$com = add_com($pic_id, $user, $content);
+		$com = add_com($pic_id, $user->login, $content);
 		if ( $com == FALSE)
 		{
 			echo "com_error##";
@@ -87,10 +85,19 @@ function rename_pic($pic_id, $user, $newName)
 	return FALSE;
 }
 
-function delete_pic($pic_id)
+function delete_pic($pic_id, $user)
 {
-	sendQuery("DELETE FROM pictures WHERE pic_id = $pic_id AND pic_owner = $user;");
-	sendQuery("DELETE FROM likes WHERE like_pic = $pic_id;");
+	$pict = new Picture(array('id' => $pic_id));
+	if ($pict->owner == $user->login OR $user->isadmin)
+	{
+		sendQuery("DELETE FROM pictures WHERE pic_id = $pic_id;");
+		sendQuery("DELETE FROM likes WHERE like_pic = $pic_id;");
+	}
+	else
+	{
+		$_SESSION['alert'] = "You cannot delete other users' pictures";
+		return FALSE;
+	}
 	return TRUE;
 }
 
@@ -114,8 +121,12 @@ function add_com($pic_id, $user, $content)
 {
 	if (!isset($content))
 		return FALSE;
+	if (!userExists($user))
+		return FALSE;
+
 	$pict = new Picture (array('id' => $pic_id));
 	$com = $pict->addComment($user, $content);
+	
 	if (!empty($com))
 		return $com;
 	else

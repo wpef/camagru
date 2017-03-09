@@ -157,6 +157,7 @@ class Picture {
 
 	public function addComment($login, $content)
 	{
+		$content = htmlentities($content);
 		$datas = array (
 			'com_pic' => $this->id,
 			'com_cont' => $content,
