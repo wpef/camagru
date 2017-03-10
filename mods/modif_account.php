@@ -1,8 +1,9 @@
 <?php
 include_once('../config/inc.php');
 
-if (!$_POST) {
-	$_SESSTION['alert'] = "an error occured.";
+//verif form
+if ($_POST['submit'] != 'Apply modifications' OR $_POST['login'] != $_SESSION['user']->login) {
+	$_SESSTION['alert'] = "Please use the form.";
 	exit(header('Location: '. WEBROOT . 'pages/account_settings.php'));
 }
 
@@ -21,10 +22,7 @@ function modif_account()
 			if ($_SESSION['user']->auth(hash('whirlpool' , $_POST['old_pw'])))
 			{
 				if ($_POST['new_pw1'] === $_POST['new_pw2'])
-				{
 					$_SESSION['user']->modif('pass', hash('whirlpool',$_POST['new_pw2']));
-					$_SESSION['message'] = "password, ";
-				}
 				else
 				{
 					$_SESSION['alert'] = "Please confirm your new password";
@@ -48,12 +46,16 @@ function modif_account()
 	foreach ($_POST as $key => $value) {
 		if ($key != 'submit' && $key != 'old_pw' && $key != 'new_pw1' && $key != 'new_pw2' && $key != 'login' && !empty($value))
 		{
-			$_SESSION['user']->modif($key, $value);
-			$_SESSION['message'] .=  $key. ", ";
+			if ($value != $_SESSION['user']->$key)
+			{
+				$_SESSION['user']->modif($key, $value);
+				$tab[] = $key;
+			}
 		}
 	}
-	$_SESSION['message'] =  "Values for " . $_SESSION['message'] . "has been modified.";
+	$str = implode(", ", $tab);
+	if ($str)
+		$_SESSION['message'] =  "Value(s) for " . $str . " has been modified.";
 	return TRUE;
 }
-
 ?>
