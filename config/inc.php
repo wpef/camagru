@@ -7,9 +7,9 @@ $root = "camagru";
 	define('WEBROOT', "/". $root . "/");
 
 	if (defined('ROOT')) :
-		include_once (ROOT . "/config/manage_db.php");
-		include_once (ROOT . "/class/User.class.php");
-		include_once (ROOT . "/class/Picture.class.php");
+		include_once (ROOT . "config/manage_db.php");
+		include_once (ROOT . "class/User.class.php");
+		include_once (ROOT . "class/Picture.class.php");
 		include_once (ROOT . "pages/functions.php");
 		session_start();
 	endif;

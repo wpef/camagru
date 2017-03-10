@@ -22,7 +22,7 @@ $pic_a = array (
 		'pic_owner' 	=>	'varchar(15) NOT NULL',
 		'pic_name'		=>	'varchar(30) NOT NULL',
 		'pic_likes'		=>	'INT UNSIGNED NOT NULL DEFAULT 0',
-		'added_on'		=>	'DATETIME NOT NULL' // ==> other table
+		'added_on'		=>	'DATETIME NOT NULL'
 	);
 
 $com_a = array (
