@@ -12,8 +12,8 @@ var select_stick = function (stick) {
 
 var disp_menu = function (event) {
     var menu = document.getElementById("account_menu");
-    if (!menu) {
-        return false;
-    }
-    menu.style.display = "block";
+    if (menu.style.display == "block")
+        menu.style.display = "none";
+    else
+        menu.style.display = "block";
 };
