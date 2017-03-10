@@ -38,7 +38,7 @@ switch ($_GET['act']) {
 		break;
 
 	case 'delete' :
-		if (delete_pic($pic_id) !== TRUE)
+		if (delete_pic($pic_id, $user) !== TRUE)
 			return FALSE;
 		break;
 
