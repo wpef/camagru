@@ -1,16 +1,22 @@
 SIGN UP
-	-- verify MAIL pattern; --> PATTERN attribute on <input>
-	- Primary key = login;
-	- Check if mail exists;
 	-- Check mot de passs => peut pas etre un mot de la langue francaise
-
-SETUP 
-	- Add Sample directory to fill DB
-
 
 VIDEO 
 	-- MERGE cote serveur
+	
+	- MKDIR PHOTOS
 
-UI
-	- Verify new name before pushing
--- MKDIR photos
+	— css
+
+
+-> MODIFS EN AJAX pour éviter pages blanches. (ou HEADER)
+
+—> load user likes dans tous les cas —> if liked -> coeur rouge
+
+—> image details css pour mobile
+
+—> titre des pages
+
+—> affichage date 
+
+—> afficher bouton logout (:after)
