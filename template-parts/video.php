@@ -20,15 +20,8 @@ var		streaming = false,
 		stickers	= document.getElementsByClassName('sticks'),
 		startbutton = document.querySelector('#startbutton'),
 		stick_on	= false,
-		width		= 520,
+		width		= (window.innerWidth * 80) / 100,
 		height		= 0;
-
-var drawOnStream = function() {
-	if (stick_on)
-		cover.getContext('2d').clearRect(0,0,width,height);
-	cover.getContext('2d').drawImage(this, 0, 0, width, height);
-	stick_on = true;
-}
 
 navigator.getMedia = (	navigator.getUserMedia ||
 						navigator.webkitGetUserMedia ||
@@ -44,7 +37,12 @@ navigator.getMedia(
 		video.src = vendorURL.createObjectURL(stream);
 		video.play();
 		for (var i = 0; i < stickers.length; i++) {
-			stickers[i].addEventListener("click", drawOnStream, false);
+			stickers[i].addEventListener("click", function() {
+				if (stick_on)
+					cover.getContext('2d').clearRect(0,0,width,height);
+				cover.getContext('2d').drawImage(this, 0, 0, width, height);
+				stick_on = true;
+			}, false);
 		};
 	},
 	function(err) {
