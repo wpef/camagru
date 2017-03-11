@@ -92,8 +92,7 @@ div.grid-wrapper {
 	display: inline-flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: flex-start;
-	align-items: center;
+	justify-content: space-around;
 }
 
 	/* WRAPPERS */
@@ -104,9 +103,7 @@ article.picture {
 	position: relative;
 	background: white;
     border-radius: 2px;
-    margin: auto;
-    margin-bottom: 2em;
-    margin-right: 1em;
+    margin-bottom: 6%;
     box-shadow: 1px 1px 5px #888888;
 }
 
