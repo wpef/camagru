@@ -5,7 +5,9 @@
 	<fieldset>
 		<legend>Required Informations :</legend>
 		<input type="text" name="login" placeholder="Login" required /> <br>
+		<p class='details'>Login must be 15 char. max.</p>
 		<input type="password" name="pass" placeholder="Password" required /> <br>
+		<p class='details'>Password must be minmum 8 chars., contains at least 1 number, 1 uppercase and 1 lowercase char.</p>
 		<input type="email" name="mail" placeholder="Mail" required /> <br>
 	</fieldset>
 	<fieldset>

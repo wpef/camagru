@@ -40,14 +40,20 @@ if ($_GET['action'] == 'confirm')
 
 		//Add new user to db
 		$current_user = new User($new_user);
+		if (isset($current_user->error))
+		{
+			$_SESSION['alert'] = $current_user->error;
+			return FALSE;
+		}
 
 		//prepare mail
+			$name = $current_user->name || 'User';
 			$to = $current_user->mail;
 			$subject = "Confirm the account you created on Camagru.com";
 			$token = hash('whirlpool', $current_user->login);
 			$link = "http://" . $_SERVER['HTTP_HOST'] . WEBROOT
 						. "mods/signup.php?login=" . $current_user->login . "&token=" . $token .  "&action=confirm";
-			$message = " <html> <head> <title>Confirm your account on Camagru</title></head><body><p>Hello " . $current_user->name . ",</p><p>You have just created an account on Camagru.com, but you still need to activate your account</p><p>Here is the link to activate :<br/><a href=\"". $link . "\">Activate my account</a></p><p>or copy-paste this link in your bowser : </p><p>" . $link . "</p><p>Thanks for activating the account.</p><p>Peace. <3</p></body></html>";
+			$message = " <html> <head> <title>Confirm your account on Camagru</title></head><body><p>Hello " . $name . ",</p><p>You have just created an account on Camagru.com, but you still need to activate your account</p><p>Here is the link to activate :<br/><a href=\"". $link . "\">Activate my account</a></p><p>or copy-paste this link in your bowser : </p><p>" . $link . "</p><p>Thanks for activating the account.</p><p>Peace. <3</p></body></html>";
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= 'From: Camagru.com <hello@camagru.com>' . "\r\n";

@@ -11,6 +11,7 @@ class User {
 	public			$mail;
 	public static	$verbose = FALSE;
 	public			$isadmin;
+	public			$error;
 	public			$confirmed;
 
 /* ==> DEFAULT METHOD <== */
@@ -88,13 +89,10 @@ class User {
 	private function _create($usr_infos) {
 	//$usr_infos must be an array in which every key corresponds to the DB entries;
 
-		if (!is_array($usr_infos))
-			return FALSE;
-
-		//Check required values;
-		if (!key_exists('login', $usr_infos) || !key_exists('pass', $usr_infos) || !key_exists('mail', $usr_infos))
+		if (!is_array($usr_infos) OR (!$this->_checkArray($usr_infos)))
 		{
-			echo "lacking required key" . PHP_EOL;
+			if (!isset($this->error))
+				$this->error = "Wrond datas provided";
 			return FALSE;
 		}
 
@@ -107,6 +105,26 @@ class User {
 		
 		//Create OBJECT
 		$this->__construct($usr_infos['login']);
+ 	}
+
+ 	private function _checkArray ($a)
+ 	{
+ 		if (!array_key_exists('login', $a) OR !array_key_exists('pass', $a) OR !array_key_exists('mail', $a))
+ 		{
+ 			$this->error = "An error occured";
+ 			return FALSE;
+ 		}
+ 		if (count($a['login']) > 15)
+ 		{
+ 			$this->error =  "Login max length is 15 char.";
+ 			return FALSE;
+ 		}
+ 		if (!filter_var($a['mail'], FILTER_VALIDATE_EMAIL) OR count($a['mail']) > 30)
+ 		{
+ 			$this->error =  "The email adress is not valid";
+ 			return FALSE;
+ 		}
+ 		return TRUE;
  	}
 
  	public function confirm($token)
