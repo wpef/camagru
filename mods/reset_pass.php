@@ -19,7 +19,7 @@ if ($_GET['act'] == 'send')
 		$link = "http://" . $_SERVER['HTTP_HOST'] . WEBROOT
 						. 'pages/login.php?action=reset&act=confirm&login=' . $usr->login
 						. "&token=" . $token;
-		$message = "<html><head><title>Reset your password for Camagru</title></head><body><p>Hello " . $usr->name . ",</p><p>This message contains a link to reset your password on Camagru.com, if you did not request it, ignore this message.</p><p>Here is the link to reset your password :<br/><a href=\"". $link . "\">Reset my password</a></p><p>or copy-paste this link in your bowser : </p><p>" . $link . "</p><p>Peace. <3</p></body></html>";
+		$message = "<html><head><title>Reset your password for Camagru</title></head><body><p>Hello " . $usr->login . ",</p><p>This message contains a link to reset your password on Camagru.com, if you did not request it, ignore this message.</p><p>Here is the link to reset your password :<br/><a href=\"". $link . "\">Reset my password</a></p><p>or copy-paste this link in your bowser : </p><p>" . $link . "</p><p>Peace. <3</p></body></html>";
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		$headers .= 'From: Camagru.com <hello@camagru.com>' . "\r\n";

@@ -24,6 +24,7 @@ else
 
 
 //FOOTER
+echo "<script type=\"text/javascript\" src=\"" . WEBROOT . "script/form.js\"></script>";
 include_once('../template-parts/footer.php');
 
 ?>
