@@ -1,24 +1,34 @@
 <?php
-if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ../');}
+if (!defined('access')) {
+	$_SESSION['alert'] = 'Direct access not permitted';
+	header('Location: ../');
+}
 
 //SET IMAGES LIST
-
-if (empty($_GET))
+if (empty($_GET) OR empty($_SESSION['user']))
 	$_GET['type'] = 'guest';
+
+$login = $_SESSION['user']->login;
+
+$p_query = "SELECT like_pic FROM likes WHERE like_author = '$login';";
+$liked_pic = getDatas($p_query, "");
 
 if ($_GET['type'] == 'user')
 	$images_id = $_SESSION['user']->getImages();
-
-else if (isset($_GET['user']))
-{
-	$user = new User (array('login' => $_GET['user']));
-	$images_id = $user->getImages();
-}
-
 else if ($_GET['type'] == 'guest')
 {
 	 	$p_query = "SELECT pic_id FROM pictures ORDER BY added_on DESC;";
  		$images_id = getDatas($p_query, "");
+}
+else if ($_GET['type'] == 'liked')
+{
+	foreach ($liked_pic as $pic)
+		$images_id[]['pic_id'] = $pic['like_pic'];
+}
+else if (isset($_GET['user']))
+{
+	$user = new User (array('login' => $_GET['user']));
+	$images_id = $user->getImages();
 }
 
 //CHECK if pictures;
@@ -34,22 +44,35 @@ echo "<div class='grid-wrapper'>";
 if (empty($images_id))
 		echo "<p class='alert'>No images found.</p>";
 else
-	displayPictureArticle($images_id, $_SESSION['log']);
-
+	displayPictureArticle($images_id, $_SESSION['log'], $liked_pic);
 echo "</div>";
 
-function displayPictureArticle($images_id, $buttons)
+function displayPictureArticle($images_id, $buttons, $liked_pic)
 {
 	foreach ($images_id as $i)
 	{
+		if (!is_array($liked_pic))
+			$liked_pic[0]['pic_id'] = $liked_pic;
+
 		$user = $_SESSION['user'];
 		$pict = new Picture(array('id' => $i['pic_id']));
 
+		foreach ($liked_pic as $i)
+		{
+			if ($i['like_pic'] == $pict->id)
+			{
+				$liked = 1;
+				break;
+			}
+			else
+				$liked = 0;
+		}
+		
 	 	echo "<article class='picture' id='pic$pict->id'>";
 	 		displayPictureHeader($pict, $user);
 			echo $pict->toImgHTML();
 			if ($buttons)
-				displayPictureButtons($pict, $user);
+				displayPictureButtons($pict, $user, $liked);
 		echo "</article>";
 	}
 }
@@ -87,11 +110,14 @@ function displayPictureHeader($pict, $user)
 	echo "</header>";
 }
 
-function displayPictureButtons($pict, $user)
+function displayPictureButtons($pict, $user, $liked)
 {
  	echo "<section class='user_actions'>";
  	//likes
-		echo "<span class='pic_likes $user->login'>";
+	 	if ($liked)
+			echo "<span class='pic_likes liked $user->login'>";
+		else
+			echo "<span class='pic_likes $user->login'>";
 		echo "<span id='likes_count'>$pict->likes</span> like(s)</span>";
 	//coments
 		echo "<span class='pic_com $user->login'>";
