@@ -69,7 +69,7 @@ function edit_pict()
 			var newName = this.value;
 			//check
 			var regexp = new RegExp("^[A-Za-z0-9 ]*$");
-			if (!regexp.test(newName))
+			if (!regexp.test(newName) || newName.length > 15)
 			{
 				this.style.outlineColor = "red";
 				this.value = "";
