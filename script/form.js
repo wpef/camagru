@@ -4,16 +4,15 @@ pass.addEventListener('focusout', function () {
 	upp = new RegExp("[A-Z]+");
 	low = new RegExp("[a-z]+");
 	nbr = new RegExp("[0-9]+");
-	spe = new RegExp("[ ;=.\'\"/\\!@#$,%^&*<~`>?(|:){}\\-[\]_+]+");
-	if	(
-			(upp.test(this.value) && low.test(this.value) && nbr.test(this.value)) 
-			&& (this.value.length >= 6) && spe.test(this.value) == false
-	) {
+	if	((upp.test(this.value) && low.test(this.value) && nbr.test(this.value)) 
+			&& (this.value.length >= 6))
+	{
 		return true;
 	}
-	else {
+	else
+	{
 		var det = document.querySelector("input[type='password'] + p.details");
-		
+	
 		this.value = "";
 		this.className = "wrong";
 		this.onfocus = function(){

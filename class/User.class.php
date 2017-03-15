@@ -119,7 +119,7 @@ class User {
  			$this->error =  "Login max length is 15 char.";
  			return FALSE;
  		}
- 		else if (!preg_match("#[\W]+#", $a['login']))
+ 		if (preg_match("#[\W]+#", $a['login']) == 1)
  		{
  			$this->error =  "Login must only contains letters numbers and underscores";
  			return FALSE;

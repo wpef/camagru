@@ -47,7 +47,7 @@ if ($_GET['action'] == 'confirm')
 		}
 
 		//prepare mail
-			$name = $current_user->name || 'User';
+			$name = $current_user->login;
 			$to = $current_user->mail;
 			$subject = "Confirm the account you created on Camagru.com";
 			$token = hash('whirlpool', $current_user->login);
