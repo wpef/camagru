@@ -16,6 +16,10 @@ pass.addEventListener('focusout', function () {
 		
 		this.value = "";
 		this.className = "wrong";
+		this.onfocus = function(){
+			this.className = "";
+			det.style.color = "initial"; 
+		};
 		det.style.color = "red";
 	}
 }
@@ -26,12 +30,14 @@ var button = document.querySelector("form input[type='submit']");
 button.disabled = true;
 
 for (i = 0; i < inputs.length; i++) {
-	inputs[i].addEventListener('onchange', function () {
-		for (j = 0; j < inputs.length; j++)
-		{
-			if (!inputs[j].value)
-				return false;
-		}
-		button.disabled = false;
-	});
+	if (inputs[i].required) {
+		inputs[i].addEventListener('focusout', function () {
+			for (j = 0; j < inputs.length; j++)
+			{
+				if (inputs[j].required && !inputs[j].value)
+					return false;
+			}
+			button.disabled = false;
+		});
+	}
 }
