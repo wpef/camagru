@@ -6,8 +6,8 @@
 		<legend>Required Informations :</legend>
 		<input type="text" name="login" placeholder="Login" required /> <br>
 		<p class='details'>Login must be 15 char. max.</p>
-		<input type="password" name="pass" placeholder="Password" required /> <br>
-		<p class='details'>Password must be minmum 8 chars., contains at least 1 number, 1 uppercase and 1 lowercase char.</p>
+		<input type="password" name="pass" placeholder="Password" required />
+		<p class='details'>Password must be minimum 6 chars., containing at least 1 number, 1 uppercase and 1 lowercase char.</p>
 		<input type="email" name="mail" placeholder="Mail" required /> <br>
 	</fieldset>
 	<fieldset>
@@ -19,3 +19,4 @@
 </form>
 <a href = "<?php echo WEBROOT . 'pages/login.php?action=signin' ?>">I already have an account !</a>
 </div>
+<script type="text/javascript" src="<?php echo WEBROOT . 'script/form.js'?>"></script>

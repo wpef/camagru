@@ -348,6 +348,19 @@ section.comments .com_error {
     background: #2a5d28;
 }
 
+.form input[type="submit"]:disabled,
+.form input[type="button"]:disabled {
+    background: #a9a9a9;
+    color: grey;
+    border-bottom: 1px solid black;
+}
+
+
+.form input.wrong, .form input.wrong:focus {
+	box-shadow: 0 0 5px #ff0000;
+    border: 1px solid #ff0000;
+}
+
 .form a {
 	display: block;
 	margin-top: 1em;

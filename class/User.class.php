@@ -119,6 +119,11 @@ class User {
  			$this->error =  "Login max length is 15 char.";
  			return FALSE;
  		}
+ 		else if (!preg_match("#[\W]+#", $a['login']))
+ 		{
+ 			$this->error =  "Login must only contains letters numbers and underscores";
+ 			return FALSE;
+ 		}
  		if (!filter_var($a['mail'], FILTER_VALIDATE_EMAIL) OR count($a['mail']) > 30)
  		{
  			$this->error =  "The email adress is not valid";
