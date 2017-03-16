@@ -53,18 +53,22 @@ function edit_pict()
 
 	var id = this.parentNode.parentNode.parentNode.id;
 	var pic_id = id.substr(3);
+	var ico = document.createElement("i");
 	var regexp = new RegExp('[^a-zA-Z0-9_ ]');
 
 	this.removeAttribute('readonly');
 	var title = this;
+	title.parentNode.appendChild(ico);
 	
 	this.onkeyup = function(e) {
 		var newName = this.value;
 
 		if (this.value.length >= 15 || regexp.test(newName)) {
 			this.className = "pic_name wrong";
+			ico.className = "fa fa-times-circle fa-3x";
 			setTimeout(function() {
 				title.className = "pic_name editing";
+				ico.className = "";
 			}, 1500);
 			this.value = this.value.slice(0, -1);
 		}
@@ -91,8 +95,10 @@ function edit_pict()
 					title.setAttribute('readonly', true);
 
 					title.className = "pic_name edited";
+					ico.className = "fa fa-check-circle fa-3x";
 					setTimeout(function() {
 						title.className = "pic_name";
+						ico.className = "";
 					}, 500);
 				}
 			});
