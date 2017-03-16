@@ -29,21 +29,31 @@ function connect_db($new){
 // MUST SET ERROR TYPE !!!!!!
 	global $DB_USER, $DB_PASSWORD, $DB_DSN, $DB_NAME;
 
-	try {
-		if ($new === TRUE)
+	if ($new === TRUE) {
+		try {
 			$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
-		else
-		{
-			$db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-			$db->exec("USE " . $DB_NAME);
 		}
+		catch (PDOexcpetion $e) {
+			die ('DB CREATING ERROR: ' . $e->getMessage());
+		}
+	}
+	else
+	{
+		try {
+			$db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+		}
+		catch (PDOexcpetion $e) {
+			die ('DB CONNECTION ERROR: ' . $e->getMessage());
+		}
+		$db->exec("USE " . $DB_NAME);
+	}
+	try {
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		return $db;
 	}
 	catch (PDOexcpetion $e) {
-		die ('DB CONNECTION ERROR: ' . $e->getMessage());
+		die ('DB SETTING PROBLEM : ' . $e->getMessage());
 	}
-
+	return $db;
 }
 
 function insertDatas ($table, $datas)
