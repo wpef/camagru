@@ -12,6 +12,9 @@ var		streaming = false,
 		width		= (window.innerWidth * 80) / 100,
 		height		= 0;
 
+if (width > 650)
+	width = 650;
+
 navigator.getMedia = (	navigator.getUserMedia ||
 						navigator.webkitGetUserMedia ||
 						navigator.mozGetUserMedia ||
