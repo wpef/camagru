@@ -34,7 +34,6 @@ switch ($_GET['act']) {
 		$newName = $_POST['newName'];
 		if (rename_pic($pic_id, $user, $newName) !== TRUE)
 			return FALSE;
-		echo $newName;
 		break;
 
 	case 'delete' :
@@ -81,7 +80,10 @@ function rename_pic($pic_id, $user, $newName)
 	if ($pict->owner != $user->login AND !$user->isadmin)
 		return FALSE;
 	if ($pict->modify(array('pic_name' => $newName)))
+	{
+		echo $pict->name;
 		return TRUE;
+	}
 	return FALSE;
 }
 

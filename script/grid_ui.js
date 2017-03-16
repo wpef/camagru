@@ -51,30 +51,29 @@ function edit_pict()
 {
 	this.removeEventListener("click", edit_pict, false); 
 
-	var id = this.parentNode.id;
+	var id = this.parentNode.parentNode.parentNode.id;
 	var pic_id = id.substr(3);
+	var regexp = new RegExp('[^a-zA-Z0-9_ ]');
 
-	//Hide title
-	var title = document.querySelector('article#' + id).querySelector('input.pic_name');
-	title.removeAttribute('readonly');
+	this.removeAttribute('readonly');
+	var title = this;
+	
+	this.onkeyup = function(e) {
+		var newName = this.value;
 
-	title.onkeypress = function(e) {
+		if (this.value.length >= 15 || regexp.test(newName)) {
+			this.className = "pic_name wrong";
+			setTimeout(function() {
+				title.className = "pic_name editing";
+			}, 1500);
+			this.value = this.value.slice(0, -1);
+		}
+
 		var key = e.charCode || e.keyCode || 0;
 		if (key == 13)
 		{
 			//esquive submit
 			e.preventDefault();
-
-			//setting vars
-			var newName = this.value;
-			//check
-			var regexp = new RegExp("^[A-Za-z0-9 ]*$");
-			if (!regexp.test(newName) || newName.length > 15)
-			{
-				this.style.outlineColor = "red";
-				this.value = "";
-				return;
-			}
 
 			//send AJAX
 			var str = "pic_id=" + pic_id + "&newName=" + newName;
@@ -91,8 +90,10 @@ function edit_pict()
 					title.innerHTML = xhr.responseText;
 					title.setAttribute('readonly', true);
 
-					//POP NOTIF IMAGE OR GREEN SUBLINE
-					pop_notif("EDITED !", pic_id, title);
+					title.className = "pic_name edited";
+					setTimeout(function() {
+						title.className = "pic_name";
+					}, 500);
 				}
 			});
 		}

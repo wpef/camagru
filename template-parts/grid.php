@@ -79,8 +79,6 @@ function displayPictureArticle($images_id, $buttons, $liked_pic)
 
 function displayPictureHeader($pict, $user)
 {
-	$edit = WEBROOT . "img/assets/edit.png";
-	$del = WEBROOT . "img/assets/del.png";
 	$user_html = "<a class='pic_owner' href='". WEBROOT . "pages/gallery.php?user=$pict->owner'>$pict->owner</a>";
 
 	$s = 	"<section class='details'>";
@@ -136,11 +134,6 @@ var i = 0;
 while (i < like.length)
 	like[i++].addEventListener("click", like_pict, false); 
 
-var edit = document.getElementsByClassName('pic_header');
-var i = 0;
-while (i < edit.length)
-	edit[i++].addEventListener("click", edit_pict, false); 
-
 var del = document.getElementsByClassName('del');
 var i = 0;
 while (i < del.length)
@@ -150,5 +143,17 @@ var com = document.getElementsByClassName('pic_com');
 var i = 0;
 while (i < com.length)
 	com[i++].addEventListener("click", init_comments, false);
+
+
+var title = document.querySelectorAll('input.pic_name');
+var i = 0;
+while (i < title.length)
+{
+	title[i].addEventListener("click", edit_pict, false);
+	title[i].onfocus = function () {
+		this.className = "pic_name editing";
+	}
+	i++;
+}
 
 </script>

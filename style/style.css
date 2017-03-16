@@ -132,20 +132,10 @@ article.picture .pic_name {
     user-select: inherit;
 }
 
-/*check if neede*/
-input.pic_name:focus {
-	outline : none;
-}
 	/*BUTTONS*/
 
 .user_actions {
 	padding : 1em;
-}
-
-.edit:hover:before {
-	font-family: FontAwesome;
-	font-size: 2em;
-	content: "\f040";
 }
 
 i.del {
