@@ -10,10 +10,15 @@ var		streaming = false,
 		startbutton = document.querySelector('#startbutton'),
 		stick_on	= false,
 		width		= (window.innerWidth * 80) / 100,
-		height		= 0;
+		height		= 0,
+		preview		= document.querySelector('#uploadedPrev'),
+		upload_form	= document.querySelector('#uploadfile');
 
 if (width > 650)
 	width = 650;
+
+preview.style.display 		= 'none';
+upload_form.style.display 	= 'none';
 
 navigator.getMedia = (	navigator.getUserMedia ||
 						navigator.webkitGetUserMedia ||
@@ -38,23 +43,28 @@ navigator.getMedia(
 		};
 	},
 	function(err) {
-		console.log("An error occured! " + err);
-		//ici upload manuel;
+		displayUploadForm();
 	}
 );
 
 video.addEventListener('canplay', function(ev){
-	if (!streaming) {
-		height = video.videoHeight / (video.videoWidth/width);
-		video.setAttribute('width', width);
-		video.setAttribute('height', height);
-		canvas.setAttribute('width', width);
-		canvas.setAttribute('height', height);
-		cover.setAttribute('width', width);
-		cover.setAttribute('height', height);
-		streaming = true;
-	}
-	}, false);
+		if (!streaming) {
+			height = video.videoHeight / (video.videoWidth/width);
+			video.setAttribute('width', width);
+			video.setAttribute('height', height);
+			canvas.setAttribute('width', width);
+			canvas.setAttribute('height', height);
+			cover.setAttribute('width', width);
+			cover.setAttribute('height', height);
+			streaming = true;
+			}
+		}, false);
+
+function displayUploadForm() {
+	upload_form.style.display	= 'initial';
+	upload_form.querySelector("#uploadProcess").style.display = "none";
+	startbutton.style.display 	= 'none';
+}
 
 function takepicture() {
 	var stick = document.querySelector('#selected');
