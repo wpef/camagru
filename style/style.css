@@ -97,6 +97,7 @@ body {
 	/* WRAPPERS */
 
 	article.picture {
+		height : 100%;
 		max-width: 520px;
 		display: inline-block;
 		position: relative;
