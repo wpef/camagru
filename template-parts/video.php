@@ -10,10 +10,10 @@
 
 
 <!-- Upload -->
-<form id="uploadfile" action="upload.php" method="post" enctype="multipart/form-data" target="uploadTarget" onsubmit="startUpload();">
+<form id="uploadfile" action="<?php echo WEBROOT ?>mods/upload_new.php" method="post" enctype="multipart/form-data" target="uploadTarget" onsubmit="startUpload();">
     <p id="uploadForm" align="center"><br/>
         <label>
-            File: <input name="myfile" type="file" size="30" />
+            File: <input name="uploaded_file" type="file" size="30" />
         </label>
         <label>
             <input type="submit" name="submitBtn" class="sbtn" value="Upload" />
@@ -39,18 +39,21 @@
 
 	function stopUpload(success,uploadedFile) {
 	    var result = '';
+	    console.log(uploadedFile);
 	    if (success == 1) 
 	    {
-	        result = '<span class="sucess-msg">The file was uploaded successfully!<\/span><br/><br/>';
+	        result = '<p class="message">The file was uploaded successfully!<\/span><br/><br/>';
 	        //Uploaded file preview
 	        var prev = document.querySelector("#UploadedFile");
 	        var clone = prev.cloneNode(true);
 	        clone.setAttribute('src',uploadedFile);
 	        prev.parentNode.replaceChild(clone,prev);
 	    }
-	    else
-	       result = '<span class="error-msg">There was an error during file upload!<\/span><br/><br/>';
-		
+	   else if (success == -1)
+	   		result = '<p class="alert">File not found!<\/span><br/><br/>';
+	   else if (success == -2)
+	   		result = '<p class="alert">Failed file upload<\/span><br/><br/>';
+	   
 		document.getElementById('uploadProcess').style.display = 'none';
 		document.getElementById('uploadForm').innerHTML = result;
 		document.getElementById('uploadForm').style.display = 'initial';

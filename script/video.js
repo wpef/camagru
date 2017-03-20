@@ -60,6 +60,11 @@ video.addEventListener('canplay', function(ev){
 			}
 		}, false);
 
+startbutton.addEventListener('click', function(ev){
+		takepicture();
+		ev.preventDefault();
+	}, false);
+
 function displayUploadForm() {
 	upload_form.style.display	= 'initial';
 	upload_form.querySelector("#uploadProcess").style.display = "none";
@@ -74,27 +79,21 @@ function takepicture() {
 	if (stick)
 		canvas.getContext('2d').drawImage(stick, 0, 0, width, height);
 	var data = canvas.toDataURL('image/png');
-	photo.setAttribute('src', data);
-	photo.setAttribute('style', ' ');
-
-//	AJAX TRY
+	//	AJAX TRY
 	var page = WEBROOT;
-	console.log(WEBROOT);
-
-	var formData = new FormData();
-	formData.append('pic', data);
+	var str = "pic=" + data;
 
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', page , true);
-	//xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send(formData);
+	xhr.open('POST', page + "mods/upload.php" , true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send(str);
+    xhr.addEventListener('readystatechange', function() { 
+		if (this.readyState == 4 && this.status == 200)
+		{
+			photo.setAttribute('src', data);
+			photo.setAttribute('style', ' ');
+		}
+	});
 }
-
-startbutton.addEventListener(
-	'click',
-	function(ev){
-		takepicture();
-		ev.preventDefault();
-	}, false);
 
 })();

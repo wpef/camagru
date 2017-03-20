@@ -269,8 +269,9 @@ class Picture {
 
 	private function _checkDatas($d) {
 		//check type
-		if ((substr($d, 0, 22)) !== 'data:image/png;base64,') {
-			$this->error = "Wrong image type (must be a .png file)";
+		if ((substr($d, 0, 22)) !== 'data:image/png;base64,'
+				&& (substr($d, 0, 23)) !== 'data:image/jpeg;base64,') {
+			$this->error = "Wrong image type (must be a .png or .jpg/jpeg file)";
 			return FALSE;
 		}
 
