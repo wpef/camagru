@@ -108,7 +108,6 @@ class Picture {
 		//push
 		if (!isset($this->id))
 			insertDatas('pictures', $datas);
-		// else alter pic_id = _id; IMPORTANT !!!!
 	}
 
 	public function like($login)
