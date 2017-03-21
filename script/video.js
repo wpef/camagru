@@ -11,14 +11,22 @@ var		streaming = false,
 		stick_on	= false,
 		width		= (window.innerWidth * 80) / 100,
 		height		= 0,
-		preview		= document.querySelector('#uploadedPrev'),
-		upload_form	= document.querySelector('#uploadfile');
+		upload_form	= document.querySelector('#uploadForm');
 
 if (width > 650)
 	width = 650;
 
-preview.style.display 		= 'none';
 upload_form.style.display 	= 'none';
+
+for (var i = 0; i < stickers.length; i++) {
+	stickers[i].addEventListener("click", function() {
+		if (stick_on)
+			cover.getContext('2d').clearRect(0,0,width,height);
+		cover.getContext('2d').drawImage(this, 0, 0, width, height);
+		stick_on = true; 
+	}, false);
+};
+
 
 navigator.getMedia = (	navigator.getUserMedia ||
 						navigator.webkitGetUserMedia ||
@@ -33,14 +41,6 @@ navigator.getMedia(
 		var vendorURL = window.URL || window.webkitURL;
 		video.src = vendorURL.createObjectURL(stream);
 		video.play();
-		for (var i = 0; i < stickers.length; i++) {
-			stickers[i].addEventListener("click", function() {
-				if (stick_on)
-					cover.getContext('2d').clearRect(0,0,width,height);
-				cover.getContext('2d').drawImage(this, 0, 0, width, height);
-				stick_on = true;
-			}, false);
-		};
 	},
 	function(err) {
 		displayUploadForm();
@@ -67,8 +67,19 @@ startbutton.addEventListener('click', function(ev){
 
 function displayUploadForm() {
 	upload_form.style.display	= 'initial';
-	upload_form.querySelector("#uploadProcess").style.display = "none";
 	startbutton.style.display 	= 'none';
+	upload_form.querySelector("input").onchange = displayPrev;
+}
+
+function displayPrev(event)
+{
+	console.log(event);
+		var prev = document.createElement("img");
+			prev.src = URL.createObjectURL(event.target.files[0]);
+			prev.id = "upload_prev";
+		video.parentNode.replaceChild(prev, video);
+		event.target.parentNode.style.display = "none";
+		activePrev();
 }
 
 function takepicture() {
@@ -94,6 +105,14 @@ function takepicture() {
 			photo.setAttribute('style', ' ');
 		}
 	});
+}
+
+function activePrev() {
+	console.log("YOYOYOYOYOOYYOYO");
+	//(MAYBE resize) 
+	//active stickers
+	//reactive start button changing value
+	//push to db if start button clicked
 }
 
 })();

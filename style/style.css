@@ -85,6 +85,13 @@ body {
 	    float: right;
 	}
 
+/* VIDEO DISPLAY */
+
+	img#upload_prev {
+		width: 80%;
+		max-width: 650px; 
+	}
+
 /* PICTURES DISPLAY */
 
 	div.grid-wrapper {

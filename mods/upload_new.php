@@ -15,7 +15,9 @@ if (empty($file))
 else
 {
     $b64 = "data:".$file['type'].';base64,';
-    $b64 .= base64_encode(file_get_contents($file['tmp_name']));
+//    $b64 .= base64_encode(file_get_contents($file['tmp_name']));
 }
 ?>
+<!--
 <script type="text/javascript">window.top.window.stopUpload(<?php echo $success; ?>,"<?php echo $b64; ?>");</script>
+-->
