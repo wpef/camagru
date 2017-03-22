@@ -12,6 +12,12 @@ body {
 	margin-right: 2.5em;
 }
 
+article {
+	background: white;
+	border-radius: 2px;
+	box-shadow: 1px 1px 5px #888888;
+}
+
 /* HEADER */
 
 	body > header {
@@ -104,14 +110,11 @@ body {
 	/* WRAPPERS */
 
 	article.picture {
-		height : 100%;
-		max-width: 520px;
+		width: 520px;
+		height: 580px;
+		margin-bottom: 6%;
 		display: inline-block;
 		position: relative;
-		background: white;
-	    border-radius: 2px;
-	    margin-bottom: 6%;
-	    box-shadow: 1px 1px 5px #888888;
 	}
 
 	article.picture header {
@@ -138,6 +141,37 @@ body {
 	    -webkit-rtl-ordering: inherit;
 	    user-select: inherit;
 	}
+
+	/* IMAGE */
+
+	article.picture .image {
+		margin : auto;
+		position : relative;
+		min-height: 380px;
+	}
+
+	article.picture .image img {
+		max-width: 520px;
+		width :100%;
+		margin :auto;
+		position: relative;
+	}
+
+	/*DETAILS*/
+
+	article.picture a, .pic_owner {
+		text-decoration: none;
+		font-style: bold !important;
+		color :#4ca747;
+	}
+
+	article.picture .details {
+		display: block;
+		border-top: 1px solid grey;
+		text-align: right;
+		font-style: italic;
+	}
+
 
 	/* Handling RENAME FORM */
 
@@ -204,34 +238,6 @@ body {
 		font-size: 2em;
 		content: "\f10e";
 		margin-right: 20px;
-	}
-
-	/*DETAILS*/
-
-	article.picture a, .pic_owner {
-		text-decoration: none;
-		font-style: bold !important;
-		color :#4ca747;
-	}
-
-	article.picture .details {
-		display: block;
-		border-top: 1px solid grey;
-		text-align: right;
-		font-style: italic;
-	}
-
-
-	article.picture .image {
-		margin : auto;
-		position : relative;
-	}
-
-	article.picture section.image img {
-		max-width: 520px;
-		width :100%;
-		margin :auto;
-		position: relative;
 	}
 
 	/*COMMENTS*/

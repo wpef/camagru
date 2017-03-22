@@ -1,7 +1,8 @@
 (function() {
 
 //setting vars
-var		streaming = false,
+var		streaming	= false,
+		upload		= false,
 		video       = document.querySelector('#video'),
 		cover       = document.querySelector('#cover'),
 		canvas      = document.querySelector('#canvas'),
@@ -17,13 +18,15 @@ if (width > 650)
 	width = 650;
 
 upload_form.style.display 	= 'none';
+startbutton.style.display   = 'none';
 
 for (var i = 0; i < stickers.length; i++) {
 	stickers[i].addEventListener("click", function() {
 		if (stick_on)
-			cover.getContext('2d').clearRect(0,0,width,height);
-		cover.getContext('2d').drawImage(this, 0, 0, width, height);
-		stick_on = true; 
+			cover.getContext('2d').clearRect(0, 0, cover.width, cover.height);
+		cover.getContext('2d').drawImage(this, 0, 0, cover.width, cover.height);
+		stick_on = true;
+		startbutton.style.display   = 'initial';
 	}, false);
 };
 
@@ -41,68 +44,62 @@ navigator.getMedia(
 		var vendorURL = window.URL || window.webkitURL;
 		video.src = vendorURL.createObjectURL(stream);
 		video.play();
+		activeVideo();
 	},
 	function(err) {
 		displayUploadForm();
 	}
 );
 
-video.addEventListener('canplay', function(ev){
+function activeVideo () { //to test
+	video.addEventListener('canplay', function(ev) {
 		if (!streaming) {
-			height = video.videoHeight / (video.videoWidth/width);
-			video.setAttribute('width', width);
-			video.setAttribute('height', height);
-			canvas.setAttribute('width', width);
-			canvas.setAttribute('height', height);
-			cover.setAttribute('width', width);
-			cover.setAttribute('height', height);
-			streaming = true;
+				height = video.videoHeight / (video.videoWidth/width);
+				video.setAttribute('width', width);
+				video.setAttribute('height', height);
+				canvas.setAttribute('width', width);
+				canvas.setAttribute('height', height);
+				cover.setAttribute('width', width);
+				cover.setAttribute('height', height);
+				streaming = true;
 			}
-		}, false);
+	}, false);
 
-startbutton.addEventListener('click', function(ev){
-		takepicture();
+	startbutton.addEventListener('click', function(ev) {
+		takepicture(video);
 		ev.preventDefault();
 	}, false);
+}
 
 function displayUploadForm() {
 	upload_form.style.display	= 'initial';
-	startbutton.style.display 	= 'none';
-	upload_form.querySelector("input").onchange = displayPrev;
-}
-
-function displayPrev(event)
-{
-	//check file
-	var prev = document.createElement("img");
-		prev.src = URL.createObjectURL(event.target.files[0]);
-		prev.id = "upload_prev";
-	video.parentNode.replaceChild(prev, video);
-	event.target.parentNode.style.display = "none";
-	activePrev();
-}
-
-function activePrev() {
-	var prev = document.querySelector('#upload_prev');
+	upload_form.querySelector("input").onchange = function (event) {
+		//check file
+		var prev = document.createElement("img");
+			prev.src = URL.createObjectURL(event.target.files[0]);
+			prev.id = "upload_prev";
+		video.parentNode.replaceChild(prev, video);
+		event.target.parentNode.style.display = "none";
 		prev.onload = function () {
-		width = prev.width;
-		height = prev.height;
-		console.log(height, width);
-	}
-	//active stickers
-	//reactive start button changing value
-	//push to db if start button clicked
+			cover.setAttribute('width', prev.width);
+			cover.setAttribute('height', prev.height);
+			startbutton.addEventListener('click', function(ev) {
+				takepicture(prev);
+				ev.preventDefault();
+			}, false);
+		};
+	};
 }
 
-function takepicture() {
+function takepicture(img) {
 	var stick = document.querySelector('#selected');
-	canvas.width = width;
-	canvas.height = height;
-	canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-	if (stick)
-		canvas.getContext('2d').drawImage(stick, 0, 0, width, height);
+	canvas.width = cover.width;
+	canvas.height = cover.height;
+	
+	canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+	canvas.getContext('2d').drawImage(stick, 0, 0, canvas.width, canvas.height);
+	
 	var data = canvas.toDataURL('image/png');
-	//	AJAX TRY
 	var page = WEBROOT;
 	var str = "pic=" + data;
 

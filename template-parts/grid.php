@@ -128,6 +128,14 @@ function displayPictureButtons($pict, $user, $liked)
 <script type="text/javascript" src="<?php echo WEBROOT . 'script/grid_ui.js' ?>"></script>
 
 <script>
+//setting nice height for articles
+var img = document.querySelectorAll("section.image img");
+for (i = 0; i < img.length; i++)
+{
+    if (img[i].height < 390)
+    	img[i].style.padding = ((390 - img[i].height)/2) + "px 0px";
+}
+
 //assigning functions to buttons
 var like = document.getElementsByClassName('pic_likes');
 var i = 0;
