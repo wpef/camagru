@@ -47,7 +47,7 @@ class Picture {
 	private function _push($datas)
 	{
 		if (!isset($this->id)) {
-			$this->create($datas);
+			$this->_create($datas);
 			$this->_pushToDb();
 		}
 		else {
@@ -56,12 +56,11 @@ class Picture {
 		}
 	}
 
-	public function create($d)
-	{		
-		//proceed datas;
-		$datas = str_replace(' ','+',$d); //JS to PHP decode
-		$datas = substr($datas,strpos($datas,",")+1); //remove data:img/png ...
-		$datas = base64_decode($datas); //decode string
+	private function _create($d)
+	{
+		$datas = str_replace(' ','+',$d);
+		$datas = substr($datas,strpos($datas,",")+1);
+		$datas = base64_decode($datas);
 
 		//Check
 		if ($this->_checkDatas($d) === TRUE)
@@ -110,7 +109,7 @@ class Picture {
 			insertDatas('pictures', $datas);
 	}
 
-	public function like($login)
+	public function like($login) //go to user class
 	{
 		//checking logged_on
 		if (empty($login))
@@ -149,7 +148,7 @@ class Picture {
 		return TRUE;
 	}
 
-	public function unlike($login)
+	public function unlike($login) //go to user class
 	{
 		sendQuery("DELETE FROM likes WHERE (like_pic = $this->id AND like_author = '$login');");
 	}
@@ -199,32 +198,6 @@ class Picture {
 		$this->_proceedArray($res[0]);
 	}
 
-	private function _proceedArray($a)
-	{
-		//treat STD
-		foreach ($a as $d => $v)
-		{
-			switch ($d) {
-			//set vars;
-				case 'pic_src':
-					$this->src = $v;
-					break;
-				case 'pic_name':
-					$this->name = $v;
-					break;
-				case 'pic_owner' :
-					$this->owner = $v;
-					break;
-				case 'added_on' :
-					$this->date = $v;
-					break;
-				case 'pic_likes' :
-					$this->likes = $v;
-					break;
-			}
-		}
-	}
-
 	public function getComments($limit, $offset)
 	{
 		//SET VARS
@@ -255,6 +228,47 @@ class Picture {
 		return $s;
 	}
 
+	public function toArticleHTML($user, $close)
+	{
+		$isowned = $this->owner == $user->login OR $user->isadmin;
+		$user_html = new User ($this->owner);
+		$user_html = $user_html->toDetailsHTML();
+		$del_icon = "<i class=\"del fa fa-times\" aria-hidden=\"true\"></i>";
+
+		//HEADER
+		$h =	"<article class='picture' id='pic$this->id'>";
+		
+		$h .=	"<section class='details'>";
+		$h .= 	"by&nbsp;$user_html";
+		$h .= 	"&nbsp;on&nbsp;<span class='pic_date'>$this->date</span> "; 
+		$h .= "</section>";
+
+		if ($isowned)
+		{
+			$h .= $del_icon;
+			
+			if ($this->owner == $user->login)
+			{
+				$h .= "<span class='edit'>";
+				$h .= "<input type='text' name='newName' class='pic_name' value='$this->name' readonly='true'>";
+				$h .= "</span>";
+			}
+			else
+				$h .= "<h2 class='pic_name'>$this->name</h2>";
+		}
+		else
+			$h .= "<h2 class='pic_name'>$this->name</h2>";
+		$h .= "</header>";
+
+		//img
+		$img = $this->toImgHTML();
+
+		if ($close)
+			return ($h + $img + "</article>");
+		else
+			return ($h + $img);
+	}
+
 /* -> USEFULL METHODS <- */
 	private function _getNewName()
 	{
@@ -266,7 +280,8 @@ class Picture {
 		return ($file); 
 	}
 
-	private function _checkDatas($d) {
+	private function _checkDatas($d)
+	{
 		//check type
 		if ((substr($d, 0, 22)) !== 'data:image/png;base64,'
 				&& (substr($d, 0, 23)) !== 'data:image/jpeg;base64,') {
@@ -287,6 +302,32 @@ class Picture {
 			return FALSE;
 		}
 		return TRUE;
+	}
+
+	private function _proceedArray($a)
+	{
+		//treat STD
+		foreach ($a as $d => $v)
+		{
+			switch ($d) {
+			//set vars;
+				case 'pic_src':
+					$this->src = $v;
+					break;
+				case 'pic_name':
+					$this->name = $v;
+					break;
+				case 'pic_owner' :
+					$this->owner = $v;
+					break;
+				case 'added_on' :
+					$this->date = $v;
+					break;
+				case 'pic_likes' :
+					$this->likes = $v;
+					break;
+			}
+		}
 	}
 }
 

@@ -107,6 +107,11 @@ class User {
 		$this->__construct($usr_infos['login']);
  	}
 
+ 	public function toDetailsHTML {
+ 		$user_html = "<a class='pic_owner' href='". WEBROOT . "pages/gallery.php?user=$this->login'>$this->login</a>";
+ 		return ($user_html);
+ 	}
+
  	private function _checkArray ($a)
  	{
  		if (!array_key_exists('login', $a) OR !array_key_exists('pass', $a) OR !array_key_exists('mail', $a))
@@ -199,11 +204,9 @@ class User {
  		return hash('md5', $_passwd);
  	}
 
- 	public function getImages() {
- 		$p_query = "SELECT pic_id
- 						FROM pictures WHERE pic_owner = ?
- 							ORDER BY added_on DESC;";
- 
+ 	public function getImages()
+ 	{
+ 		$p_query = "SELECT pic_id FROM pictures WHERE pic_owner = ? ORDER BY added_on DESC;";
  		$images_ids = getDatas($p_query, $this->login);
  		return ($images_ids);
  	}
