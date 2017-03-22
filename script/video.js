@@ -73,13 +73,25 @@ function displayUploadForm() {
 
 function displayPrev(event)
 {
-	console.log(event);
-		var prev = document.createElement("img");
-			prev.src = URL.createObjectURL(event.target.files[0]);
-			prev.id = "upload_prev";
-		video.parentNode.replaceChild(prev, video);
-		event.target.parentNode.style.display = "none";
-		activePrev();
+	//check file
+	var prev = document.createElement("img");
+		prev.src = URL.createObjectURL(event.target.files[0]);
+		prev.id = "upload_prev";
+	video.parentNode.replaceChild(prev, video);
+	event.target.parentNode.style.display = "none";
+	activePrev();
+}
+
+function activePrev() {
+	var prev = document.querySelector('#upload_prev');
+		prev.onload = function () {
+		width = prev.width;
+		height = prev.height;
+		console.log(height, width);
+	}
+	//active stickers
+	//reactive start button changing value
+	//push to db if start button clicked
 }
 
 function takepicture() {
@@ -105,14 +117,6 @@ function takepicture() {
 			photo.setAttribute('style', ' ');
 		}
 	});
-}
-
-function activePrev() {
-	console.log("YOYOYOYOYOOYYOYO");
-	//(MAYBE resize) 
-	//active stickers
-	//reactive start button changing value
-	//push to db if start button clicked
 }
 
 })();
