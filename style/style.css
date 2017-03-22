@@ -111,7 +111,7 @@ article {
 
 	article.picture {
 		width: 520px;
-		height: 580px;
+		min-height: 580px;
 		margin-bottom: 6%;
 		display: inline-block;
 		position: relative;
@@ -147,7 +147,11 @@ article {
 	article.picture .image {
 		margin : auto;
 		position : relative;
-		min-height: 380px;
+		height: 380px;
+	}
+
+	article.picture .image .stretched {
+		height : 100%;
 	}
 
 	article.picture .image img {

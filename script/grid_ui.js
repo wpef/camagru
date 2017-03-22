@@ -139,6 +139,7 @@ function init_comments()
 	this.removeEventListener("click", init_comments, false);
 
 	var pic_id = this.parentNode.parentNode.id.substr(3);
+	this.parentNode.parentNode.className += " stretched";
 	this.onclick = function () { hide_comments(pic_id); };
 	this.innerHTML = "Hide comments";
 	display_comMenu(pic_id);
@@ -213,9 +214,10 @@ function add_com(pic_id, content)
 
 function hide_comments(article)
 {
+	article.className = "picture";
+
 	var sect = article.querySelector('.comments');
-	
-	sect.parentNode.removeChild(sect);
+		sect.parentNode.removeChild(sect);
 
 	var button = article.querySelector('.pic_com');
 		button.innerHTML = "Show comments";
