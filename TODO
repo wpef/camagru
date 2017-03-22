@@ -7,10 +7,8 @@ VIDEO
 
 —> titre des pages
 
-—> affichage date 
-
 —> afficher bouton logout (:after)
 
 -> check modify with invalid values (Nom et Prenom);
 
--> Check display article when no buttons;
+//-> Check display article when no buttons;

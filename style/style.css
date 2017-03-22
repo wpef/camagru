@@ -109,8 +109,13 @@ article {
 
 	/* WRAPPERS */
 
+	article.picture.stretched {
+		max-height: initial;
+	}
+	
 	article.picture {
 		width: 520px;
+		max-height: 561px;
 		margin-bottom: 6%;
 		display: inline-block;
 		position: relative;
@@ -147,10 +152,6 @@ article {
 		margin : auto;
 		position : relative;
 		height: 380px;
-	}
-
-	article.picture .image .stretched {
-		height : 100%;
 	}
 
 	article.picture .image img {

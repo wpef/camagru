@@ -87,7 +87,6 @@ function displayPictureButtons($pict, $user, $liked)
 		echo "Show comments</span>";
 	echo "</section>";
 }
-
 ?>
 <script type="text/javascript" src="<?php echo WEBROOT . 'script/grid_ui.js' ?>"></script>
 

@@ -234,6 +234,7 @@ class Picture {
 			$isowned = 1;
 		$user_html = new User ($this->owner);
 		$user_html = $user_html->toDetailsHTML();
+		$date = date_ago($this->date, 2);
 		$del_icon = "<i class=\"del fa fa-times\" aria-hidden=\"true\"></i>";
 
 		//HEADER
@@ -253,7 +254,7 @@ class Picture {
 		//DETAILS
 		$s =	"<section class='details'>";
 		$s .= 	"by&nbsp;$user_html";
-		$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$this->date</span> ";
+		$s .= 	"&nbsp<span class='pic_date'>$date</span> ";
 		$s .= "</section>";
 		$s .= "</header>";
 
