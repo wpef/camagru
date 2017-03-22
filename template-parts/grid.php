@@ -89,24 +89,26 @@ function displayPictureButtons($pict, $user, $liked)
 }
 
 ?>
-
 <script type="text/javascript" src="<?php echo WEBROOT . 'script/grid_ui.js' ?>"></script>
 
 <script>
 //setting nice height for articles
-var img = document.querySelectorAll("section.image img");
-var height = 0;
+document.onload = function () {
+	var img = document.querySelectorAll("section.image img");
+	var height = 0;
+	for (i = 0; i < img.length; i++)
+	{
+		if (img[i].height > height)
+			height = img[i].height;
+	}
 
-for (i = 0; i < img.length; i++)
-{
-	if (img[i].height > height)
-		height = img[i].height;
-}
-
-for (i = 0; i < img.length; i++)
-{
-    if (img[i].height < height)
-    	img[i].style.padding = ((height - img[i].height)/2) + "px 0px";
+	for (i = 0; i < img.length; i++)
+	{
+	    if (img[i].height < height)
+	    {
+	    	img[i].style.paddingTop = ((height - img[i].height) /2) + "px";
+	    }
+	}
 }
 
 //assigning functions to buttons

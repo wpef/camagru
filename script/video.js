@@ -18,6 +18,7 @@ if (width > 650)
 
 upload_form.style.display 	= 'none';
 startbutton.style.display   = 'none';
+stickers[0].parentNode.style.display = 'none';
 
 for (var i = 0; i < stickers.length; i++) {
 	stickers[i].addEventListener("click", function() {
@@ -50,7 +51,8 @@ navigator.getMedia(
 	}
 );
 
-function activeVideo () { //to test
+function activeVideo () {
+	stickers[0].parentNode.style.display = 'initial';
 	video.addEventListener('canplay', function(ev) {
 		if (!streaming) {
 				height = video.videoHeight / (video.videoWidth/width);
@@ -80,6 +82,7 @@ function displayUploadForm() {
 		video.parentNode.replaceChild(prev, video);
 		event.target.parentNode.style.display = "none";
 		prev.onload = function () {
+			stickers[0].parentNode.style.display = 'initial';
 			cover.setAttribute('width', prev.width);
 			cover.setAttribute('height', prev.height);
 			startbutton.addEventListener('click', function(ev) {
@@ -112,9 +115,21 @@ function takepicture(img) {
 			var uploaded = document.createElement('div');
 				uploaded.className = 'new_picture';
 				uploaded.innerHTML = xhr.responseText;
-			document.querySelector('.body').replaceChild(uploaded, startbutton);
+			document.querySelector('.body').replaceChild(uploaded, startbutton); //mauvaise idee
+			activeButtons();
 		}
 	});
+}
+
+function activeButtons () {
+	var del = document.querySelector('.del');
+	del.addEventListener("click", delete_pict, false);
+
+	var title = document.querySelector('input.pic_name');
+	title.addEventListener("click", edit_pict, false);
+	title.onfocus = function () {
+		this.className = "pic_name editing";
+	}
 }
 
 })();

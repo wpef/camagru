@@ -14,8 +14,5 @@
 		File: <input name="uploaded_file" type="file" size="30" />
 	</label>
 </p>
-<script type="text/javascript">
-	var WEBROOT = "<?php echo WEBROOT ?>";
-</script>
-<script type="text/javascript" src="<?php echo WEBROOT . 'script/video.js'?>">
-</script>
+<script type="text/javascript" src="<?php echo WEBROOT . 'script/video.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBROOT . 'script/grid_ui.js'?>"></script>

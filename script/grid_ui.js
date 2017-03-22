@@ -18,7 +18,7 @@ function like_pict()
 
 	//send ajax
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', "../mods/edit_pic.php?act=like", true);	
+	xhr.open('POST', WEBROOT + "mods/edit_pic.php?act=like", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
 	
@@ -82,7 +82,7 @@ function edit_pict()
 			//send AJAX
 			var str = "pic_id=" + pic_id + "&newName=" + newName;
 			var xhr = new XMLHttpRequest();
-			xhr.open('POST', "../mods/edit_pic.php?act=rename", true);	
+			xhr.open('POST', WEBROOT + "mods/edit_pic.php?act=rename", true);	
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.send(str);
 
@@ -119,7 +119,7 @@ function delete_pict()
 	var str = "pic_id=" + pic_id;
 
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', "../mods/edit_pic.php?act=delete", true);	
+	xhr.open('POST', WEBROOT + "mods/edit_pic.php?act=delete", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
 
@@ -190,7 +190,7 @@ function add_com(pic_id, content)
 
 	var str = "pic_id=" + pic_id + "&content=" + content;
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', "../mods/edit_pic.php?act=add_com", true);	
+	xhr.open('POST', WEBROOT + "mods/edit_pic.php?act=add_com", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
 
@@ -243,7 +243,7 @@ function load_coms(article)
 	//send ajax
 	var str = "pic_id=" + article.id.substr(3) + "&offset=" + count; //checked
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', "../mods/edit_pic.php?act=load_coms", true);	
+	xhr.open('POST', WEBROOT + "mods/edit_pic.php?act=load_coms", true);	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(str);
 
