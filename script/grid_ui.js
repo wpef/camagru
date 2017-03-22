@@ -139,7 +139,6 @@ function init_comments()
 	this.removeEventListener("click", init_comments, false);
 
 	var pic_id = this.parentNode.parentNode.id.substr(3);
-	this.parentNode.parentNode.className += " stretched";
 	this.onclick = function () { hide_comments(pic_id); };
 	this.innerHTML = "Hide comments";
 	display_comMenu(pic_id);
@@ -148,7 +147,7 @@ function init_comments()
 function display_comMenu (pic_id)
 {
 	var article = document.querySelector("#pic" + pic_id);
-
+		article.className += " stretched";
 	//create new elems	
 	var button = article.querySelector('.pic_com');
 		button.innerHTML = "Hide comments";
