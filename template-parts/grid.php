@@ -56,7 +56,7 @@ function displayPictureArticle($images_id, $buttons, $liked_pic)
 
 		$user = $_SESSION['user'];
 		$pict = new Picture(array('id' => $i['pic_id']));
-
+		echo $pict->toArticleHTML($user, FALSE);
 		foreach ($liked_pic as $i)
 		{
 			if ($i['like_pic'] == $pict->id)
@@ -67,45 +67,10 @@ function displayPictureArticle($images_id, $buttons, $liked_pic)
 			else
 				$liked = 0;
 		}
-		
-	 	echo "<article class='picture' id='pic$pict->id'>";
-	 		displayPictureHeader($pict, $user);
-			echo $pict->toImgHTML();
-			if ($buttons)
+	 	if ($buttons)
 				displayPictureButtons($pict, $user, $liked);
 		echo "</article>";
 	}
-}
-
-function displayPictureHeader($pict, $user)
-{
-	$user_html = "<a class='pic_owner' href='". WEBROOT . "pages/gallery.php?user=$pict->owner'>$pict->owner</a>";
-
-	$s = 	"<section class='details'>";
-	$s .= 	"by&nbsp;$user_html";
-	$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$pict->date</span> "; 
-	$s .= 	"</section>";
-
-	$del_icon = "<i class=\"del fa fa-times\" aria-hidden=\"true\"></i>";
-
-	echo "<header class='pic_header'>";
-	if ($user->isadmin OR $pict->owner == $user->login)
-	{
-		echo $del_icon;
-		if ($pict->owner == $user->login)
-		{
-			echo "<span class='edit'>";
-			echo "<input type='text' name='newName' class='pic_name' value='$pict->name' readonly='true'>";
-			echo "</span>";
-		}
-		else
-			echo "<h2 class='pic_name'>$pict->name</h2>";
-	}
-	else
-		echo "<h2 class='pic_name'>$pict->name</h2>";
-	
-	echo $s;
-	echo "</header>";
 }
 
 function displayPictureButtons($pict, $user, $liked)

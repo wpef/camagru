@@ -107,7 +107,7 @@ class User {
 		$this->__construct($usr_infos['login']);
  	}
 
- 	public function toDetailsHTML {
+ 	public function toDetailsHTML () {
  		$user_html = "<a class='pic_owner' href='". WEBROOT . "pages/gallery.php?user=$this->login'>$this->login</a>";
  		return ($user_html);
  	}

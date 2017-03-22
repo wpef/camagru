@@ -219,8 +219,6 @@ class Picture {
 /* ==> DISPLAY <== */
 	public function toImgHTML()
 	{
-		$page = WEBROOT . "pages/gallery?type=guest&user=";
-
 		$s = 	"<section class='image'>";
 		$s .= 	"<img src=\"$this->src\"/>";
 		$s .=	"</section>";
@@ -230,43 +228,42 @@ class Picture {
 
 	public function toArticleHTML($user, $close)
 	{
-		$isowned = $this->owner == $user->login OR $user->isadmin;
+	//Return a picture formatted as an article $user must be a User object, is $close == true the last closing tag will be added;
+		$isowned = 0;
+		if ($this->owner == $user->login OR $user->isadmin)
+			$isowned = 1;
 		$user_html = new User ($this->owner);
 		$user_html = $user_html->toDetailsHTML();
 		$del_icon = "<i class=\"del fa fa-times\" aria-hidden=\"true\"></i>";
 
 		//HEADER
 		$h =	"<article class='picture' id='pic$this->id'>";
-		
-		$h .=	"<section class='details'>";
-		$h .= 	"by&nbsp;$user_html";
-		$h .= 	"&nbsp;on&nbsp;<span class='pic_date'>$this->date</span> "; 
-		$h .= "</section>";
+		$h .= 	"<header class='pic_header'>";
 
-		if ($isowned)
+		if (!$isowned)
+			$h .= "<h2 class='pic_name'>$this->name</h2>";
+		else
 		{
 			$h .= $del_icon;
-			
-			if ($this->owner == $user->login)
-			{
-				$h .= "<span class='edit'>";
-				$h .= "<input type='text' name='newName' class='pic_name' value='$this->name' readonly='true'>";
-				$h .= "</span>";
-			}
-			else
-				$h .= "<h2 class='pic_name'>$this->name</h2>";
+			$h .= "<span class='edit'>";
+			$h .= "<input type='text' name='newName' class='pic_name' value='$this->name' readonly='true'>";
+			$h .= "</span>";
 		}
-		else
-			$h .= "<h2 class='pic_name'>$this->name</h2>";
 		$h .= "</header>";
 
-		//img
+		//DETAILS
+		$s =	"<section class='details'>";
+		$s .= 	"by&nbsp;$user_html";
+		$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$this->date</span> "; 
+		$s .= "</section>";
+
+		//IMAGE
 		$img = $this->toImgHTML();
 
 		if ($close)
-			return ($h + $img + "</article>");
+			return ($h . $s . $img . "</article>");
 		else
-			return ($h + $img);
+			return ($h . $s . $img);
 	}
 
 /* -> USEFULL METHODS <- */
