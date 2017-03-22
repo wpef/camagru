@@ -5,14 +5,14 @@ define('DIR', ROOT . "photos/");
 
 //PARSING
 
-if (!empty($_POST['pic']))
-	$imgb64 = $_POST["pic"];
-else
+$user = $_SESSION['user'];
+$imgb64 = $_POST["pic"];
+
+if (empty($imgb64) or empty($user))
 {
 	$_SESSION['alert'] = 'ERROR : No files found';
 	exit();
 }
-
 
 //TRAITING
 if (!empty($imgb64)) {
@@ -22,6 +22,8 @@ if (!empty($imgb64)) {
 		$_SESSION['alert'] = $pict->error;
 		die();
 	}
+	else
+		echo $pict->toArticleHTML($user, true);
 }
 
 ?>

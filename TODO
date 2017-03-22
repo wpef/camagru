@@ -1,17 +1,7 @@
-SIGN UP
-	-- Check mot de passs => peut pas etre un mot de la langue francaise
-
 VIDEO 
 	-- MERGE cote serveur
-	
 	- MKDIR PHOTOS
-
 	— css
-
-
--> MODIFS EN AJAX pour éviter pages blanches. (ou HEADER)
-
-—> load user likes dans tous les cas —> if liked -> coeur rouge
 
 —> image details css pour mobile
 
@@ -20,3 +10,7 @@ VIDEO
 —> affichage date 
 
 —> afficher bouton logout (:after)
+
+-> check modify with invalid values (Nom et Prenom);
+
+-> Check display article when no buttons;

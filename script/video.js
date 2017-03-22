@@ -6,7 +6,6 @@ var		streaming	= false,
 		video       = document.querySelector('#video'),
 		cover       = document.querySelector('#cover'),
 		canvas      = document.querySelector('#canvas'),
-		photo       = document.querySelector('#photo'),
 		stickers	= document.getElementsByClassName('sticks'),
 		startbutton = document.querySelector('#startbutton'),
 		stick_on	= false,
@@ -110,8 +109,10 @@ function takepicture(img) {
     xhr.addEventListener('readystatechange', function() { 
 		if (this.readyState == 4 && this.status == 200)
 		{
-			photo.setAttribute('src', data);
-			photo.setAttribute('style', ' ');
+			var uploaded = document.createElement('div');
+				uploaded.className = 'new_picture';
+				uploaded.innerHTML = xhr.responseText;
+			document.querySelector('.body').replaceChild(uploaded, startbutton);
 		}
 	});
 }

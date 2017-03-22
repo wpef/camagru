@@ -249,13 +249,13 @@ class Picture {
 			$h .= "<input type='text' name='newName' class='pic_name' value='$this->name' readonly='true'>";
 			$h .= "</span>";
 		}
-		$h .= "</header>";
 
 		//DETAILS
 		$s =	"<section class='details'>";
 		$s .= 	"by&nbsp;$user_html";
-		$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$this->date</span> "; 
+		$s .= 	"&nbsp;on&nbsp;<span class='pic_date'>$this->date</span> ";
 		$s .= "</section>";
+		$s .= "</header>";
 
 		//IMAGE
 		$img = $this->toImgHTML();

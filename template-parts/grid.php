@@ -95,10 +95,18 @@ function displayPictureButtons($pict, $user, $liked)
 <script>
 //setting nice height for articles
 var img = document.querySelectorAll("section.image img");
+var height = 0;
+
 for (i = 0; i < img.length; i++)
 {
-    if (img[i].height < 390)
-    	img[i].style.padding = ((390 - img[i].height)/2) + "px 0px";
+	if (img[i].height > height)
+		height = img[i].height;
+}
+
+for (i = 0; i < img.length; i++)
+{
+    if (img[i].height < height)
+    	img[i].style.padding = ((height - img[i].height)/2) + "px 0px";
 }
 
 //assigning functions to buttons
