@@ -234,7 +234,7 @@ class Picture {
 			$isowned = 1;
 		$user_html = new User ($this->owner);
 		$user_html = $user_html->toDetailsHTML();
-		$date = date_ago($this->date, 2);
+		$date = date_ago($this->date, 1);
 		$del_icon = "<i class=\"del fa fa-times\" aria-hidden=\"true\"></i>";
 
 		//HEADER
