@@ -206,7 +206,7 @@ class User {
 
  	public function getImages()
  	{
- 		$p_query = "SELECT pic_id FROM pictures WHERE pic_owner = ? ORDER BY added_on ASC;";
+ 		$p_query = "SELECT pic_id FROM pictures WHERE pic_owner = ? ORDER BY added_on DESC;";
  		$images_ids = getDatas($p_query, $this->login);
  		return ($images_ids);
  	}

@@ -147,7 +147,7 @@ function display_comment($com)
 		$href = WEBROOT . "/pages/gallery.php?user=$author";
 	$author = "<a class='com_author' href='$href'>$author</a>";
 	
-	$date = date_ago($com['com_date'], 1);
+	$date = date_ago($com['com_date'], 1); //to modif
 		$date = "<span class='com_date'>$date</span>";
 	
 	$cont = $com['com_cont'];

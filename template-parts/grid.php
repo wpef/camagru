@@ -18,7 +18,7 @@ if ($_GET['type'] == 'user')
 
 else if ($_GET['type'] == 'guest')
 {
-	 	$p_query = "SELECT pic_id FROM pictures ORDER BY added_on ASC;";
+	 	$p_query = "SELECT pic_id FROM pictures ORDER BY added_on DESC;";
  		$images_id = getDatas($p_query, "");
 }
 
@@ -94,25 +94,6 @@ function displayPictureButtons($pict, $user, $liked)
 <script type="text/javascript" src="<?php echo WEBROOT . 'script/grid_ui.js' ?>"></script>
 
 <script>
-//setting nice height for articles
-window.onload = function () {	
-	var img = document.querySelectorAll("section.image img");
-	var height = 0;
-	for (i = 0; i < img.length; i++)
-	{
-		if (img[i].height > height)
-			height = img[i].height;
-	}
-
-	for (i = 0; i < img.length; i++)
-	{
-	    if (img[i].height < height)
-	    	img[i].style.paddingTop = ((height - img[i].height) /2) + "px";
-	}
-
-	//add date function
-};
-
 //assigning functions to buttons
 var like = document.getElementsByClassName('pic_likes');
 var i = 0;
