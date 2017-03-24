@@ -26,33 +26,35 @@ function create_table($name, $values) {
 
 function connect_db($new){
 // connect_db try to create a connexion to CAMAGRU DATABASE, and return the PDO object if it worked; $new must be set to TRUE if the databases is to be created and FALSE if it already exists;
-// MUST SET ERROR TYPE !!!!!!
 	global $DB_USER, $DB_PASSWORD, $DB_DSN, $DB_NAME;
 
-	if ($new === TRUE) {
-		try {
-			$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
-		}
-		catch (PDOexcpetion $e) {
-			die ('DB CREATING ERROR: ' . $e->getMessage());
-		}
+	//Get object
+	try {
+		$db = new PDO('mysql:host=localhost', $DB_USER, $DB_PASSWORD);
 	}
-	else
-	{
-		try {
-			$db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-		}
-		catch (PDOexcpetion $e) {
-			die ('DB CONNECTION ERROR: ' . $e->getMessage());
-		}
-		$db->exec("USE " . $DB_NAME);
+	catch (PDOexcpetion $e) {
+		die ('DB CREATING ERROR: ' . $e->getMessage());
 	}
+	
+	//Set ERROR 
 	try {
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 	catch (PDOexcpetion $e) {
 		die ('DB SETTING PROBLEM : ' . $e->getMessage());
 	}
+	
+	//Use my DB
+	if ($new == FALSE)
+	{
+		try {
+			$db->query("USE " . $DB_NAME);
+		}
+		catch (PDOexcpetion $e) {
+			die ('DB SETTING PROBLEM : ' . $e->getMessage());
+		}	
+	}
+
 	return $db;
 }
 
