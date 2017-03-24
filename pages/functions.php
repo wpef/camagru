@@ -14,12 +14,9 @@ function display_alerts()
 
 function date_ago($date, $level = 7)
 {
-    $now = new DateTime;
-    $ago = new DateTime($date);
-    $diff = $now->diff($ago);
-
-    $diff->w = floor($diff->d / 7);
-    $diff->d -= $diff->w * 7;
+    $now = new DateTime($date);
+    $old = new DateTime;
+    $diff = $now->diff($old, TRUE);
 
     $string = array(
         'y' => 'year',
@@ -30,16 +27,25 @@ function date_ago($date, $level = 7)
         'i' => 'minute',
         's' => 'second',
     );
+    
+    $i = -1;
     foreach ($string as $k => &$v) {
         if ($diff->$k)
-            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
-        else
-            unset($string[$k]);
+        {
+            $i++;
+            $l = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            $ret[$i] = $l;
+            if ($i >= $limit)
+                return (implode(', ', $ret) . ' ago');
+        }
     }
+    if (!empty($ret))
+        return (implode(', ', $ret) . ' ago');
+    return "just now";
 
-    $string = array_slice($string, 0, $level);
+    // $string = array_slice($string, 0, $level);
 
-    return $string ? implode(', ', $string) . ' ago' : 'just now';
+    // return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
 ?>

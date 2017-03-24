@@ -65,12 +65,12 @@ function get_sample_images() {
 		if ($rand % 3)
 		{
 			$a = array( WEBROOT . 'photos/' . basename($p), 'guest', 
-				basename($p), date('Y-m-d H:i:s', time() + (15 * $rand)));
+				basename($p), date('Y-m-d H:i:s', time() - (15 * $rand - 12)));
 		}
 		else
 		{
 			$a = array( WEBROOT . 'photos/' . basename($p), 'admin', 
-				basename($p), date('Y-m-d H:i:s', time() + (15 * $rand)));
+				basename($p), date('Y-m-d H:i:s', time() - (15 * $rand - 11)));
 		}
 		$q->execute($a);
 		$rand++;

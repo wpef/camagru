@@ -21,5 +21,4 @@ include_once('template-parts/video.php');
 
 //FOOTER
 include_once('template-parts/footer.php');
-
 ?>

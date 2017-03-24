@@ -15,16 +15,19 @@ $liked_pic = getDatas($p_query, "");
 
 if ($_GET['type'] == 'user')
 	$images_id = $_SESSION['user']->getImages();
+
 else if ($_GET['type'] == 'guest')
 {
-	 	$p_query = "SELECT pic_id FROM pictures ORDER BY added_on DESC;";
+	 	$p_query = "SELECT pic_id FROM pictures ORDER BY added_on ASC;";
  		$images_id = getDatas($p_query, "");
 }
+
 else if ($_GET['type'] == 'liked')
 {
 	foreach ($liked_pic as $pic)
 		$images_id[]['pic_id'] = $pic['like_pic'];
 }
+
 else if (isset($_GET['user']))
 {
 	$user = new User (array('login' => $_GET['user']));
@@ -92,7 +95,7 @@ function displayPictureButtons($pict, $user, $liked)
 
 <script>
 //setting nice height for articles
-document.onload = function () {
+window.onload = function () {	
 	var img = document.querySelectorAll("section.image img");
 	var height = 0;
 	for (i = 0; i < img.length; i++)
@@ -104,11 +107,11 @@ document.onload = function () {
 	for (i = 0; i < img.length; i++)
 	{
 	    if (img[i].height < height)
-	    {
 	    	img[i].style.paddingTop = ((height - img[i].height) /2) + "px";
-	    }
 	}
-}
+
+	//add date function
+};
 
 //assigning functions to buttons
 var like = document.getElementsByClassName('pic_likes');
