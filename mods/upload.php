@@ -23,7 +23,10 @@ if (!empty($imgb64)) {
 		die();
 	}
 	else
+	{
+		$pict->getId();
 		echo $pict->toArticleHTML($user, true);
+	}
 }
 
 ?>

@@ -198,6 +198,19 @@ class Picture {
 		$this->_proceedArray($res[0]);
 	}
 
+	public function getId()
+	{
+		if ($this->id)
+			return ($this->id);
+		if ($this->src)
+		{
+			$query = "SELECT pic_id FROM pictures WHERE pic_src = '$this->src';";
+			$res = getDatas($query, '');
+			$this->id = $res[0]['pic_id'];
+			return $this->id;
+		}
+	}
+
 	public function getComments($limit, $offset)
 	{
 		//SET VARS
