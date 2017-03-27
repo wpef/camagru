@@ -103,10 +103,62 @@ article {
 	}
 
 	#cover {
+		max-width : 650px;
+		padding: 0;
+		margin: auto;
+		display: block;
 		position: relative;
 	}
 
+	#main {
+	    width: 70%;
+	    float: left;
+    	display: inline-block;
+    	position: relative;
+	}
+
+	#video {
+		width: 100%;
+	}
+
+	#preview {
+		position: relative;
+		display: inline-block;
+		width: 29%;
+		height: 80vh;
+		float : right;
+		border-left: 2px inset white;
+		margin: auto;
+		overflow-x : hidden;
+		overflow-y : scroll;
+	}
+
+	.new_picture * {
+		max-width: 100%;
+	}
+
+	.new_picture {
+		width: 90%;
+		position: relative;
+		margin: auto;
+	}
+
+	#startbutton {
+		display: block;
+		width: 30%;
+	    background: #4ca747;
+	    padding: 2% 4%;
+	    border : none;
+	    border-bottom: 2px solid #11580d;   
+	    color: #fff;
+	    font-size: 100%;
+	    margin: auto;
+	    margin-top :2em;
+	}
+
+
 	/* sticker list */
+	
 	#stickers-list {
 		display: block;
     	overflow-x: scroll;
@@ -144,7 +196,6 @@ article {
 	}
 	
 	article.picture {
-		width: 520px;
 		max-height: 561px;
 		margin-bottom: 6%;
 		display: inline-block;
@@ -181,7 +232,10 @@ article {
 	article.picture .image {
 		margin : auto;
 		position : relative;
-		height: 380px;
+	}
+
+	.grid-wrapper article.picture .image {
+		height : 380px;
 	}
 
 	article.picture .image img {

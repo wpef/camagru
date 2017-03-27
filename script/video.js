@@ -140,7 +140,7 @@ function activeStickers () {
 				cover.getContext('2d').clearRect(0, 0, cover.width, cover.height);
 			cover.getContext('2d').drawImage(this, 0, 0, cover.width, cover.height);
 			stick_on = true;
-			startbutton.style.display   = 'initial';
+			startbutton.style.display   = 'block';
 		}, false);
 	}
 }
