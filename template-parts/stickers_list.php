@@ -1,20 +1,5 @@
 <?php if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ..?error=direct_access');} ?>
 
-<style>
-#stickers-list li {
-	display: inline-block;
-}
-
-.sticks {
-	max-width : 110px;
-}
-
-#selected {
-	border : 1px solid black;
-}
-
-</style>
-
 <ul id="stickers-list">
 <?php
 $dir = ROOT . 'stickers/';

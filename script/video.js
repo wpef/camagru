@@ -7,6 +7,7 @@ var		streaming	= false,
 		cover       = document.querySelector('#cover'),
 		canvas      = document.querySelector('#canvas'),
 		stickers	= document.getElementsByClassName('sticks'),
+		sList		= document.querySelector('#stickers-list'),
 		startbutton = document.querySelector('#startbutton'),
 		stick_on	= false,
 		width		= (window.innerWidth * 80) / 100,
@@ -18,7 +19,7 @@ if (width > 650)
 
 upload_form.style.display 	= 'none';
 startbutton.style.display   = 'none';
-stickers[0].parentNode.style.display = 'none';
+sList.style.display = 'none';
 
 for (var i = 0; i < stickers.length; i++) {
 	stickers[i].addEventListener("click", function() {
@@ -52,7 +53,7 @@ navigator.getMedia(
 );
 
 function activeVideo () {
-	stickers[0].parentNode.style.display = 'initial';
+	sList.style.display = 'block';
 	video.addEventListener('canplay', function(ev) {
 		if (!streaming) {
 				height = video.videoHeight / (video.videoWidth/width);
@@ -82,7 +83,7 @@ function displayUploadForm() {
 		video.parentNode.replaceChild(prev, video);
 		event.target.parentNode.style.display = "none";
 		prev.onload = function () {
-			stickers[0].parentNode.style.display = 'initial';
+			sList.style.display = 'block';
 			cover.setAttribute('width', prev.width);
 			cover.setAttribute('height', prev.height);
 			startbutton.addEventListener('click', function(ev) {
@@ -115,20 +116,24 @@ function takepicture(img) {
 			var uploaded = document.createElement('div');
 				uploaded.className = 'new_picture';
 				uploaded.innerHTML = xhr.responseText;
-			document.querySelector('.body').replaceChild(uploaded, startbutton); //mauvaise idee
+			document.querySelector('#preview').appendChild(uploaded);
 			activeButtons();
 		}
 	});
 }
 
 function activeButtons () {
-	var del = document.querySelector('.del');
-	del.addEventListener("click", delete_pict, false);
+	var del = document.querySelectorAll('.del');
+	for (i = 0; i < del.length; i++)
+		del[i].addEventListener("click", delete_pict, false);
 
-	var title = document.querySelector('input.pic_name');
-	title.addEventListener("click", edit_pict, false);
-	title.onfocus = function () {
-		this.className = "pic_name editing";
+	var title = document.querySelectorAll('input.pic_name');
+	for (i = 0; i < del.length; i++)
+	{
+		title.addEventListener("click", edit_pict, false);
+		title.onfocus = function () {
+			this.className = "pic_name editing";
+		}
 	}
 }
 

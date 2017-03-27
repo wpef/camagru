@@ -5,7 +5,7 @@
 <video id="video"></video>
 <button id="startbutton">Prendre une photo</button>
 <canvas id="canvas" style="display: none"></canvas>
-<img style="display: none" src="#" id="photo" alt="photo">
+<div id="preview"></div>
 
 
 <!-- Upload -->

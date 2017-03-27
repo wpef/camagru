@@ -98,6 +98,27 @@ article {
 		max-width: 650px; 
 	}
 
+	/* sticker list */
+	#stickers-list {
+		display: block;
+    	overflow-x: scroll;
+	}
+
+	#stickers-list li {
+		display: table-cell;
+	}
+
+	.sticks {
+		max-width : 110px;
+		margin : 0px 1em;
+	}
+
+	#selected {
+		border : 1px solid black;
+	}
+
+	/*preview */
+
 /* PICTURES DISPLAY */
 
 	div.grid-wrapper {
