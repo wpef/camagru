@@ -95,7 +95,15 @@ article {
 
 	img#upload_prev {
 		width: 80%;
-		max-width: 650px; 
+		max-width: 650px;
+	}
+
+	#video, #upload_prev {
+		position: absolute;
+	}
+
+	#cover {
+		position: relative;
 	}
 
 	/* sticker list */
