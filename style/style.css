@@ -117,8 +117,9 @@ article {
 	}
 
 	.sticks {
-		max-width : 110px;
-		margin : 0px 1em;
+	    max-height: 110px;
+	    margin: 0px 1em;
+    	padding: 5px;
 	}
 
 	#selected {
