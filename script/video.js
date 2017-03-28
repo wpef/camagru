@@ -137,7 +137,6 @@ function activeButtons () {
 function activeStickers () {
 	for (var i = 0; i < stickers.length; i++) {
 		stickers[i].addEventListener("click", function() {
-			console.log('activ');
 			if (stick_on)
 				cover.getContext('2d').clearRect(0, 0, cover.width, cover.height);
 			cover.getContext('2d').drawImage(this, 0, 0, cover.width, cover.height);
