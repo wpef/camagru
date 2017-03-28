@@ -167,7 +167,7 @@ function display_comMenu (pic_id)
 				if (this.value.length == 0)
 					return;
 				e.preventDefault(); //esquive submit
-				add_com(pic_id, this.value);
+				add_com(pic_id, encodeURIComponent(this.value));
 				this.value = "";
 			}
 		}

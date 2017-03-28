@@ -11,6 +11,7 @@ VIDEO
 
 —> afficher bouton logout (:after)
 
--> check modify with invalid values (Nom et Prenom);
+-> turn comments into HTMLentities
 
-//-> Check display article when no buttons;
+-> https://openclassrooms.com/courses/protegez-vous-efficacement-contre-les-failles-web/la-csrf
+	-> check modify with invalid values (Nom et Prenom);
