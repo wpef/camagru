@@ -79,6 +79,8 @@ function displayUploadForm() {
 
 				cover.setAttribute('width', document.querySelector('#upload_prev').width);
 				cover.setAttribute('height', document.querySelector('#upload_prev').height);
+				cover.style.backgroundImage = "url('" + prev.src + "')";
+				vDiv.removeChild(prev);
 
 				activeStickers();
 				startbutton.addEventListener('click', function(ev) {
