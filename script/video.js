@@ -125,10 +125,10 @@ function activeButtons () {
 		del[i].addEventListener("click", delete_pict, false);
 
 	var title = document.querySelectorAll('input.pic_name');
-	for (i = 0; i < del.length; i++)
+	for (i = 0; i < title.length; i++)
 	{
-		title.addEventListener("click", edit_pict, false);
-		title.onfocus = function () {
+		title[i].addEventListener("click", edit_pict, false);
+		title[i].onfocus = function () {
 			this.className = "pic_name editing";
 		}
 	}
@@ -142,7 +142,7 @@ function activeStickers () {
 				cover.getContext('2d').clearRect(0, 0, cover.width, cover.height);
 			cover.getContext('2d').drawImage(this, 0, 0, cover.width, cover.height);
 			stick_on = true;
-			startbutton.style.display   = 'block';
+			startbutton.style.display = 'block';
 		}, false);
 	}
 }
