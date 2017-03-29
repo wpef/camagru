@@ -15,7 +15,6 @@
 	</div>
 	<button id="startbutton">Take a picture</button>
 </div>
-<div id="preview"></div>
 
 <script type="text/javascript" src="<?php echo WEBROOT . 'script/video.js'?>"></script>
 <script type="text/javascript" src="<?php echo WEBROOT . 'script/grid_ui.js'?>"></script>

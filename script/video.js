@@ -110,10 +110,22 @@ function takepicture(img) {
     xhr.addEventListener('readystatechange', function() { 
 		if (this.readyState == 4 && this.status == 200)
 		{
+			var section = document.querySelector('#preview');
+			if (!section)
+			{
+				section = document.createElement('div');
+				section.id = 'preview';
+				var main = document.querySelector('#main');
+					main.style.width = '70%';
+				main.parentNode.insertBefore(section, main.nextSibling);
+			}
 			var uploaded = document.createElement('div');
 				uploaded.className = 'new_picture';
 				uploaded.innerHTML = xhr.responseText;
-			document.querySelector('#preview').appendChild(uploaded);
+			if (section.firstChild)
+				section.insertBefore(uploaded, section.firstChild);
+			else
+				section.appendChild(uploaded);
 			activeButtons();
 		}
 	});
