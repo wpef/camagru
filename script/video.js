@@ -147,10 +147,12 @@ function activeButtons () {
 function activeStickers () {
 	for (var i = 0; i < stickers.length; i++) {
 		stickers[i].addEventListener("click", function() {
-			cover.setAttribute('width', video.width);
-			cover.setAttribute('height', video.height);
-			cover.style.height = video.height + 'px';
-			cover.style.width = video.width + 'px';
+			if (streaming) {
+				cover.setAttribute('width', video.width);
+				cover.setAttribute('height', video.height);
+				cover.style.height = video.height + 'px';
+				cover.style.width = video.width + 'px';
+			}
 			if (stick_on && cover)
 				cover.getContext('2d').clearRect(0, 0, cover.width, cover.height);
 			if (cover)
