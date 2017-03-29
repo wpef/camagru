@@ -1,17 +1,10 @@
 VIDEO 
 	-- MERGE cote serveur
 	- MKDIR PHOTOS
-	— css
-
--> Re-upload (no camera)
-
-—> image details css pour mobile
 
 —> titre des pages
 
 —> afficher bouton logout (:after)
-
--> turn comments into HTMLentities
 
 -> https://openclassrooms.com/courses/protegez-vous-efficacement-contre-les-failles-web/la-csrf
 	-> check modify with invalid values (Nom et Prenom);
