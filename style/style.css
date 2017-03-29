@@ -282,6 +282,7 @@ article {
 
 	article.picture .image img {
 		max-width: 520px;
+		max-height: 380px;
 		width :100%;
 		margin :auto;
 		position: relative;

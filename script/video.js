@@ -64,7 +64,7 @@ function activeVideo () {
 }
 
 function displayUploadForm() {
-	upload_form.style.display	= 'initial';
+	upload_form.style.display	= '';
 	upload_form.querySelector("input").onchange = function (event) {
 		//INSERT check file here
 		var prev = document.createElement("img");

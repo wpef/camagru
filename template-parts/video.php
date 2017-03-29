@@ -2,11 +2,10 @@
 <div id="main">
 	<?php include(ROOT . 'template-parts/stickers_list.php') ?>
 	<!-- Upload -->
-	<p id="uploadForm" align="center"><br/>
-		<label>
-			File: <input name="uploaded_file" type="file" size="30" />
-		</label>
-	</p>
+	<div class='form' id="uploadForm" align="center">
+		<h2>Upload a picture</h2>
+		<input name="uploaded_file" type="file" size="30" />
+	</div>
 	<!-- VIDEO -->
 	<div id="video-div">
 		<video id="video"></video>
