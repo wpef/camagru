@@ -53,8 +53,6 @@ function activeVideo () {
 				video.setAttribute('height', height);
 				canvas.setAttribute('width', width);
 				canvas.setAttribute('height', height);
-				cover.setAttribute('width', width);
-				cover.setAttribute('height', height);
 				streaming = true;
 			}
 	}, false);
@@ -149,9 +147,14 @@ function activeButtons () {
 function activeStickers () {
 	for (var i = 0; i < stickers.length; i++) {
 		stickers[i].addEventListener("click", function() {
-			if (stick_on)
+			cover.setAttribute('width', video.width);
+			cover.setAttribute('height', video.height);
+			cover.style.height = video.height + 'px';
+			cover.style.width = video.width + 'px';
+			if (stick_on && cover)
 				cover.getContext('2d').clearRect(0, 0, cover.width, cover.height);
-			cover.getContext('2d').drawImage(this, 0, 0, cover.width, cover.height);
+			if (cover)
+				cover.getContext('2d').drawImage(this, 0, 0, cover.width, cover.height);
 			stick_on = true;
 			startbutton.style.display = 'block';
 		}, false);

@@ -158,6 +158,46 @@ article {
 	    margin-top :2em;
 	}
 
+/* MOBILE VIDEO DISPLAY */
+	@media screen and (max-width: 700px) {
+	    body {
+	    	font-size: 60% !important;
+	    }
+	}
+
+	@media screen and (max-width: 1025px) {
+	    body {
+	    	font-size: 80%;
+	    }
+
+	    .grid-wrapper article.picture .image {
+	    	height: auto !important;
+	    }
+
+	    #main, #preview, #cover {
+	        width : 100% !important;
+	        position: relative;
+	        display: inline-block;
+	        float :none;
+	        margin: auto;
+	    }
+
+	    #cover {
+	    	display: block;
+	    }
+
+	    #preview {
+	    	margin-top: 2em;
+	    	border : none;
+	    	overflow: visible;
+	    }
+
+	    .new_picture {
+	    	width : 50%;
+
+	    }
+	}
+
 
 	/* sticker list */
 	
@@ -181,24 +221,6 @@ article {
 		border : 1px solid black;
 	}
 
-	/*preview */
-
-/* MOBILE VIDEO DISPLAY */
-@media screen and (max-width: 830px) {
-    #main, #preview, #cover {
-        width : 100%;
-        position: relative;
-        display: inline-block;
-        float :none;
-        margin: auto;
-    }
-
-    #preview {
-    	border : none;
-    	overflow: visible;
-    }
-}
-
 /* PICTURES DISPLAY */
 
 	div.grid-wrapper {
@@ -215,7 +237,7 @@ article {
 	}
 	
 	article.picture {
-		max-height: 561px;
+		max-height: 590px;
 		margin-bottom: 6%;
 		display: inline-block;
 		position: relative;
@@ -236,6 +258,7 @@ article {
 		text-align: center;
 		padding: 0.5em 0;
 		margin : auto;
+		width:100%;
 
 		/*PREVENT INPUT DISPLAY*/
 		-webkit-appearance: inherit;
