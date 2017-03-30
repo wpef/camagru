@@ -7,3 +7,5 @@
 photos/**
 _server/**
 _server
+.idea/**
+.idea
