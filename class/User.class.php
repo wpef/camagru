@@ -210,6 +210,15 @@ class User {
  		$images_ids = getDatas($p_query, $this->login);
  		return ($images_ids);
  	}
+
+ 	public function notif($datas)
+ 	{
+ 		$picture = new Picture ($datas['com_pic']);
+ 		$author = $datas['com_author'];
+ 		$content = $datas['com_cont'];
+ 		$date = $datas['com_date'];
+ 		//en cours
+ 	}
  }
 
 ?>

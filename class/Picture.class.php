@@ -163,8 +163,12 @@ class Picture {
 			'com_author' => $login
 			);
 		
-		if (userExists($login))
+		$owner = new User ($login);
+		if ($owner)
+		{
 			insertDatas('comments', $datas);
+			$owner->notif($datas);
+		}
 		return $datas;
 	}
 

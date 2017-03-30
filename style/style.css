@@ -243,10 +243,14 @@ article {
 	
 	article.picture {
 		max-height: 590px;
-		min-width: 520px;
 		margin-bottom: 2em;
 		display: inline-block;
 		position: relative;
+	}
+	
+	.grid-wrapper article.picture {
+		min-width: 520px;
+
 	}
 
 	article.picture header {
