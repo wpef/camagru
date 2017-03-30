@@ -4,7 +4,7 @@ html {
 }
 
 body {
-	margin : 0px;
+	margin : 0;
 }
 
 .body {
@@ -163,6 +163,11 @@ article {
 	    body {
 	    	font-size: 60% !important;
 	    }
+
+	    article.picture {
+	    	min-width: 80% !important;
+	    	margin :auto;
+	    }
 	}
 
 	@media screen and (max-width: 1025px) {
@@ -238,7 +243,8 @@ article {
 	
 	article.picture {
 		max-height: 590px;
-		margin-bottom: 6%;
+		min-width: 520px;
+		margin-bottom: 2em;
 		display: inline-block;
 		position: relative;
 	}
@@ -292,8 +298,8 @@ article {
 
 	article.picture a, .pic_owner {
 		text-decoration: none;
-		font-style: bold !important;
-		color :#4ca747;
+		font-weight: bold !important;
+		color : #4ca747;
 	}
 
 	article.picture .details {
@@ -308,7 +314,7 @@ article {
 
 	.pic_name.wrong {
 		outline: none;
-		box-shadow: 0px 0px 3px 3px red;
+		box-shadow: 0 0 3px 3px red;
 		padding: 3%;
 		border: 1px solid red;
 	}
