@@ -213,11 +213,34 @@ class User {
 
  	public function notif($datas)
  	{
- 		$picture = new Picture ($datas['com_pic']);
+ 		//if $login == $owner -> return;
+ 		$picture = new Picture (array('id' => $datas['com_pic']));
+ 		if ($picture->error)
+ 			$pic_name = $picture->error;
+ 		else
+ 			$pic_name = $picture->name;
  		$author = $datas['com_author'];
  		$content = $datas['com_cont'];
  		$date = $datas['com_date'];
- 		//en cours
+ 		
+ 		//Set mail;
+		$name = $this->login;
+		$to = $this->mail;
+		$subject = "New comment on your picture";
+
+		$message = " <html> <head> <title>New comment on your picture</title></head><body><p>Hello " . $name . ",<br/>Your picture " . $pic_name . " has just received a new comment.<br/><br/><em>$author</em> said:  <strong>\"$content\"</strong><br/>on $date</body></html>";
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'From: Camagru.com <notif@camagru.com>' . "\r\n";
+
+		if ($author != $name)
+		{
+			if (mail($to, $subject, $message, $headers))
+				return TRUE;
+			else
+				$_SESSION['alert'] = 'Your comment can not be added, an unidentified error occured.';
+		}
+		return FALSE;
  	}
  }
 

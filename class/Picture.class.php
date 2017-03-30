@@ -163,7 +163,7 @@ class Picture {
 			'com_author' => $login
 			);
 		
-		$owner = new User ($login);
+		$owner = new User ($this->owner);
 		if ($owner)
 		{
 			insertDatas('comments', $datas);
