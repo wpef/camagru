@@ -1,7 +1,7 @@
 <?php if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ..?error=direct_access');} ?>
 <div class="form">
 	<h2>Edit account</h2>
-<form name='modif' action="<? echo WEBROOT . 'mods/modif_account.php'; ?>" method='post' />
+<form name='modif' action="<?php echo WEBROOT . 'mods/modif_account.php'; ?>" method='post' />
 	Login (cannot be modify):
 	<input type='email' name='login' value='<?php echo $_SESSION['user']->login ?>' readonly/><br>
 	Mail :

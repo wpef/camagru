@@ -1,52 +1,59 @@
 <?php
-
 define('access', true);
-
 require_once('inc.php');
 
-$drop_db = "DROP DATABASE IF EXISTS " . $DB_NAME . ";";
-$create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
-
-//Connect to MySql (db not created yet) and get the PDO object;
-$db = connect_db(TRUE);
-
-//Create DB
-try { $db->exec($drop_db); }
-catch (PDOexcpetion $e) {;}
-
-try { $db->exec($create_db); }
-catch (PDOexcpetion $e) { die("ERROR CREATING DB : " . $e->getMessage());}
-
-//Create tables var;
-include_once('tables.php');
-
-//push tables + admin to DB;
-try {
-		$db->exec("USE " . $DB_NAME);
-		foreach ($tables as $name => $v) {
-			$db->exec(create_table($name, $v));
+if ($_POST['submit'] == "ok"))
+{
+	$drop_db = "DROP DATABASE IF EXISTS " . $DB_NAME . ";";
+	$create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
+	
+	//Connect to MySql (db not created yet) and get the PDO object;
+	$db = connect_db(TRUE);
+	
+	//Create DB
+	try { $db->exec($drop_db); }
+	catch (PDOexcpetion $e) {;}
+	
+	try { $db->exec($create_db); }
+	catch (PDOexcpetion $e) { die("ERROR CREATING DB : " . $e->getMessage());}
+	
+	//Create tables var;
+	include_once('tables.php');
+	
+	//push tables + admin to DB;
+	try {
+			$db->exec("USE " . $DB_NAME);
+			foreach ($tables as $name => $v) {
+				$db->exec(create_table($name, $v));
+			}
+			new User ($admin_user);
+			
+			if (isset($_POST["dummy"]))
+			{
+				new User ($guest_user);
+				get_sample_images();
+			}
 		}
-		new User ($admin_user);
-		new User ($guest_user);
-		get_sample_images();
+	catch (PDOexcpetion $e) {
+	die ('DB ERROR: ' . $e->getMessage());
 	}
-catch (PDOexcpetion $e) {
-die ('DB ERROR: ' . $e->getMessage());
+
+	if (!is_dir(ROOT . "photos"))
+		mkdir(ROOT . "photos");
+
+	echo "<p class='message'>THE SITE IS SET UP</p>
+	<a href='../index.php'>Visit</a>";
 }
+?>
+<?php else : ?>
+<form name="setup" action="<?php echo WEBROOT . 'config/setup.php'; ?>" method="post"/>
+	<input type="checkbox" name="dummy" value="1"/> Upload dummy content<br>
+	<button type="submit" name="submit" value="ok"> (Re) Generat Database </button>
+</form>
 
-if (!is_dir(ROOT . "photos"))
-	mkdir(ROOT . "photos");
-
-echo "<p class='message'>THE SITE IS SET UP</p>
-<a href='../index.php'>Visit</a>";
-
-// Load database files (DUMMY CONTENT);
-//get_sample_comments();
-
-///////////////////////////////////////
-//////////////////// FUNCTIONS
-////////////////////////////////////
-
+<?php endif; ?>
+<?php
+//FUNCTIONS
 function get_sample_images() {
 	//add all already taken images in photos/dir (might to the same for /sample);
 	$dir = ROOT . 'photos/';
