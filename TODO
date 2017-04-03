@@ -1,6 +1,4 @@
-VIDEO 
-	- MERGE cote serveur
-	- MKDIR PHOTOS
+- MKDIR PHOTOS
 
 -> Pagination gallerie
 
