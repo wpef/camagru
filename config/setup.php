@@ -16,9 +16,6 @@ catch (PDOexcpetion $e) {;}
 
 try { $db->exec($create_db); }
 catch (PDOexcpetion $e) { die("ERROR CREATING DB : " . $e->getMessage());}
-//or die ("ERROR DROPPING DB : " .print_r($db->errorInfo(), true));
-
-//$db->exec($create_db) or die ("ERROR CREATING DB : " .print_r($db->errorInfo(), true));
 
 //Create tables var;
 include_once('tables.php');
@@ -36,6 +33,9 @@ try {
 catch (PDOexcpetion $e) {
 die ('DB ERROR: ' . $e->getMessage());
 }
+
+if (!is_dir(ROOT . "photos"))
+	mkdir(ROOT . "photos");
 
 echo "<p class='message'>THE SITE IS SET UP</p>
 <a href='../index.php'>Visit</a>";
