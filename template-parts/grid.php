@@ -35,7 +35,8 @@ else if (isset($_GET['user']))
 {
 	$user = new User (array('login' => $_GET['user']));
 	$images_id = $user->getImages();
-	$h1 = "$user's pictures";
+	$name = ucfirst($user->login);
+	$h1 = "$name's pictures";
 }
 
 echo "<h1>$h1</h1>";

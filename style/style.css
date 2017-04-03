@@ -1,5 +1,6 @@
 html {
 	font-family: Roboto, 'Helvetica Neue', 'Lucida Grande', sans-serif;
+	color: black;
 	background-color: rgb(241, 241, 241);
 }
 
@@ -26,37 +27,33 @@ h1, article, #startbutton {
 
 /* HEADER */
 
-	body > header {
-		background-color: white;
-		display: flex;
-		width: 100%;
-		height :7em;
-		margin-bottom: 3em;
-	}
+body > header {
+    background-color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    height: 7em;
+    margin-bottom: 3em;
+}
 
 	body > header a {
-		position: relative;
-		text-align: center;
-		text-decoration: none;
-		color : black;
-		font-weight: bold;
-		text-transform: uppercase;
 		margin: auto;
+		color: black;
+		text-decoration: none;
 	}
 
 	body > header a#logo {
-		width : 50%;
-		font-size : 5em;
+		font-size : 4em;
 		font-family: 'Pacifico', sans-serif;
-		text-transform: none;
-		font-weight: initial;
+		flex-basis:50%;
+		text-align: center;
 	}
 
 	ul#account_menu {
 		display: none;
 		position: absolute;
-		right: 3em;
-		top: 4em;
+		right: 8%;
+		top: 5em;
 		background-color: white;
 		list-style: none;
 		box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
