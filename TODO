@@ -1,5 +1,5 @@
 -> Pagination gallerie
 
--> protect setup.php
-
 -> https://openclassrooms.com/courses/protegez-vous-efficacement-contre-les-failles-web/la-csrf
+
+-> supprimer le .png du default name
