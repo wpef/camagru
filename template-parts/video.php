@@ -1,4 +1,5 @@
 <?php if(!defined('access')) { $_SESSION['alert'] = 'Direct access not permitted'; header('Location: ..?error=direct_access');} ?>
+<h1>Take a picture !</h1>
 <div id="main">
 	<?php include(ROOT . 'template-parts/stickers_list.php') ?>
 	<!-- Upload -->

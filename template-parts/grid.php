@@ -4,35 +4,41 @@ if (!defined('access')) {
 	header('Location: ../');
 }
 
-//SET IMAGES LIST
-if (empty($_GET) OR empty($_SESSION['user']))
-	$_GET['type'] = 'guest';
-
+//SET VARS
 $login = $_SESSION['user']->login;
-
+$h1 = "Gallery"; 
 $p_query = "SELECT like_pic FROM likes WHERE like_author = '$login';";
 $liked_pic = getDatas($p_query, "");
 
+//SET REQUEST
+if (empty($_GET) OR empty($login))
+	$_GET['type'] = 'guest';
 if ($_GET['type'] == 'user')
+{
 	$images_id = $_SESSION['user']->getImages();
-
+	$h1 = "Your pictures";
+}
 else if ($_GET['type'] == 'guest')
 {
-	 	$p_query = "SELECT pic_id FROM pictures ORDER BY added_on DESC;";
- 		$images_id = getDatas($p_query, "");
+	$p_query = "SELECT pic_id FROM pictures ORDER BY added_on DESC;";
+ 	$images_id = getDatas($p_query, "");
 }
 
 else if ($_GET['type'] == 'liked')
 {
 	foreach ($liked_pic as $pic)
 		$images_id[]['pic_id'] = $pic['like_pic'];
+	$h1 = "Your liked pictures";
 }
 
 else if (isset($_GET['user']))
 {
 	$user = new User (array('login' => $_GET['user']));
 	$images_id = $user->getImages();
+	$h1 = "$user's pictures";
 }
+
+echo "<h1>$h1</h1>";
 
 //CHECK if pictures;
 if (!$_SESSION['log'])

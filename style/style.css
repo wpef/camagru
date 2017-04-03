@@ -12,7 +12,13 @@ body {
 	margin-right: 2.5em;
 }
 
-article {
+h1 {
+	text-align: center;
+	background: white;
+	padding: 1em;
+}
+
+h1, article, #startbutton {
 	background: white;
 	border-radius: 2px;
 	box-shadow: 1px 1px 5px #888888;
@@ -148,14 +154,12 @@ article {
 	#startbutton {
 		display: block;
 		width: 30%;
-	    background: #4ca747;
 	    padding: 2% 4%;
-	    border : none;
-	    border-bottom: 2px solid #11580d;   
-	    color: #fff;
+	    border-bottom: 2px solid #000;   
 	    font-size: 100%;
 	    margin: auto;
 	    margin-top :2em;
+	    margin-bottom: 3em;
 	}
 
 /* MOBILE VIDEO DISPLAY */

@@ -2,8 +2,6 @@ VIDEO
 	-- MERGE cote serveur
 	- MKDIR PHOTOS
 
-—> titre des pages
-
 —> afficher bouton logout (:after)
 
 -> Pagination gallerie
