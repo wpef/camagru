@@ -80,6 +80,43 @@ class Picture {
 		}
 	}
 
+	public	function merge($sticker) 
+	{
+		$img_path = explode("/", $this->src);
+		$img_path = $img_path[count($img_path) - 1];
+		$img_path = ROOT . "photos/" . $img_path;
+		
+		$img_info = getimagesize($img_path);
+		$img_h = $img_info[1];
+		$img_w = $img_info[0];
+		
+		$stick_info = getimagesize($sticker);
+		$stick_h = $stick_info[1];
+		$stick_w = $stick_info[0];
+
+		$stick = imagecreatefrompng($sticker);
+		$image = imagecreatefrompng($img_path);
+		if (empty($stick) OR empty($image))
+		{
+			$_SESSION['alert'] = "Woops... Something went wrong !";
+			die();
+		}
+
+		imagealphablending($stick, false);
+		imagesavealpha($stick, true);
+		
+		if (imagecopyresized($image, $stick, 0, 0, 0, 0, $img_w, $img_h, $stick_w, $stick_h))
+		{
+			header('Content-Type: image/png');
+			imagepng($image, $img_path);
+		}
+		else
+			$this->error = "Woops... A problem occured merging images";
+		
+		imagedestroy($stick);
+		imagedestroy($image);
+	}
+
 	private function _uploadImg($img)
 	{
 		if (file_put_contents(ROOT . 'photos/' . $this->name, $img))

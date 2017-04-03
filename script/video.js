@@ -95,11 +95,13 @@ function takepicture(img) {
 	canvas.height = cover.height;
 	
 	canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-	canvas.getContext('2d').drawImage(stick, 0, 0, canvas.width, canvas.height);
 	
 	var data = canvas.toDataURL('image/png');
 	var page = WEBROOT;
-	var str = "pic=" + data;
+	var stickName = stick.src.split('/');
+		stickName = stickName[stickName.length - 1];
+
+	var str = "pic=" + data + "&stick=" + stickName;
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', page + "mods/upload.php" , true);
