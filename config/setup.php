@@ -2,8 +2,7 @@
 define('access', true);
 require_once('inc.php');
 
-if ($_POST['submit'] == "ok"))
-{
+if ($_POST['submit'] == "ok") :
 	$drop_db = "DROP DATABASE IF EXISTS " . $DB_NAME . ";";
 	$create_db = "CREATE DATABASE IF NOT EXISTS " . $DB_NAME . ";";
 	
@@ -43,16 +42,14 @@ if ($_POST['submit'] == "ok"))
 
 	echo "<p class='message'>THE SITE IS SET UP</p>
 	<a href='../index.php'>Visit</a>";
-}
-?>
-<?php else : ?>
+else : ?>
 <form name="setup" action="<?php echo WEBROOT . 'config/setup.php'; ?>" method="post"/>
 	<input type="checkbox" name="dummy" value="1"/> Upload dummy content<br>
 	<button type="submit" name="submit" value="ok"> (Re) Generat Database </button>
 </form>
 
-<?php endif; ?>
-<?php
+<?php endif;
+
 //FUNCTIONS
 function get_sample_images() {
 	//add all already taken images in photos/dir (might to the same for /sample);
