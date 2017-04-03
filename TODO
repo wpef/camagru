@@ -6,5 +6,11 @@ VIDEO
 
 —> afficher bouton logout (:after)
 
+-> Pagination gallerie
+
+-> HEADER : Left picture ou rien, middle gallery, right login
+
+-> protect setup.php
+
 -> https://openclassrooms.com/courses/protegez-vous-efficacement-contre-les-failles-web/la-csrf
 	-> check modify with invalid values (Nom et Prenom);
