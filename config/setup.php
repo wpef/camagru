@@ -45,7 +45,7 @@ if ($_POST['submit'] == "ok") :
 else : ?>
 <form name="setup" action="<?php echo WEBROOT . 'config/setup.php'; ?>" method="post"/>
 	<input type="checkbox" name="dummy" value="1"/> Upload dummy content<br>
-	<button type="submit" name="submit" value="ok"> (Re) Generat Database </button>
+	<button type="submit" name="submit" value="ok"> (Re) Generate Database </button>
 </form>
 
 <?php endif;
@@ -66,15 +66,17 @@ function get_sample_images() {
 
 	$rand = 0;
 	foreach ($photos as $p) {
+		$name = explode('.', basename($p));
+		$name = $name[0];
 		if ($rand % 3)
 		{
 			$a = array( WEBROOT . 'photos/' . basename($p), 'guest', 
-				basename($p), date('Y-m-d H:i:s', time() - (15 * $rand - 12)));
+				$name, date('Y-m-d H:i:s', time() - (15 * $rand - 12)));
 		}
 		else
 		{
 			$a = array( WEBROOT . 'photos/' . basename($p), 'admin', 
-				basename($p), date('Y-m-d H:i:s', time() - (15 * $rand - 11)));
+				$name, date('Y-m-d H:i:s', time() - (15 * $rand - 11)));
 		}
 		$q->execute($a);
 		$rand++;
