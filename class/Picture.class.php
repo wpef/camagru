@@ -23,18 +23,18 @@ class Picture {
 		foreach ($datas as $d => $v) {
 			switch ($d) {
 				case 'id' :
-					if (self::verbose)
+					if (self::$verbose)
 						echo "Pulling picture $v datas";
 					$this->_pull($v);
 					break;
 				case 'data' :
-					if (self::verbose)
+					if (self::$verbose)
 						echo "Pushing new picture";
 					$this->_push($v);
 					break;
 			}
 		}
-		if (self::verbose)
+		if (self::$verbose)
 			echo "Picture $this->id constructed";
 		return ($this);
 	}
@@ -86,7 +86,7 @@ class Picture {
 			}
 			//upload
 			$this->_uploadImg($datas);
-			if (self::verbose)
+			if (self::$verbose)
 				echo "New picture uploaded to server";
 					
 		}

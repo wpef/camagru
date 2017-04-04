@@ -11,6 +11,7 @@ body {
 .body {
 	margin-left: 2.5em;
 	margin-right: 2.5em;
+	margin-bottom: 7em;
 }
 
 h1 {
@@ -23,6 +24,40 @@ h1, article, #startbutton {
 	background: white;
 	border-radius: 2px;
 	box-shadow: 1px 1px 5px #888888;
+}
+
+footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #262926;
+	color: #7b7b7b;
+	font-size: 80%;
+}
+
+footer a {
+	color: #7b7b7b;
+	text-decoration: none;
+	margin: auto;
+}
+
+footer #mysite {
+	color : #d8d8d8;
+	text-decoration: underline;
+}
+
+footer p {
+	margin-right: 2em;
+}
+
+footer ul {
+	text-decoration: none;
+	list-style: none;
 }
 
 /* HEADER */
