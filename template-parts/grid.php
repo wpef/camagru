@@ -13,6 +13,7 @@ $liked_pic = getDatas($p_query, "");
 //SET REQUEST
 if (empty($_GET) OR empty($login))
 	$_GET['type'] = 'guest';
+
 if ($_GET['type'] == 'user')
 {
 	$images_id = $_SESSION['user']->getImages();
@@ -46,7 +47,6 @@ if (!$_SESSION['log'])
 {
 	echo "<p id='alert' onclick='hide_mess(this)'>You are seeing this page as guest, you must be logged in to interact with users pictures.</p>";
 }
-
 
 //display
 echo "<div class='grid-wrapper'>";

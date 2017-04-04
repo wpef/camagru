@@ -12,7 +12,7 @@ else if (!isset($_SESSION['user']))
 	$_SESSION['alert'] = "You must be logged in to interact";
 else if (!userExists($_SESSION['user']->login))
 	$_SESSION['alert'] = "An error occured";
-else if (!is_numeric($_POST['pic_id']))
+else if (isset($_POST['pic_id']) && !is_numeric($_POST['pic_id']))
 	$_SESSION['alert'] = "An error occured";
 
 if (isset($_SESSION['alert']))
@@ -43,7 +43,7 @@ switch ($_GET['act']) {
 
 	case 'load_coms' :
 		$offset = $_POST['offset'];
-		if (load_coms($pic_id, $offset) !== TRUE)
+		if (!is_numeric($offset) OR load_coms($pic_id, $offset) !== TRUE)
 			return FALSE;
 		break;
 
