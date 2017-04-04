@@ -68,7 +68,7 @@ class Picture {
 			if (!isset($this->name))
 				$this->name = $this->_getNewName();
 			if (!isset($this->src))
-				$this->src = DIR . $this->name;
+				$this->src = DIR . $this->name . '.png';
 			if (!isset($this->owner))
 					$this->owner = $_SESSION['user']->login;
 			if (!isset($this->date)) {
@@ -119,7 +119,7 @@ class Picture {
 
 	private function _uploadImg($img)
 	{
-		if (file_put_contents(ROOT . 'photos/' . $this->name, $img))
+		if (file_put_contents(ROOT . 'photos/' . $this->name . '.png', $img))
 			return TRUE;
 		else
 			$this->error = "An error occured uploading the file : $this->src";
@@ -326,9 +326,9 @@ class Picture {
 	{
 		$i = 0;
 		do {
-			$file = 'photo' . $i . '.png';
+			$file = 'photo' . $i;
 			$i++;
-			} while (file_exists(ROOT . 'photos/' . $file));
+			} while (file_exists(ROOT . 'photos/' . $file . ".png"));
 		return ($file); 
 	}
 
