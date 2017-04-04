@@ -1,39 +1,60 @@
-<- User ----------------------------------------------------------------------
+<- User ------------------------------------------------------------------------------------------------
 The User class handles datas for registered users.
 
-An instance can be contructed from either an Array :
-new User ( array( 'login' => 'abc' , 'pass' => '0dk3', 'mail' => 'xx@xx.xx' [...] ) );
-Which will INSERT a new user in DB;
+An instance can be contructed from either :
+	- an Array : new User ( array( 'login' => 'abc' , 'pass' => '0dk3', 'mail' => 'xx@xx.xx' [...] ) );
+		Which will INSERT a new user in DB;
+		This array contains keys=>values as : (entries between [] are optional) 
+			'login' => 'user_login'
+			'pass' => 'hashed password'
+			'mail' => 'xx@xx.xx'
+			['l_name' => 'last Name']
+			['f_name' => 'first Name']
+			['isadmin' => TRUE or FALSE]
 
-This array contains keys=>values as : (entries between [] are optional) 
-'login' => 'user_login'
-'pass' => 'hashed password'
-'mail' => 'xx@xx.xx'
-['l_name' => 'last Name']
-['f_name' => 'first Name']
-['isadmin' => TRUE or FALSE]
+	- a single string : new User( 'login' );
+		Which will set all vars for an existing user;
 
-Or from a single string :
-new User( 'login' );
-Which will set all vars for an existing user;
 
 The class provides the following vars :
-public			$login;
-private			$_passwd;
-public			$f_name;
-public			$name;
-public			$mail;
-public static	$verbose = FALSE;
-public			$isadmin;
+	public			$login; 		contains the primary key.
+	private			$_passwd;		contains hashed password.
+	public			$f_name;		contains user’s first name.
+	public			$l_name;		contains user’s last name.
+	public			$name;			contains user’s full name.
+	public			$mail;			contains user’s email adress.
+	public static		$verbose = FALSE;	displays more infos if set to TRUE. 
+	public			$isadmin;		is TRUE if user has admin rights or FALSE.
 
-The class provides the following methods :
+The class provides the following public methods :
 
-Color   auth( str $log, str $pass );
-Return TRUE if the given HASHED $pass corresponds to the User->_passwd for a given $log; 
+	User   auth( str $log, str $pass );
+	Return TRUE if the given HASHED $pass corresponds to the User->_passwd for a given $log.
 
-Color   getInfos( str $log );
-Set all objects vars from DB looking for $log as login value
+	User   getInfos( str $log );
+	Set all vars from DB looking for $log as login value.
 
-Color   create( array $infos );
-Insert datas in Camagru.Users table as given in $infos. Every $infos=>keys must correspon to a table entry or the php script will throw an error 
----------------------------------------------------------------------- User ->
+	User	toDetailsHTML();
+	Returns User details as HTML.
+
+	User	confirm($token);
+	Confirm user’s mail and activate account.
+
+	User	signin();
+	Sign in as user.
+
+	User	logout();
+	Log user out and destroy session.
+
+	User	modif($attr, $val);
+	Modify user’s info in DB where $attr is a DB entry and $val its new value.
+
+	User	token();
+	Return a personalized token.
+
+	User	getImages();
+	Returns an array containing all user’s pictures’IDs.
+
+	User	notif();
+	Send a notification email when one of this user’s pictures is commented (by another user).
+------------------------------------------------------------------------------------------------ User ->

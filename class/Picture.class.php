@@ -9,7 +9,6 @@ class Picture {
 	public		$src;
 	public		$name;
 	public		$date;
-	public		$comments;
 	public		$likes;
 	public		$error;
 	public static $verbose = false;
@@ -24,13 +23,19 @@ class Picture {
 		foreach ($datas as $d => $v) {
 			switch ($d) {
 				case 'id' :
+					if (self::verbose)
+						echo "Pulling picture $v datas";
 					$this->_pull($v);
 					break;
 				case 'data' :
+					if (self::verbose)
+						echo "Pushing new picture";
 					$this->_push($v);
 					break;
 			}
 		}
+		if (self::verbose)
+			echo "Picture $this->id constructed";
 		return ($this);
 	}
 
@@ -41,6 +46,10 @@ class Picture {
 
 	public function __toString () {
 		return "IMG :" . $this->src . " from " . $this->owner . PHP_EOL;
+	}
+
+	static function doc() {
+		return (file_get_contents('Pictures.doc.txt'));
 	}
 
 /* ==> PUSH <== */
@@ -77,6 +86,9 @@ class Picture {
 			}
 			//upload
 			$this->_uploadImg($datas);
+			if (self::verbose)
+				echo "New picture uploaded to server";
+					
 		}
 	}
 

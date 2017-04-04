@@ -32,19 +32,10 @@ class User {
 			echo "USER : " . $this->login . " DESTRUCTED" . PHP_EOL;
 	}
 
-	public function __toString () {		
+	public function __toString () {	
 		if (!$this->login)
 			return "USER :\tNot found!\n---------------------------\n";
-		
-		$ad = $this->isadmin ? "YES" : "NO";
-		
-		$st = "USER :\n";
-		$log = "\t" . "Login = " . $this->login . "\n"; 
-		$name = "\t" . "Name = " . $this->name . "\n";
-		$mail = "\t" . "Mail = " . $this->mail . "\n";
-		$adm = "\t" . "isadmin = " . $ad . "\n";
-		$end = "---------------------------\n"; 
-		return ($st . $log . $name . $mail . $adm . $end);
+		return ("USER : " . $this->login . "\n");
 	}
 
 	static function doc() {
@@ -54,15 +45,12 @@ class User {
 /* ==> MY METHODS <== */
 
 	public function auth($pass) {
-	//$log & $pass must be sent by $_POST; $pass is sent hashed;
 		if ($pass === $this->_passwd)
 			return TRUE;
 		return FALSE;
 	}
 
 	public function getInfos($log) {
-	//fills the new User vars with database datas;
-
 		//check for array
 		if (is_array($log))
 			$log = $log['login'];
@@ -72,7 +60,6 @@ class User {
 
 		//getting result;
 		$res = getDatas($query, $log);
-		//var_dump($res);
 
 		//setting vars
 		$res = $res[0];
@@ -87,8 +74,6 @@ class User {
 	}
 
 	private function _create($usr_infos) {
-	//$usr_infos must be an array in which every key corresponds to the DB entries;
-
 		if (!is_array($usr_infos) OR (!$this->_checkArray($usr_infos)))
 		{
 			if (!isset($this->error))
@@ -101,7 +86,7 @@ class User {
 
 		//VERBOSE
 		if (self::$verbose)
-			echo "USER : " . $usr_infos['login'] . " added to DB" . PHP_EOL . "<br/>";
+			echo "USER : " . $usr_infos['login'] . " added to DB" . PHP_EOL;
 		
 		//Create OBJECT
 		$this->__construct($usr_infos['login']);
