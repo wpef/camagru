@@ -159,6 +159,7 @@ body > header {
 
 	#video {
 		width: 100%;
+		margin-bottom: 5%;
 	}
 
 	#preview {
@@ -191,7 +192,7 @@ body > header {
 	    font-size: 100%;
 	    margin: auto;
 	    margin-top :2em;
-	    margin-bottom: 3em;
+	    margin-bottom: 5%;
 	}
 
 /* MOBILE VIDEO DISPLAY */
@@ -504,6 +505,12 @@ body > header {
 
 	.form fieldset {
 		padding-top: 8%;
+	}
+
+	.form .details {
+		margin-top: -5%;
+		font-size: 70%;
+		color: #949494;
 	}
 
 	.form input[type="text"],

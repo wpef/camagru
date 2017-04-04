@@ -4,8 +4,8 @@
 <footer>
 	<ul>
 		<li><a href="<?php echo WEBROOT;?>">Take a picture</a></li>
-		<li><a href="<?php echo WBROOT . "/pages/gallery.php"?>">Gallery</a></li>
-		<li><a href="<?php echo WBROOT . "/pages/login.php"?>">Sign in / Login</a></li>
+		<li><a href="<?php echo WEBROOT . "/pages/gallery.php"?>">Gallery</a></li>
+		<li><a href="<?php echo WEBROOT . "/pages/login.php"?>">Sign up</a></li>
 	</ul>
 	<p id='logo'> Camagru.fr </p>
 	<p id='copyright'>Created by <a id='mysite' target="_blank" href="http://fdemoncade.com">fdemoncade</a> for 42.</p>
