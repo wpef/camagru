@@ -270,6 +270,7 @@ body > header {
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: space-around;
+		width : 100%;
 	}
 
 	/* WRAPPERS */
